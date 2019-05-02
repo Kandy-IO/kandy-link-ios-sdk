@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>SMRegistrationService Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">MobileSDK 4.5.9 </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">GENBAND</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/notificationEngine">notificationEngine</option>
+		
+		<option value="//api/name/registrationApplicationDelegate">registrationApplicationDelegate</option>
+		
+	</optgroup>
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/getExpirationTime">- getExpirationTime</option>
+		
+		<option value="//api/name/getNotificationState">- getNotificationState</option>
+		
+		<option value="//api/name/getRegistrationState">- getRegistrationState</option>
+		
+		<option value="//api/name/init">- init</option>
+		
+		<option value="//api/name/registerToServer:expirationTime:completionHandler:">- registerToServer:expirationTime:completionHandler:</option>
+		
+		<option value="//api/name/registerToServer:expirationTime:subscriptionId:notificationChannelId:completionHandler:">- registerToServer:expirationTime:subscriptionId:notificationChannelId:completionHandler:</option>
+		
+		<option value="//api/name/unRegisterFromServerWithHandler:">- unRegisterFromServerWithHandler:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">SMRegistrationService Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>SMRegistrationService.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/registrationApplicationDelegate" title="registrationApplicationDelegate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/registrationApplicationDelegate">&nbsp;&nbsp;registrationApplicationDelegate</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The delegate object that must be implement the callbacks.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nonnull) id&lt;SMRegistrationApplicationDelegate&gt; registrationApplicationDelegate</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection see-also-section">
+				<h4 class="method-subtitle">See Also</h4>
+				<ul>
+					
+					<li><code><p><a href="../Protocols/SMRegistrationApplicationDelegate.html">SMRegistrationApplicationDelegate</a></p></code></li>
+					
+				</ul>
+			</div>
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/notificationEngine" title="notificationEngine"></a>
+	<h3 class="method-title"><code><a href="#//api/name/notificationEngine">&nbsp;&nbsp;notificationEngine</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Hold the notification engine object for reusing.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (readonly, nonnull) SMNotificationEngine *notificationEngine</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/registerToServer:expirationTime:completionHandler:" title="registerToServer:expirationTime:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/registerToServer:expirationTime:completionHandler:">&ndash;&nbsp;registerToServer:expirationTime:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method registers user to server with values set in configuration and valid parameters,
+Failure and success calls will be transmitted to completion block which can be null.
+After registration request succeeded and notification channel is connected completion block will be called without error.
+During registration process, registration registrationStateChanged of RegistrationApplicationDelegate will be triggered after registration request and notificationConnectionStateChanged of RegistrationApplicationDelegate will be triggered after notification connection is established.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)registerToServer:(nonnull NSArray&lt;NSString*&gt; *)<em>serviceTypes</em> expirationTime:(NSInteger)<em>expirationTime</em> completionHandler:(void ( ^ _Nullable ) ( SMMobileError *_Nullable error ))<em>completionBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionBlock,</code></th>
+						<td><p>block implementation that will be used by the registration service to trigger callback events. Listener can be null if user don&rsquo;t care the callbacks or failure reasons.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>serviceTypes,</code></th>
+						<td><p>service list that application will be registered to</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>expirationTime,</code></th>
+						<td><p>Expiration time for registration in seconds. This value is sent to SPiDR server to set the registration expiration value and SPiDR sends the suitable expiration value back in registration request response. If this value exceeds the maximum supported expiration time in SPiDR, it will send the maximum value of SPiDR server that is set. This value is generally 3600sec and the final value can be gathered by calling <a href="#//api/name/getExpirationTime">getExpirationTime</a> method.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>2.0.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/registerToServer:expirationTime:subscriptionId:notificationChannelId:completionHandler:" title="registerToServer:expirationTime:subscriptionId:notificationChannelId:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/registerToServer:expirationTime:subscriptionId:notificationChannelId:completionHandler:">&ndash;&nbsp;registerToServer:expirationTime:subscriptionId:notificationChannelId:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method registers user to server with given subscription id and notification channel id
+Failure and success calls will be transmitted to completion block which can be null.
+After registration request succeeded and notification channel is connected completion block will be called without error.
+During registration process, registration registrationStateChanged of RegistrationApplicationDelegate will be triggered after registration request and notificationConnectionStateChanged of RegistrationApplicationDelegate will be triggered after notification connection is established.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)registerToServer:(nonnull NSArray&lt;NSString*&gt; *)<em>serviceTypes</em> expirationTime:(NSInteger)<em>expiration</em> subscriptionId:(nonnull NSString *)<em>subscriptionId</em> notificationChannelId:(nonnull NSString *)<em>notificationChannelId</em> completionHandler:(void ( ^ _Nullable ) ( SMMobileError *_Nullable error ))<em>completionBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>subscriptionId</code></th>
+						<td><p>, subscription id to use unregistration and renew registration</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>notificationChannelId</code></th>
+						<td><p>, notification channel id to use websocket connection</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>expirationTime,</code></th>
+						<td><p>Expiration time for registration in seconds. This value is sent to SPiDR server to set the registration expiration value and SPiDR sends the suitable expiration value back in registration request response. If this value exceeds the maximum supported expiration time in SPiDR, it will send the maximum value of SPiDR server that is set. This value is generally 3600sec and the final value can be gathered by calling <a href="#//api/name/getExpirationTime">getExpirationTime</a> method.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>serviceTypes,</code></th>
+						<td><p>service list that application will be registered to</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionBlock,</code></th>
+						<td><p>block implementation that will be used by the registration service to trigger callback events. Listener can be null if user don&rsquo;t care the callbacks or failure reasons.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>4.0.1</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/unRegisterFromServerWithHandler:" title="unRegisterFromServerWithHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/unRegisterFromServerWithHandler:">&ndash;&nbsp;unRegisterFromServerWithHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method unregisters user from server. Failure and success calls will be transmitted by RegistrationListener interface.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)unRegisterFromServerWithHandler:(void ( ^ _Nullable ) ( SMMobileError *_Nullable error ))<em>completionBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionBlock,</code></th>
+						<td><p>block implementation that will be used by the registration service to trigger callback events. Listener can be null if user don&rsquo;t care the callbacks or failure reasons.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>2.0.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getExpirationTime" title="getExpirationTime"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getExpirationTime">&ndash;&nbsp;getExpirationTime</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gives the expiration time for registration in seconds. Since the exact value is determined by SPiDR server, this method should be called after registration succeeded.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)getExpirationTime</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>NSInteger, registration expiration time in seconds.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getRegistrationState" title="getRegistrationState"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getRegistrationState">&ndash;&nbsp;getRegistrationState</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gives the current status of the registration.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (SMRegistrationStates)getRegistrationState</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p><a href="../Constants/SMRegistrationStates.html">SMRegistrationStates</a>, REGISTERED, UNREGISTERED</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getNotificationState" title="getNotificationState"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getNotificationState">&ndash;&nbsp;getNotificationState</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gives the current status of the notification component.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (SMNotificationStates)getNotificationState</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p><a href="../Constants/SMNotificationStates.html">SMNotificationStates</a>, CONNECTED, DISCONNECTED</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/init" title="init"></a>
+	<h3 class="method-title"><code><a href="#//api/name/init">&ndash;&nbsp;init</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Constructing is disallowed from API level.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id _Nonnull)init</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Constructing is disallowed from API level.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMRegistrationService.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2019 GENBAND. All rights reserved. Updated: 2019-05-02</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

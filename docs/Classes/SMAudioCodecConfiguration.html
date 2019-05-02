@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>SMAudioCodecConfiguration Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">MobileSDK 4.5.9 </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">GENBAND</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/opusDtx">opusDtx</option>
+		
+		<option value="//api/name/opusFec">opusFec</option>
+		
+		<option value="//api/name/opusMaxAverageBitRate">opusMaxAverageBitRate</option>
+		
+		<option value="//api/name/opusMaxPlaybackRate">opusMaxPlaybackRate</option>
+		
+		<option value="//api/name/ptime">ptime</option>
+		
+	</optgroup>
+	
+
+	
+	<optgroup label="Class Methods">
+		
+		<option value="//api/name/configurationWithMobileSDKPreferredSet">+ configurationWithMobileSDKPreferredSet</option>
+		
+		<option value="//api/name/configurationWithWebRTCDefaultSet">+ configurationWithWebRTCDefaultSet</option>
+		
+	</optgroup>
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/getOpusFMtpLine">- getOpusFMtpLine</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">SMAudioCodecConfiguration Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>SMAudioCodecConfiguration.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/opusMaxAverageBitRate" title="opusMaxAverageBitRate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/opusMaxAverageBitRate">&nbsp;&nbsp;opusMaxAverageBitRate</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Maxaveragebitrate specifies the maximum average receive
+bitrate of a session in bits per second (bit/s).  The actual value of the bitrate
+can vary, as it is dependent on the characteristics of the media in a packet.
+Note that the maximum average bitrate MAY be modified dynamically during a session.
+Any positive integer is allowed, but values outside the range 6000 to 510000
+SHOULD be ignored. If no value is specified, the maximum value will equals to
+corresponding mode of Opus and corresponding maxplaybackrate is the default.
+Decreasing MaxAverageBitRate will cause less bandwidth usage
+(For further information check RFC-7587).</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSInteger opusMaxAverageBitRate</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Maxaveragebitrate specifies the maximum average receive
+bitrate of a session in bits per second (bit/s).  The actual value of the bitrate
+can vary, as it is dependent on the characteristics of the media in a packet.
+Note that the maximum average bitrate MAY be modified dynamically during a session.
+Any positive integer is allowed, but values outside the range 6000 to 510000
+SHOULD be ignored. If no value is specified, the maximum value will equals to
+corresponding mode of Opus and corresponding maxplaybackrate is the default.
+Decreasing MaxAverageBitRate will cause less bandwidth usage
+(For further information check RFC-7587).</p>
+
+<p>MobileSDK default maxAverageBitRate=20000
+6000 &lt;= MaxAverageBitRate &lt;= 510000
+In case this value set as -1 WebRTC defaults will be use.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/ptime" title="ptime"></a>
+	<h3 class="method-title"><code><a href="#//api/name/ptime">&nbsp;&nbsp;ptime</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Ptime is the preferred duration of media represented by a
+packet that a decoder wants to receive, in milliseconds rounded up to the next full
+integer value.  For Opus, possible values are 3, 5, 10, 20, 40, 60, or an arbitrary
+multiple of frame size rounded up to the next full integer value, up to a maximum value of
+120.  If no value is specified, the default is 20. Changing ptime effects all audio codecs.
+Increasing Ptime will cause less bandwidth usage (For further information check RFC-7587).</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSInteger ptime</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Ptime is the preferred duration of media represented by a
+packet that a decoder wants to receive, in milliseconds rounded up to the next full
+integer value.  For Opus, possible values are 3, 5, 10, 20, 40, 60, or an arbitrary
+multiple of frame size rounded up to the next full integer value, up to a maximum value of
+120.  If no value is specified, the default is 20. Changing ptime effects all audio codecs.
+Increasing Ptime will cause less bandwidth usage (For further information check RFC-7587).</p>
+
+<p>MobileSDK default ptime=60
+3 &lt;= MaxAverageBitRate &lt;= 120 and it should be multiple of an Opus frame size
+rounded up to the next full integer value
+In case this value set as -1 WebRTC defaults will be use.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/opusDtx" title="opusDtx"></a>
+	<h3 class="method-title"><code><a href="#//api/name/opusDtx">&nbsp;&nbsp;opusDtx</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sets DTX value which will enable or disable Discontinuous Transmission feature of Opus codec.
+When using continuous transmission, Variable Bitrate will reduce
+the bitrate when the characteristics of the input signal permit, but it will never
+interrupt the transmission to the receiver.  Therefore, the received signal will
+maintain the same high level of audio quality over the full duration
+of a transmission while minimizing the average bitrate over time.
+In cases where the bitrate of Opus needs to be reduced even further
+or in cases where only constant bitrate is available, the Opus encoder can use Discontinuous
+Transmission (DTX), where parts of the encoded signal that correspond to periods of silence
+in the input speech or audio signal are not transmitted to the receiver.
+A receiver can distinguish between DTX and packet loss by looking for gaps in the
+sequence number. On default DTX is disabled and enabling DTX will cause less bandwidth usage
+(For further information check RFC-7587).
+If application set dtxEnable parameter as &lsquo;YES&rsquo; DTX will be enable, if application set it as
+&lsquo;NO&rsquo; DTX will be disable.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL opusDtx</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sets DTX value which will enable or disable Discontinuous Transmission feature of Opus codec.
+When using continuous transmission, Variable Bitrate will reduce
+the bitrate when the characteristics of the input signal permit, but it will never
+interrupt the transmission to the receiver.  Therefore, the received signal will
+maintain the same high level of audio quality over the full duration
+of a transmission while minimizing the average bitrate over time.
+In cases where the bitrate of Opus needs to be reduced even further
+or in cases where only constant bitrate is available, the Opus encoder can use Discontinuous
+Transmission (DTX), where parts of the encoded signal that correspond to periods of silence
+in the input speech or audio signal are not transmitted to the receiver.
+A receiver can distinguish between DTX and packet loss by looking for gaps in the
+sequence number. On default DTX is disabled and enabling DTX will cause less bandwidth usage
+(For further information check RFC-7587).
+If application set dtxEnable parameter as &lsquo;YES&rsquo; DTX will be enable, if application set it as
+&lsquo;NO&rsquo; DTX will be disable.</p>
+
+<p>MobileSDK default DTX is enabled</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/opusFec" title="opusFec"></a>
+	<h3 class="method-title"><code><a href="#//api/name/opusFec">&nbsp;&nbsp;opusFec</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sets FEC value which will enable or disable ForwardErrorCorrection feature of Opus codec.
+The voice mode of Opus allows for embedding in-band Forward Error Correction (FEC)
+data into the Opus bitstream.  This FEC scheme adds redundant information about the
+previous packet (N-1) to the current output packet N. On the receiving side, the decoder
+can take advantage of this additional information when it loses a
+packet and the next packet is available. Disabling FEC cause cause less bandwidth usage
+(For further information check RFC-7587).
+If application set fecEnable parameter as &lsquo;YES&rsquo; FEC will be enable, if application set it as
+&lsquo;NO&rsquo; FEC will be disable.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL opusFec</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sets FEC value which will enable or disable ForwardErrorCorrection feature of Opus codec.
+The voice mode of Opus allows for embedding in-band Forward Error Correction (FEC)
+data into the Opus bitstream.  This FEC scheme adds redundant information about the
+previous packet (N-1) to the current output packet N. On the receiving side, the decoder
+can take advantage of this additional information when it loses a
+packet and the next packet is available. Disabling FEC cause cause less bandwidth usage
+(For further information check RFC-7587).
+If application set fecEnable parameter as &lsquo;YES&rsquo; FEC will be enable, if application set it as
+&lsquo;NO&rsquo; FEC will be disable.</p>
+
+<p>MobileSDK default FEC is enabled</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/opusMaxPlaybackRate" title="opusMaxPlaybackRate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/opusMaxPlaybackRate">&nbsp;&nbsp;opusMaxPlaybackRate</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sets the MaxPlaybackRate. Maxplaybackrate is a hint about the maximum output sampling rate
+that the receiver is capable of rendering in Hz. The decoder MUST be capable of decoding
+any audio bandwidth, but, due to hardware limitations, only signals up to the specified
+sampling rate can be played back. Sending signals with higher audio bandwidth results
+in higher than necessary network usage and encoding complexity, so an encoder SHOULD NOT
+encode frequencies above the audio bandwidth specified by maxplaybackrate.
+This parameter can take any value between 8000 and 48000, although commonly the value will
+match one of the Opus bandwidths . By default, the receiver is assumed to have no
+limitations, i.e., 48000. Decreasing MaxPlaybackRate will cause less bandwidth usage.
+Decreasing MaxPlaybackRate will cause less bandwidth usage
+(For further information check RFC-7587).</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSInteger opusMaxPlaybackRate</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sets the MaxPlaybackRate. Maxplaybackrate is a hint about the maximum output sampling rate
+that the receiver is capable of rendering in Hz. The decoder MUST be capable of decoding
+any audio bandwidth, but, due to hardware limitations, only signals up to the specified
+sampling rate can be played back. Sending signals with higher audio bandwidth results
+in higher than necessary network usage and encoding complexity, so an encoder SHOULD NOT
+encode frequencies above the audio bandwidth specified by maxplaybackrate.
+This parameter can take any value between 8000 and 48000, although commonly the value will
+match one of the Opus bandwidths . By default, the receiver is assumed to have no
+limitations, i.e., 48000. Decreasing MaxPlaybackRate will cause less bandwidth usage.
+Decreasing MaxPlaybackRate will cause less bandwidth usage
+(For further information check RFC-7587).</p>
+
+<p>MobileSDK default MaxPlaybackRate=16000</p>
+
+<p>8000 &lt;= maxPlaybackRate &lt;= 48000
+In case this value set as -1 WebRTC defaults will be use.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/configurationWithMobileSDKPreferredSet" title="configurationWithMobileSDKPreferredSet"></a>
+	<h3 class="method-title"><code><a href="#//api/name/configurationWithMobileSDKPreferredSet">+&nbsp;configurationWithMobileSDKPreferredSet</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Init SMAudioCodecConfiguration with MobileSDK preferred sets.
+If an application use this configuration MobileSDK will modify the
+Audio Codec parameters automatically with it&rsquo;s preferred set.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (instancetype)configurationWithMobileSDKPreferredSet</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Init SMAudioCodecConfiguration with MobileSDK preferred sets.
+If an application use this configuration MobileSDK will modify the
+Audio Codec parameters automatically with it&rsquo;s preferred set.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/configurationWithWebRTCDefaultSet" title="configurationWithWebRTCDefaultSet"></a>
+	<h3 class="method-title"><code><a href="#//api/name/configurationWithWebRTCDefaultSet">+&nbsp;configurationWithWebRTCDefaultSet</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Init SMAudioCodecConfiguration with WebRTC default sets.
+If an application use this configuration MobileSDK will not modify the
+Audio Codec parameters automatically.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (instancetype)configurationWithWebRTCDefaultSet</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Init SMAudioCodecConfiguration with WebRTC default sets.
+If an application use this configuration MobileSDK will not modify the
+Audio Codec parameters automatically.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getOpusFMtpLine" title="getOpusFMtpLine"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getOpusFMtpLine">&ndash;&nbsp;getOpusFMtpLine</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method will return the opus fmtp line parameters which will be in the fmtp line of SDP.
+Only Utils in WebRTC should call this method. Using this method Utils will modify the SDP and
+bitrate will decrease.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSString *)getOpusFMtpLine</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>String fmtpLine</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>This method will return the opus fmtp line parameters which will be in the fmtp line of SDP.
+Only Utils in WebRTC should call this method. Using this method Utils will modify the SDP and
+bitrate will decrease.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMAudioCodecConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2019 GENBAND. All rights reserved. Updated: 2019-05-02</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>SMCallServiceDelegate Protocol Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">MobileSDK 4.5.9 </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">GENBAND</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/useManualAudio">useManualAudio</option>
+		
+		<option value="//api/name/voipAudioEnabled">voipAudioEnabled</option>
+		
+	</optgroup>
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/createOutGoingCall:andCallId:andOriginator:andTerminator:completion:">- createOutGoingCall:andCallId:andOriginator:andTerminator:completion:</option>
+		
+		<option value="//api/name/createOutGoingCall:andOriginator:andTerminator:completion:">- createOutGoingCall:andOriginator:andTerminator:completion:</option>
+		
+		<option value="//api/name/createOutGoingCall:andTerminator:completion:">- createOutGoingCall:andTerminator:completion:</option>
+		
+		<option value="//api/name/createThreeWayCall:firstCallId:secondCallId:completion:">- createThreeWayCall:firstCallId:secondCallId:completion:</option>
+		
+		<option value="//api/name/getActiveCalls">- getActiveCalls</option>
+		
+		<option value="//api/name/rotateCameraOrientationToPosition:">- rotateCameraOrientationToPosition:</option>
+		
+		<option value="//api/name/setCallApplication:">- setCallApplication:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">SMCallServiceDelegate Protocol Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Conforms to</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>SMCallServiceDelegate.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/useManualAudio" title="useManualAudio"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useManualAudio">&nbsp;&nbsp;useManualAudio</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>If YES, MobileSDK will not initialize the audio unit automatically when an
+audio track is ready for playout or recording. Instead, applications should
+call setVoipAudioEnabled. If NO, MobileSDK will initialize the audio unit
+as soon as an audio track is ready for playout or recording.
+Default value is NO.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL useManualAudio</code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>4.3.1</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If YES, MobileSDK will not initialize the audio unit automatically when an
+audio track is ready for playout or recording. Instead, applications should
+call setVoipAudioEnabled. If NO, MobileSDK will initialize the audio unit
+as soon as an audio track is ready for playout or recording.
+Default value is NO.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/voipAudioEnabled" title="voipAudioEnabled"></a>
+	<h3 class="method-title"><code><a href="#//api/name/voipAudioEnabled">&nbsp;&nbsp;voipAudioEnabled</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This property is only effective if <a href="#//api/name/useManualAudio">useManualAudio</a> is YES.
+Represents permission for MobileSDK to initialize the VoIP audio unit.
+When set to NO, if the VoIP audio unit used by MobileSDK is active, it will be
+stopped and uninitialized. This will stop incoming and outgoing audio.
+When set to YES, MobileSDK will initialize and start the audio unit when it is
+needed (e.g. due to establishing an audio connection).
+Default value is NO.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, getter=isVoipAudioEnabled) BOOL voipAudioEnabled</code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>4.3.1</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>This property is only effective if <a href="#//api/name/useManualAudio">useManualAudio</a> is YES.
+Represents permission for MobileSDK to initialize the VoIP audio unit.
+When set to NO, if the VoIP audio unit used by MobileSDK is active, it will be
+stopped and uninitialized. This will stop incoming and outgoing audio.
+When set to YES, MobileSDK will initialize and start the audio unit when it is
+needed (e.g. due to establishing an audio connection).
+Default value is NO.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setCallApplication:" title="setCallApplication:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setCallApplication:">&ndash;&nbsp;setCallApplication:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Set the event handler CallApplicationDelegate for the CallService.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setCallApplication:(nonnull id&lt;SMCallApplicationDelegate&gt;)<em>app</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>app</code></th>
+						<td><p>CallApplicationDelegate</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>2.0.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createOutGoingCall:andCallId:andOriginator:andTerminator:completion:" title="createOutGoingCall:andCallId:andOriginator:andTerminator:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createOutGoingCall:andCallId:andOriginator:andTerminator:completion:">&ndash;&nbsp;createOutGoingCall:andCallId:andOriginator:andTerminator:completion:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method is to create outgoing/mobile originated calls</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)createOutGoingCall:(nonnull id&lt;SMCallApplicationDelegate&gt;)<em>app</em> andCallId:(nullable NSString *)<em>callId</em> andOriginator:(nonnull SMUriAddress *)<em>originator</em> andTerminator:(nonnull SMUriAddress *)<em>terminator</em> completion:(nonnull void ( ^ ) ( id&lt;SMOutgoingCallDelegate&gt; _Nullable call , SMMobileError *_Nullable error ))<em>callHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>app</code></th>
+						<td><p>delegete of application to return callbacks for call</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>originator</code></th>
+						<td><p>address of caller</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>terminator</code></th>
+						<td><p>address of callee</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>id</code></th>
+						<td><p>of call as string. If it set as null MobileSDK will generate a uniq callId</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completion</code></th>
+						<td><p>block</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>call to establish call</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>4.1.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createOutGoingCall:andOriginator:andTerminator:completion:" title="createOutGoingCall:andOriginator:andTerminator:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createOutGoingCall:andOriginator:andTerminator:completion:">&ndash;&nbsp;createOutGoingCall:andOriginator:andTerminator:completion:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method is to create outgoing/mobile originated calls</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)createOutGoingCall:(nonnull id&lt;SMCallApplicationDelegate&gt;)<em>app</em> andOriginator:(nonnull SMUriAddress *)<em>originator</em> andTerminator:(nonnull SMUriAddress *)<em>terminator</em> completion:(nonnull void ( ^ ) ( id&lt;SMOutgoingCallDelegate&gt; _Nullable call , SMMobileError *_Nullable error ))<em>callHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>app</code></th>
+						<td><p>delegete of application to return callbacks for call</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>originator</code></th>
+						<td><p>address of caller</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>terminator</code></th>
+						<td><p>address of callee</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completion</code></th>
+						<td><p>block</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>call to establish call</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>3.1.4</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createOutGoingCall:andTerminator:completion:" title="createOutGoingCall:andTerminator:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createOutGoingCall:andTerminator:completion:">&ndash;&nbsp;createOutGoingCall:andTerminator:completion:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method is to create outgoing/mobile originated calls</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)createOutGoingCall:(nonnull id&lt;SMCallApplicationDelegate&gt;)<em>app</em> andTerminator:(nonnull SMUriAddress *)<em>terminator</em> completion:(nonnull void ( ^ ) ( id&lt;SMOutgoingCallDelegate&gt; _Nullable call , SMMobileError *_Nullable error ))<em>callHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>app</code></th>
+						<td><p>delegete of application to return callbacks for call</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>terminator</code></th>
+						<td><p>address of callee</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completion</code></th>
+						<td><p>block</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>call to establish call</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>3.1.4</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createThreeWayCall:firstCallId:secondCallId:completion:" title="createThreeWayCall:firstCallId:secondCallId:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createThreeWayCall:firstCallId:secondCallId:completion:">&ndash;&nbsp;createThreeWayCall:firstCallId:secondCallId:completion:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method creates Three Way Call.
+For now this api just supports to merge two calls.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)createThreeWayCall:(nonnull id&lt;SMCallApplicationDelegate&gt;)<em>app</em> firstCallId:(nonnull NSString *)<em>firstCallId</em> secondCallId:(nonnull NSString *)<em>secondCallId</em> completion:(nonnull void ( ^ ) ( id&lt;SMOutgoingCallDelegate&gt; _Nullable call , SMMobileError *_Nullable error ))<em>callHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>app</code></th>
+						<td><p>delegete of application to return callbacks for call</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>firstCallId</code></th>
+						<td><p>specifies the first call which will be joined to ThreeWay Call</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>secondCallId</code></th>
+						<td><p>specifies the second call which will be joined to ThreeWay Call</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completion</code></th>
+						<td><p>block</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>4.4.8</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/rotateCameraOrientationToPosition:" title="rotateCameraOrientationToPosition:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/rotateCameraOrientationToPosition:">&ndash;&nbsp;rotateCameraOrientationToPosition:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Rotates camera to specified orientation</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)rotateCameraOrientationToPosition:(AVCaptureVideoOrientation)<em>orientation</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>orientation</code></th>
+						<td><p>AVCaptureVideoOrientation value that will be used for camera orientation</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>2.0.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getActiveCalls" title="getActiveCalls"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getActiveCalls">&ndash;&nbsp;getActiveCalls</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Returns the active call objects.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nonnull NSArray&lt;id&lt;SMCallDelegate&gt; &gt; *)getActiveCalls</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Immutable call list</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>4.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Returns the active call objects.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallServiceDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2019 GENBAND. All rights reserved. Updated: 2019-05-02</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>
