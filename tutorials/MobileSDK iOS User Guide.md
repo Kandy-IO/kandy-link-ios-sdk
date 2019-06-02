@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **4.5.9**
+Version Number: **4.6.0**
 <br>
-Revision Date: **May 02, 2019**
+Revision Date: **May 30, 2019**
 
 ## Mobile SDK overview
 
@@ -66,8 +66,10 @@ This section contains the required steps for beginning your mobile application d
 * GLKit.framework
 * VideoToolbox.framework
 * AudioToolbox.framework
+* PushKit.framework
 * libc++.tbd
 * libicucore.tbd
+* libz.tbd
 
 12. Mobile SDK doesn't support bitcode, under the "Build Settings" search for "Bitcode", and change "Enable Bitcode" option to NO.
 
@@ -2725,8 +2727,8 @@ Set your application to use the WebRTC default set or the Mobile SDK preferred s
 
 ###### WebRTC default settings, MobileSDK preferred default settings, and acceptable values
 
-|   | WebRTC default | Mobile SDK preferred | Acceptable values |
-|----|----|----|----|----|
+|  | WebRTC default | Mobile SDK preferred | Acceptable values |
+|----|----|----|----|
 | MaxPlaybackRate | 24000  | 16000  | 8000-48000  |
 | MaxAverageBitRate | 40000  | 20000  | 6000-510000  |
 | DTX | Disabled  | Enabled  | true or false  |
@@ -3008,71 +3010,433 @@ For a full example of the data received, see [Appendix E: Examples of call stati
 
 <div class="page-break"></div>
 
-## Event Service
+## Push Service
 
-The Mobile SDK receives any notification (for example, Call, Registration) with an application layer-provided JSON string. The application layer forwards the JSON string to the Mobile SDK using the receiveNotification method, which then invokes a new notification.
+<div style="border-style:solid; page-break-inside: avoid;">
+<h5>WARNING</h5>
+In order to use the push service, please contact your Ribbon channel account manager as it requires a pre-provisioning process.
+</div>
+<br>
 
-**Note:** The application should not send notifications to the Mobile SDK when the application already invoked register to setup a WebSocket connection with SPiDR/Kandy Link. Otherwise, the Mobile SDK could receive the same notification (for example, a ringing or answer event) twice—one notification from the application and one notification from the WebSocket connection.
+The Mobile SDK can subscribe to push channel to receive notifications from the call service while the application is in suspended or terminated state. But before start using the service, mobile application must be configured on Apple Developer Member Center to be able to receive VoIP Push Notifications. Then the following information must be supplied to the CPaaS admin for some server side configurations.
+- bundleID (unique ID of the application)
+- authentication key (key which the app developer created on the apple developer portal)
+- keyID (ID of the authentication key)
+- teamID (ID of the apple developer team)
 
-The Mobile SDK performs three error checks. If validation fails, the Mobile SDK fills the `error` parameter with the related `SMMobileError` object. The three error checks include:
+### Push Service Subscription
 
-* If the received message string cannot be "JSONized"
+To be able to receive push notifications, applications must subscribe to push channel by using the `subscribeToPushNotifications` API of the `SMPushService`. Fail and success calls will be transmitted through the completion block. If the registration is successful, a `subscriptionID` will be returned which can be used to update or remove the push subscription.
 
-* If the received message string does not contain the `eventType` field
+**Note:** The `pushServiceURL` configuration must be set on client before using the service.
 
-* If the received message string contains the `statusCode` field and its value is **not** zero.
-
-<div class="page-break"></div>
-
-###### Example: Sample incoming call notification as JSON string
+###### Example: Subscribing to Push Service
 
 ```obj-c
 Objective-C
 
-NSString * message = @"
-{\"notificationMessage\":{\"statusCode\":0,\"eventType\":\"call\",\"eventId\":\"807235484\",\"notificationChannelId\":\"eWF2dXoxLXNwaWRyLmNvbTEwNjA1NDM5MDIwMTg4NTgy\",\"active\":\"true\",\"time\":\"1431031344293\",\"callNotificationParams\":{\"callerDisplayNumber\":\"yavuz2\",\"callerName\":\"yavuz2 cakir2\",\"calleeDisplayNumber\":\"yavuz1\"},\"callDispositionParams\":{\"sessionData\":\"(01521108_0efbfc5e_6e91381c-11cc-4e26-8174-7d3f8197b309:8eafdbf2d48c6b543d6606862d92bf1123ae48@47.168.116.57:7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$(7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$d3ZtMjE5LWFzaXBjLTE%3D%0A\",\"actions\":\"reject|forward\"},\"sessionParams\":{\"actions\":\"answer|reject|forward\",\"sessionData\":\"(01521108_0efbfc5e_6e91381c-11cc-4e26-8174-7d3f8197b309:8eafdbf2d48c6b543d6606862d92bf1123ae48@47.168.116.57:7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$(7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$d3ZtMjE5LWFzaXBjLTE%3D%0A\",\"sdp\":\"v=0\\r\\no=- 9864 9864 IN IP4 47.168.161.9\\r\\ns=media server session\\r\\nt=0 0\\r\\na=ice-lite\\r\\nm=audio 55436 RTP/SAVPF 109 8 18 0\\r\\nc=IN IP4 47.168.150.219\\r\\na=rtpmap:109 opus/48000/2\\r\\na=fmtp:109 maxplaybackrate=16000;sprop-maxcapturerate=16000;maxaveragebitrate=128000;usedtx=1\\r\\na=rtpmap:8 PCMA/8000\\r\\na=rtpmap:18 G729/8000\\r\\na=rtpmap:0 PCMU/8000\\r\\na=rtcp-xr\\r\\na=ptime:20\\r\\na=sendrecv\\r\\na=fingerprint:sha-256 96:FC:72:E5:03:77:2E:73:E0:E4:7E:E9:A8:7E:55:BE:89:5D:34:81:6F:2D:42:19:3D:8B:FB:EE:09:CE:6F:83\\r\\na=setup:actpass\\r\\na=ice-pwd:Y9v4sauSPkOONcC+v/GPNtpbRJatl83K\\r\\na=ice-ufrag:8uhcC2ZkzvNvsLJasHNOrKc33ZZKaM1B\\r\\na=crypto:1 AES_CM_128_HMAC_SHA1_80 inline:c8cF/UK5aPWBr2AqZxZEV0OlAlq6ZBZVGd9ES6Uf\\r\\na=rtcp:55437 IN IP4 47.168.150.219\\r\\na=candidate:1 1 udp 2113937151 47.168.150.219 55436 typ host generation 0\\r\\na=candidate:1 2 udp 2113937151 47.168.150.219 55437 typ host generation 0\\r\\n\"}}}";
+#import <MobileSDK/MobileSDK.h>
+
+@interface PushModule ()
+@end
+
+@implementation PushModule
+
+- (void) subscribeToPushWithCredentials:(nonnull PKPushCredentials *)pushCredentials {
+
+    SMPushService *pushService = [[SMServiceProvider getInstance] getPushService];
+    NSString *realm = @"default";
+
+    // pushServerURL configuration must be set before using the push subscription API
+    [pushService subscribeToPushNotificationsWithPushCredentials:pushCredentials
+                                                        andRealm:realm
+                                               completionHandler:^(NSString * _Nullable subscriptionID, SMMobileError * _Nullable error) {
+                                                   if (error) {
+                                                       // handle error case
+                                                   }
+                                                   if (subscriptionID) {
+                                                       // save this subscriptionID to use later
+                                                   }
+    }];
+}
+
+@end
+
 ```
 
 ```swift
 Swift
 
-let message = "
-{\"notificationMessage\":{\"statusCode\":0,\"eventType\":\"call\",\"eventId\":\"807235484\",\"notificationChannelId\":\"eWF2dXoxLXNwaWRyLmNvbTEwNjA1NDM5MDIwMTg4NTgy\",\"active\":\"true\",\"time\":\"1431031344293\",\"callNotificationParams\":{\"callerDisplayNumber\":\"yavuz2\",\"callerName\":\"yavuz2 cakir2\",\"calleeDisplayNumber\":\"yavuz1\"},\"callDispositionParams\":{\"sessionData\":\"(01521108_0efbfc5e_6e91381c-11cc-4e26-8174-7d3f8197b309:8eafdbf2d48c6b543d6606862d92bf1123ae48@47.168.116.57:7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$(7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$d3ZtMjE5LWFzaXBjLTE%3D%0A\",\"actions\":\"reject|forward\"},\"sessionParams\":{\"actions\":\"answer|reject|forward\",\"sessionData\":\"(01521108_0efbfc5e_6e91381c-11cc-4e26-8174-7d3f8197b309:8eafdbf2d48c6b543d6606862d92bf1123ae48@47.168.116.57:7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$(7b40dd04-5bc1-4180-a6de-fc86a750231e:wae-base-sipt)$d3ZtMjE5LWFzaXBjLTE%3D%0A\",\"sdp\":\"v=0\\r\\no=- 9864 9864 IN IP4 47.168.161.9\\r\\ns=media server session\\r\\nt=0 0\\r\\na=ice-lite\\r\\nm=audio 55436 RTP/SAVPF 109 8 18 0\\r\\nc=IN IP4 47.168.150.219\\r\\na=rtpmap:109 opus/48000/2\\r\\na=fmtp:109 maxplaybackrate=16000;sprop-maxcapturerate=16000;maxaveragebitrate=128000;usedtx=1\\r\\na=rtpmap:8 PCMA/8000\\r\\na=rtpmap:18 G729/8000\\r\\na=rtpmap:0 PCMU/8000\\r\\na=rtcp-xr\\r\\na=ptime:20\\r\\na=sendrecv\\r\\na=fingerprint:sha-256 96:FC:72:E5:03:77:2E:73:E0:E4:7E:E9:A8:7E:55:BE:89:5D:34:81:6F:2D:42:19:3D:8B:FB:EE:09:CE:6F:83\\r\\na=setup:actpass\\r\\na=ice-pwd:Y9v4sauSPkOONcC+v/GPNtpbRJatl83K\\r\\na=ice-ufrag:8uhcC2ZkzvNvsLJasHNOrKc33ZZKaM1B\\r\\na=crypto:1 AES_CM_128_HMAC_SHA1_80 inline:c8cF/UK5aPWBr2AqZxZEV0OlAlq6ZBZVGd9ES6Uf\\r\\na=rtcp:55437 IN IP4 47.168.150.219\\r\\na=candidate:1 1 udp 2113937151 47.168.150.219 55436 typ host generation 0\\r\\na=candidate:1 2 udp 2113937151 47.168.150.219 55437 typ host generation 0\\r\\n\"}}}"
+import MobileSDK
+
+class PushModule {
+    func subscribeToPush(with pushCredentials: PKPushCredentials) {
+
+        let pushService: SMPushService? = SMServiceProvider.getInstance().getPushService()
+        let realm = "default"
+
+        // pushServerURL configuration must be set before using the push subscription API
+        pushService?.subscribeToPushNotifications(with: pushCredentials, andRealm: realm, completionHandler: { subscriptionID, error in
+            if error != nil {
+                // handle error case
+            }
+            if subscriptionID != nil {
+                // save this subscriptionID to use later
+            }
+        })
+    }
+}
+
 ```
 
-<div class="page-break"></div>
+### Updating Push Subscription
 
-###### Example: Notifying Mobile SDK with incoming call notification
+The OS can update the push credentials (a.k.a device token) in some cases. The new credentials must be updated on the push server, so that the MobileSDK can continue receiving push notifications.
+
+###### Example: Updating Push Service Subscription
 
 ```obj-c
 Objective-C
 
-- (void) incomingCallNotificationExample {
-    SMEventService *eventService = [[SMServiceProvider getInstance] getEventService];
-    SMMobileError *mobileError;
+#import <MobileSDK/MobileSDK.h>
 
-    [eventService receiveNotification:message withError:&mobileError];
+@interface PushModule ()
+@end
 
-    if(mobileError)
-    {
-      // Event service push notification attempt failed
-    }
+@implementation PushModule
+
+- (void) updatePushSubscription:(nonnull NSString *)pushSubscriptionID withNewCredentials:(nonnull PKPushCredentials *)pushCredentials {
+
+    SMPushService *pushService = [[SMServiceProvider getInstance] getPushService];
+
+    // pushServerURL configuration must be set before using the push subscription API
+    [pushService updatePushSubscriptionWithPushCredentials:pushCredentials
+                                         andSubscriptionID:pushSubscriptionID
+                                         completionHandler:^(SMMobileError * _Nullable error) {
+                                             if (error) {
+                                                 // handle error case
+                                             }
+    }];
 }
+
+@end
+
 ```
 
 ```swift
 Swift
 
-func incomingCallNotificationExample() {
-    let eventService = SMServiceProvider.getInstance().getEventService()
-    let mobileError: SMMobileError?
+import MobileSDK
 
-    eventService.receiveNotification(message, withError: &mobileError)
+class PushModule {
+    func updatePushSubscription(_ pushSubscriptionID: String, withNewCredentials pushCredentials: PKPushCredentials) {
 
-    if (mobileError != nil) {
-        // Event service push notification attempt failed
+        let pushService: SMPushService? = SMServiceProvider.getInstance().getPushService()
+
+        // pushServerURL configuration must be set before using the push subscription API
+        pushService.updatePushSubscription(withPushCredentials: pushCredentials, andSubscriptionID: pushSubscriptionID, completionHandler: { error in
+            if error != nil {
+                // handle error case
+            }
+        })
     }
 }
+
+```
+
+### Removing Push Subscription
+
+To stop receiving push notifications, client should remove the push subscription. Otherwise, client will continue to receive push notifications until the application removed from the device.
+
+###### Example: Removing Push Service Subscription
+
+```obj-c
+Objective-C
+
+#import <MobileSDK/MobileSDK.h>
+
+@interface PushModule ()
+@end
+
+@implementation PushModule
+
+- (void) removePushSubscription:(nonnull NSString *)pushSubscriptionID {
+
+    SMPushService *pushService = [[SMServiceProvider getInstance] getPushService];
+
+    // pushServerURL configuration must be set before using the push subscription API
+    [pushService unsubscribeFromPushNotificationsWithSubscriptionID:subscriptionID
+                                                  completionHandler:^(SMMobileError * _Nullable error) {
+                                                      if (error) {
+                                                          // handle error case
+                                                      }
+    }];
+}
+
+@end
+
+```
+
+```swift
+Swift
+
+import MobileSDK
+
+class PushModule {
+    func removePushSubscription(_ pushSubscriptionID: String) {
+
+        let pushService: SMPushService? = SMServiceProvider.getInstance().getPushService()
+
+        // pushServerURL configuration must be set before using the push subscription API
+        pushService.unsubscribeFromPushNotifications(withSubscriptionID: subscriptionID, completionHandler: { error in
+            if error != nil {
+                // handle error case
+            }
+        })
+    }
+}
+
+```
+
+### Injecting Push Messages to MobileSDK
+
+If the application receives a VoIP push notification, it should inject it to MobileSDK, so that the MobileSDK can handle the notification and perform the required actions.
+But some push notifications (e.g. incomingCall notification) require the user to be registered. So, the client should check its registration state first, then it can inject the notification to MobileSDK. Otherwise, MobileSDK cannot establish the call successfully.
+According to the registration state, client should take the following actions:
+
+- If the client already registered to server, the notification can be directly injected to the MobileSDK.
+- If the client not registered to server, client should register first then it can inject the notification to the MobileSDK.
+
+###### Example: Injecting Push Message
+
+```obj-c
+Objective-C
+
+#import <UIKit/UIKit.h>
+#import <PushKit/PushKit.h>
+#import <MobileSDK/MobileSDK.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, PKPushRegistryDelegate>
+@property (strong) PKPushRegistry *pushRegistry;
+@end
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    pushRegistry = [[PKPushRegistry alloc] initWithQueue:nil];
+    pushRegistry.delegate = self;
+    pushRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+
+    return YES;
+}
+
+#pragma mark PushKitDelegate
+- (void) pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type {
+    [self handlePushPayload:payload forType:type withCompletionHandler:nil];
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion {
+    [self handlePushPayload:payload forType:type withCompletionHandler:completion];
+}
+
+- (void) pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type {
+    if(type == PKPushTypeVoIP) {
+        // VoIP push credentials, use it for push subscription
+    }
+}
+
+#pragma end
+
+- (void)handlePushPayload:(PKPushPayload *)pushPayload forType:(PKPushType )type withCompletionHandler:(void (^)(void))completion{
+
+    NSDictionary *pushData = pushPayload.dictionaryPayload;
+
+    // MobileSDK only deals with VoIP push notifications
+    // all MobileSDK push notifications starts with "notificationMessage" key, you can use it to filter your notificaitons
+    if (type == PKPushTypeVoIP && [pushData objectForKey:@"notificationMessage"]) {
+
+        SMPushService *pushService = [[SMServiceProvider getInstance] getPushService];
+
+        id notificationCompletion = ^(SMMobileError * _Nullable error) {
+            if (error)
+                // handle the error
+
+            if (completion)
+                completion();
+        };
+
+        if ([[[SMServiceProvider getInstance] getRegistrationService] getRegistrationState] == REGISTERED) {
+            [pushService injectPushMessage:pushData completionHandler:notificationCompletion];
+        }
+        else {
+            // note: set your configurations before registration
+            [[[SMServiceProvider getInstance] getRegistrationService] registerToServer:@[[SMServiceTypes getCallService]
+                                                                        expirationTime:3600
+                                                                     completionHandler:^(SMMobileError *error) {
+
+                                                            if(error)
+                                                                // handle the error
+                                                            else
+                                                                [pushService injectPushMessage:pushData completionHandler:notificationCompletion];
+            }];
+        }
+
+    } else {
+        // received notification is not related with the MobileSDK
+    }
+
+}
+
+@end
+
+```
+
+```swift
+Swift
+
+import MobileSDK
+import PushKit
+import UIKit
+
+class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
+    var pushRegistry: PKPushRegistry?
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+
+        pushRegistry = PKPushRegistry(queue: nil)
+        pushRegistry?.delegate = self
+        pushRegistry?.desiredPushTypes = Set<AnyHashable>([.voIP])
+
+        return true
+    }
+}
+
+// MARK: PushKitDelegate
+func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
+    handle(payload, for: type, withCompletionHandler: nil)
+}
+
+func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+    handle(payload, for: type, withCompletionHandler: completion)
+}
+
+func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, for type: PKPushType) {
+    if type == .voIP {
+        // VoIP push credentials, use it for push subscription
+    }
+}
+
+func handle(_ pushPayload: PKPushPayload?, for type: PKPushType, withCompletionHandler completion: @escaping () -> Void) {
+
+    let pushData = pushPayload?.dictionaryPayload
+
+    // MobileSDK only deals with VoIP push notifications
+    // all MobileSDK push notifications starts with "notificationMessage" key, you can use it to filter your notificaitons
+    if type == .voIP && pushData?["notificationMessage"] != nil {
+
+        let pushService: SMPushService? = SMServiceProvider.getInstance().getPushService()
+
+        let notificationCompletion = { error in
+                if error != nil {
+                    // handle the error
+                }
+
+                if completion != nil {
+                    completion()
+                }
+            }
+
+        if SMServiceProvider.getInstance().getRegistrationService().getRegistrationState() == .registered {
+            pushService.injectPushMessage(pushData, completionHandler: notificationCompletion)
+        } else {
+            // note: set your configurations before registration
+            SMServiceProvider.getInstance().getRegistrationService().register(toServer: [SMServiceTypes.getCallService()], expirationTime: 3600, completionHandler: { error in
+                if error != nil {
+                    // handle the error
+                } else {
+                    pushService.injectPushMessage(pushData, completionHandler: notificationCompletion)
+                }
+            })
+        }
+
+    } else {
+        // received notification is not related with the MobileSDK
+    }
+
+}
+
+```
+
+### Handling Push Subscription Events
+
+The push subscription can be removed from the server side by the system admin. In this case client will receive a notification which indicates that the push subscription is invalidated. To be able to handle this notification, client should set the `pushSubscriptionDelegate` of the push service and implement the `pushSubscriptionInvalidated` method of the `SMPushSubscriptionDelegate`.
+
+**Note:** If the `pushSubscriptionInvalidated` notification received, MobileSDK will just inform the application layer via this delegate method. Application side will be responsible of the remaining logic (i.e. it can try to re-subscribe to push notifications).
+
+###### Example: Implementing PushSubscriptionDelegate
+
+```obj-c
+Objective-C
+
+#import <MobileSDK/MobileSDK.h>
+
+@interface PushModule ()
+@end
+
+@implementation PushModule <SMPushSubscriptionDelegate>
+
+__strong static PushModule *_instance;
+
++ (PushModule *) sharedInstance{
+    @synchronized(_instance) {
+        if(!_instance){
+            _instance = [[self alloc] init];
+            [[[SMServiceProvider getInstance] getPushService] setPushSubscriptionDelegate:_instance];
+        }
+        return _instance;
+    }
+}
+
+#pragma mark SMPushSubscriptionDelegate methods
+
+- (void) pushSubscriptionInvalidated:(NSString *)subscriptionID {
+    //  push subscription which has given subscriptionID is invalidated by the server,
+    // client needs to re-subscribe to push channel. No more push notifications will be received
+    // until client subscribes to push service again.
+}
+
+@end
+
+```
+
+```swift
+Swift
+
+import MobileSDK
+
+var _instance: PushModule?
+
+class PushModule<SMPushSubscriptionDelegate> {
+    class func sharedInstance() -> PushModule? {
+        let lockQueue = DispatchQueue(label: "_instance")
+        lockQueue.sync {
+            if _instance == nil {
+                _instance = self.init()
+                SMServiceProvider.getInstance().getPushService().pushSubscriptionDelegate = _instance
+            }
+            return _instance
+        }
+    }
+
+// MARK: SMPushSubscriptionDelegate methods
+    func pushSubscriptionInvalidated(_ subscriptionID: String?) {
+        //  push subscription which has given subscriptionID is invalidated by the server,
+        // client needs to re-subscribe to push channel. No more push notifications will be received
+        // until client subscribes to push service again.
+    }
+}
+
 ```
 
 <div class="page-break"></div>
