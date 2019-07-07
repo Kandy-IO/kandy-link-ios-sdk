@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **4.6.0**
+Version Number: **4.6.1**
 <br>
-Revision Date: **May 30, 2019**
+Revision Date: **July 5, 2019**
 
 ## Mobile SDK overview
 
@@ -62,6 +62,7 @@ This section contains the required steps for beginning your mobile application d
 
 11. Add the following iOS SDK frameworks to your application:
 
+* AvFoundation.framework
 * SystemConfiguration.framework
 * GLKit.framework
 * VideoToolbox.framework
@@ -2719,7 +2720,106 @@ a=rtpmap:106 ulpfec/90000
 …
 ```
 
+#### Bandwidth limitation
+
+Mobile SDK users will be able to limit bandwidth for the media received in audio/video call. Setting the configuration will inform the other peer about this bandwidth limitation and ask it to favor this limit when sending audio/video media to Mobile SDK. Audio and Video bandwidth limit values can be set separately using the SMCallReceiveBandwidthLimit class. The important thing for Mobile SDK users is this parameter is global and user can set this once according to the platform restriction.
+
+<div style="border-style:solid; page-break-inside: avoid;">
+<h5>NOTE</h5>
+Once this configuration is set on SMConfiguration object, it will apply for all of the outgoing and incoming calls from that point on. When an outgoing call or an incoming call starts, the bandwidth limit values read from this configuration and will be fixed to those values throughout the call session. If the configuration setting is changed on SMConfiguration object, ongoing call sessions will not be affected by this change, only new sessions that are created will use the new bandwidth limit.
+</div>
+<br>
+
+###### Example: Bandwidth limitation
+
+```obj-c
+Objective-C
+
+SMCallReceiveBandwidthLimit *callReceiveBandwidthLimit =
+     [[SMCallReceiveBandwidthLimit alloc] initWithVideoReceiveBandwidth:1000 withAudioReceiveBandwidth:300];
+
+[[SMConfiguration getInstance] setReceiveBandwidthLimit: callReceiveBandwidthLimit];
+```
+
+```swift
+Swift
+
+let callReceiveBandwidthLimit = SMCallReceiveBandwidthLimit(videoReceiveBandwidth: 1000, withAudioReceiveBandwidth: 300)
+
+SMConfiguration.getInstance().receiveBandwidthLimit = callReceiveBandwidthLimit
+```
+
+###### Example: Effect of the Bandwidth Limit on Sample SDP
+
+```
+…
+o=- 1173675450103298446 2 IN IP4 127.0.0.1
+s=-
+.
+.
+m=audio 39631 UDP/TLS/RTP/SAVPF 111 103 104 9 102 0 8 106 105 13 110 112 113 126
+c=IN IP4 10.254.16.184
+b=AS:300
+b=TIAS:300000
+.
+.
+m=video 33898 UDP/TLS/RTP/SAVPF 96 97 98 99 100 101 127 124 125
+c=IN IP4 10.254.16.184
+b=AS:1000
+b=TIAS:1000000
+.
+.
+…
+```
+
+###### Example: Bandwidth limitation only for video
+
+```obj-c
+Objective-C
+
+SMCallReceiveBandwidthLimit *callReceiveBandwidthLimit = [[SMCallReceiveBandwidthLimit alloc] init];
+callReceiveBandwidthLimit.videoReceiveBandwidth = 1000;
+
+[[SMConfiguration getInstance] setReceiveBandwidthLimit: callReceiveBandwidthLimit];
+```
+
+```swift
+Swift
+
+let callReceiveBandwidthLimit = SMCallReceiveBandwidthLimit()
+callReceiveBandwidthLimit.videoReceiveBandwidth = 1000
+
+SMConfiguration.getInstance().receiveBandwidthLimit = callReceiveBandwidthLimit
+```
+
+###### Example: Effect of the Bandwidth Limit only for video on Sample SDP
+
+```
+…
+o=- 1173675450103298446 2 IN IP4 127.0.0.1
+s=-
+.
+.
+m=audio 39631 UDP/TLS/RTP/SAVPF 111 103 104 9 102 0 8 106 105 13 110 112 113 126
+c=IN IP4 10.254.16.184
+.
+.
+m=video 33898 UDP/TLS/RTP/SAVPF 96 97 98 99 100 101 127 124 125
+c=IN IP4 10.254.16.184
+b=AS:1000
+b=TIAS:1000000
+.
+.
+…
+```
+
 #### Control audio bandwidth
+
+<div style="border-style:solid; page-break-inside: avoid;">
+<h5>WARNING</h5>
+Bandwidth limitation setting for audio bandwidth which is explained in previous section and controlling audio bandwidth using the feature in this section are features which configure the bandwidth preferences for audio media stream. Using both features at the same time may cause unexpected behavior.
+</div>
+<br>
 
 Applications can modify five audio codec properties to control audio bandwidth. The MaxPlaybackRate, MaxAverageBitrate, Discontinuous Transmission (DTX), and Forward Error Correction (FEC) properties apply to the Opus audio codec. The fifth property, packetization time (ptime), affects all audio codecs. Refer to RFC 7587 for descriptions, acceptable values, and recommended values for the audio codec properties.
 
