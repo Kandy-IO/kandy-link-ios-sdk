@@ -2,7 +2,7 @@
 
 SDK framework file can be found in the [SDK collection](https://github.com/Kandy-IO/kandy-link-ios-sdk/tree/master/dist).
 
-MD5 Checksum for SDK collection : ef37166c39e1d40917d0a9da1454b020
+MD5 Checksum for SDK collection : 78b5b9d44e8691094fe64df26b215d51
 
 Compatible iOS versions :
 
