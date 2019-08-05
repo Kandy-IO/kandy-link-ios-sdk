@@ -5,6 +5,13 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 4.6.1.1 - 2019-08-05
+
+### Fixed
+- VoiceActivityDetection is disabled on WebRTC layer `KAE-415`
+- A fix provided for setting Push URL without a port number  `KAE-479`
+
+
 ## 4.6.1 - 2019-07-05
 
 ### Added
