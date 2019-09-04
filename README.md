@@ -8,6 +8,10 @@ Compatible iOS versions :
 
 * iOS 9.X - iOS 12.X
 
+Tested on :
+
+* iPhone 5S, 5C, 6S, 7, 7+, 8, X, iPad mini, iPad 4, and iPad Air
+
 Compatible KandyLink Server versions :
 
 * Kandy Link 4.4 + patch 4
