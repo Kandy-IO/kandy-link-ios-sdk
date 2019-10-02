@@ -7,10 +7,10 @@ Pod::Spec.new do |s|
     s.author            = { 'Name' => 'cpaassdk@netas.com.tr' }
     s.platform          = :ios
     s.source            = { :git => 'https://github.com/Kandy-IO/kandy-link-ios-sdk.git', :tag => '5.0.0'}
-    s.dependency 	      'KandyWebRTC', '~> 0.72'
+    s.dependency  'KandyWebRTC', '~> 0.72'
     s.ios.deployment_target   = '9.0'
-    s.ios.frameworks = ['AvFoundation','SystemConfiguration','GLKit','VideoToolbox','AudioToolbox','PushKit']
     s.library = ['c++','icucore','z']
+    s.ios.frameworks = ['AvFoundation','SystemConfiguration','GLKit','VideoToolbox','AudioToolbox','PushKit']
     s.vendored_frameworks = ['MobileSDK.framework', 'WebRTC.framework']
     s.pod_target_xcconfig = {
       'ENABLE_BITCODE' => 'NO',
