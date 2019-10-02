@@ -1,0 +1,6 @@
+framework module MobileSDK {
+  umbrella header "MobileSDK.h"
+
+  export *
+  module * { export * }
+}
