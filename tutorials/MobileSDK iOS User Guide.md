@@ -3,6 +3,12 @@ Version Number: **4.6.1**
 <br>
 Revision Date: **July 5, 2019**
 
+# Table of Contents
+
+@[toc]
+
+<div class="page-break"></div>
+
 ## Mobile SDK overview
 
 The SPiDR/Kandy Link Mobile Software Development Kit (SDK) defines a library implementation supporting SPiDR platform features like registration, notification, call management, instant message, presence management, and WebRTC on iOS. You can use this library implementation to integrate SPiDR/Kandy Link services and WebRTC into your native mobile applications to create new, innovative user experiences.
@@ -40,9 +46,10 @@ The following items need to be complete prior to beginning work on your applicat
 
 ## Get Started
 
+### Installation
+
 This section contains the required steps for beginning your mobile application development and an example of using the Mobile SDK in Xcode 10.x.
 
-### Create your Xcode project
 
 1. Open the Xcode application.
 2. Click Create a new Xcode project.
@@ -54,13 +61,16 @@ This section contains the required steps for beginning your mobile application d
 5. Click Next.
 6. Type your project details and click Next.
 7. Select a location for your project and click Create.
-8. Navigate to Build Phases and scroll down to Link binary with libraries.
-9. Add MobileSDK.framework under Link binary with libraries.
-10. Add WebRTC.framework under the **Embedded Binaries** section in **General** tab on Project Settings. Select **Copy items if needed**.
+8. Select one of the installation methods below
+
+#### Manual Installation
+1. Navigate to Build Phases and scroll down to Link binary with libraries.
+2. Add MobileSDK.framework under Link binary with libraries.
+3. Add WebRTC.framework under the **Embedded Binaries** section in **General** tab on Project Settings. Select **Copy items if needed**.
 
 ![alt text](images/get_started_2.png "")
 
-11. Add the following iOS SDK frameworks to your application:
+4. Add the following iOS SDK frameworks to your application:
 
 * AvFoundation.framework
 * SystemConfiguration.framework
@@ -72,15 +82,25 @@ This section contains the required steps for beginning your mobile application d
 * libicucore.tbd
 * libz.tbd
 
-12. Mobile SDK doesn't support bitcode, under the "Build Settings" search for "Bitcode", and change "Enable Bitcode" option to NO.
+5. Mobile SDK doesn't support bitcode, under the "Build Settings" search for "Bitcode", and change "Enable Bitcode" option to NO.
 
 ![alt text](images/get_started_3.png "")
 
-13. "-ObjC" flag should be added to "Other Linker Flags" options under the "Build Settings".
+6. "-ObjC" flag should be added to "Other Linker Flags" options under the "Build Settings".
 
 ![alt text](images/get_started_4.png "")
 
-14. Add usage descriptions for both camera and microphone access should be added to application's Info.plist file.
+#### Cocoapods
+1. Add below pods to your Podfile (If you dont have any Podfile, visit this link to install cocoapods: https://guides.cocoapods.org/using/using-cocoapods.html)
+
+* pod 'KandyLinkMobileSDK'
+
+2. Go to project folder via command line and run "pod install" command and wait for cocoapods to finish installation of MobileSDK ,WebRTC frameworks and their dependencies
+
+### Post Installation Steps
+
+
+1. Add usage descriptions for both camera and microphone access should be added to application's Info.plist file.
 
 ```tag
 <key>NSCameraUsageDescription</key>
@@ -306,9 +326,7 @@ Objective-C
     //Get registration service notifications
     [regService setRegistrationApplicationDelegate:self];
     //Service types used in registration
-    NSArray *services = @[[SMServiceTypes getCallService],
-                          [SMServiceTypes getIMService],
-                          [SMServiceTypes getPresenceService]];
+    NSArray *services = @[[SMServiceTypes getCallService]];
 
     [regService registerToServer:services
                   expirationTime:3600
@@ -333,6 +351,12 @@ Objective-C
 {
     //Handle notification state changes
 }
+
+- (void) internalErrorDidOccur:(SMMobileError*) error
+{
+	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
+}
+
 @end
 ```
 
@@ -346,9 +370,7 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
     func registerExample() {
         let regService = SMServiceProvider.getInstance().getRegistrationService()
         regService.registrationApplicationDelegate = self
-        let services = [SMServiceTypes.getCallService(),
-                        SMServiceTypes.getIMService(),
-                        SMServiceTypes.getPresenceService()]
+        let services = [SMServiceTypes.getCallService()]
         regService.register(toServer: services, expirationTime: 3600) { (error) in
             if let error = error {
                 // Handle registration error
@@ -367,6 +389,10 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
 
     func notificationStateChanged(_ notificationState: SMNotificationStates) {
         //Handle notification state changes
+    }
+    
+    func internalErrorDidOccur(_ error: SMMobileError) {
+    	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
     }
 
 }
