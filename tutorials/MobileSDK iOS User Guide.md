@@ -1,13 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **5.0.0**
+Version Number: **5.1.0**
 <br>
-Revision Date: **October 2, 2019**
-
-# Table of Contents
-
-@[toc]
-
-<div class="page-break"></div>
+Revision Date: **November 4, 2019**
 
 ## Mobile SDK overview
 
@@ -37,8 +31,6 @@ This document provides help getting started developing your mobile application u
 
 The following items need to be complete prior to beginning work on your application:
 
-* You have downloaded the MobileSDK package from http://developer.genband.com/MobileSDK .
-* You have extracted the contents of the MobileSDK package and located MobileSDK.framework.
 * Your Xcode development environment is set up and ready for new projects.
 * You know the IP address and port of the SPiDR/Kandy Link server.
 
@@ -95,10 +87,9 @@ This section contains the required steps for beginning your mobile application d
 
 * pod 'KandyLinkMobileSDK'
 
-2. Go to project folder via command line and run "pod install" command and wait for cocoapods to finish installation of MobileSDK ,WebRTC frameworks and their dependencies
+2. Go to project folder via command line and run "pod install" command and wait for cocoapods to finish installation of MobileSDK, WebRTC frameworks and their dependencies
 
 ### Post Installation Steps
-
 
 1. Add usage descriptions for both camera and microphone access should be added to application's Info.plist file.
 
@@ -152,7 +143,7 @@ Objective-C
     //password for authorization
     configuration.password = @"password";
     //server IP value for SPiDR/Kandy Link
-    configuration.restServerIP = @"127.0.0.1";
+    configuration.restServerIP = @"$SUBSCRIPTIONFQDN$";
     //server port value for SPiDR/Kandy Link
     configuration.restServerPort = @"443";
     //logger implementation defined by application
@@ -160,14 +151,14 @@ Objective-C
 
     //IP used in websocket connection creation.
     // If not provided, Rest Server IP will be used
-    configuration.webSocketServerIP = @"127.0.0.1";
+    configuration.webSocketServerIP = @"$WEBSOCKETFQDN$";
     //port used in websocket connection creation
     configuration.webSocketServerPort = @"443";
 
     // add ICE Server
     SMICEServers * servers = [[SMICEServers alloc] init];
-    [servers addICEServer:@"turns:turn.spidr.com:443?transport=tcp"];
-    [servers addICEServer:@"stun:stun1.spidr.com:3478?transport=udp"];
+    [servers addICEServer:@"$ICESERVER1$"];
+    [servers addICEServer:@"$ICESERVER2$"];
     [configuration setICEServers:servers];
 }
 ```
@@ -192,7 +183,7 @@ func manageConfiguration() {
     //password for authorization
     configuration.password = "password"
     //server IP value for SPiDR/Kandy Link
-    configuration.restServerIP = "127.0.0.1"
+    configuration.restServerIP = "$SUBSCRIPTIONFQDN$"
     //server port value for SPiDR/Kandy Link
     configuration.restServerPort = "443"
     //logger implementation defined by application
@@ -200,14 +191,14 @@ func manageConfiguration() {
 
     //IP used in websocket connection creation
     // If not provided, Rest Server IP will be used
-    configuration.webSocketServerIP  = "127.0.0.1"
+    configuration.webSocketServerIP  = "$WEBSOCKETFQDN$"
     //port used in websocket connection creation
     configuration.webSocketServerPort  = "443"
 
     // add ICE Server
     let servers = SMICEServers()
-    servers.addICEServer("turns:turn.spidr.com:443?transport=tcp")
-    servers.addICEServer("stun:stun1.spidr.com:3478?transport=udp")
+    servers.addICEServer("$ICESERVER1$")
+    servers.addICEServer("$ICESERVER2$")
     configuration.iceServers = servers
 }
 ```
@@ -390,7 +381,7 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
     func notificationStateChanged(_ notificationState: SMNotificationStates) {
         //Handle notification state changes
     }
-    
+
     func internalErrorDidOccur(_ error: SMMobileError) {
     	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
     }
@@ -2291,7 +2282,9 @@ func callStatusChanged(_ call: SMCallDelegate, with callState: SMCallState) {
 
 The Configuration class has a variable "preferredCodecSet", which is an instance of the SMCodecSet class. To use only a subset of the available codecs or to change the default priority, the "audioCodecs" and "videoCodecs" arrays of preferredCodecSet must be set. Codecs should be listed in order of priority (i.e. first codec listed is first priority).
 
-If you do not add any codecs to the preferredCodecSet variable or if you create the preferredCodecSet variable with a default constructor, the SDK uses the default codecs in the following priority order:
+If you do not add any codecs to the preferredCodecSet variable, Mobile SDK will use the WebRTC default behavior for codec preference.
+
+If you create the preferredCodecSet variable with a default constructor, the Mobile SDK uses the default codecs in the following priority order:
 
 * Audio Codecs: AC_OPUS, AC_G722, AC_PCMA, AC_PCMU, AC_ISAC, AC_ILBC
 * Video Codecs: VC_VP8, VC_VP9, VC_H264
@@ -2342,7 +2335,7 @@ Using "CodecToReplace" feature of Mobile SDK, applications can manipulate the co
 
 Note that, it is strongly recommended **not** to use this API during an ongoing call operation (e.g. mid-call events). A configuration change will affect the ongoing call and this may cause unstable WebRTC behavior.
 
-For the replacing codec payload number feature, the MobileSDK user have to create an instance of the CodecToReplace model class and set the codecDefinition (the definition of the codec that can be seen on the rtpmap in SDP, e.g. “telephone-event/8000” or “opus/48000/2”) and payloadNumber (e.g. “101” or “96” etc.) parameters. After creation of CodecToReplace object(s), they should be set to Mobile SDK through `setReplaceCodecSet` API on `Configuration` class.
+For the replacing codec payload number feature, the MobileSDK user have to create an instance of the CodecToReplace model class and set the codecDefinition (the definition of the codec that can be seen on the rtpmap in SDP, e.g. "telephone-event/8000" or "opus/48000/2") and payloadNumber (e.g. "101" or "96" etc.) parameters. After creation of CodecToReplace object(s), they should be set to Mobile SDK through `setReplaceCodecSet` API on `Configuration` class.
 
 After the Mobile SDK user set the ReplaceCodecSet configuration, all of the local offer call SDPs will be generated with the specified codec payload numbers and there will be no modification done on remote SDPs and local answer SDPs.
 
@@ -2480,7 +2473,7 @@ a=rtpmap:106 ulpfec/90000
 …
 ```
 
- * A simple replacement as <”opus/48000/2”, “114”> and <”telephone-event/48000”, “101”> :
+ * A simple replacement as <"opus/48000/2", "114"> and <"telephone-event/48000", "101"> :
 
 ```
 …
@@ -2569,7 +2562,7 @@ a=rtpmap:106 ulpfec/90000
 …
 ```
 
- * For H264, there are 2 codecs with the same description, so another property should be introduced for comparison in order to define which one to replace. So replacement should be defined as <”H264/90000”, “126”, “profile-level-id=42e029”>:
+ * For H264, there are 2 codecs with the same description, so another property should be introduced for comparison in order to define which one to replace. So replacement should be defined as <"H264/90000", "126", "profile-level-id=42e029">:
 
 ```
 …
@@ -2657,7 +2650,7 @@ a=fmtp:124 apt=104
 a=rtpmap:106 ulpfec/90000
 ```
 
- * If <”opus/48000/2”, “105”> provided through this configuration, there will be a conflict with “CN/16000” in the original SDP. In this case Mobile SDK will swap the payload numbers of these codecs as follows:
+ * If <"opus/48000/2", "105"> provided through this configuration, there will be a conflict with "CN/16000" in the original SDP. In this case Mobile SDK will swap the payload numbers of these codecs as follows:
 
 ```
 …
@@ -3663,7 +3656,7 @@ Objective-C
     //password for authorization
     configuration.password = @"password";
     //server IP value for SPiDR/Kandy Link
-    configuration.restServerIP = @"127.0.0.1";
+    configuration.restServerIP = @"$SUBSCRIPTIONFQDN$";
     //server port value for SPiDR/Kandy Link
     configuration.restServerPort = @"443";
     //logger implementation defined by application
@@ -3674,7 +3667,7 @@ Objective-C
     configuration.connectionType = WEBSOCKET;
 
     //IP used in websocket connection creation
-    configuration.webSocketServerIP = @"127.0.0.1";
+    configuration.webSocketServerIP = @"$WEBSOCKETFQDN$";
     //port used in websocket connection creation
     configuration.webSocketServerPort = @"443";
     //set to WS or WSS protocol
@@ -3682,16 +3675,11 @@ Objective-C
 
     //SPiDR TURN server in WebRTC's peer connection
     SMICEServers *iceServers = [[SMICEServers alloc] init];
-    [iceServers addICEServer:@"turns:turn1.spidr.com:443?transport=tcp"];
-    [iceServers addICEServer:@"turns:turn2.spidr.com:443?transport=tcp"];
-
-    // Adding SPiDR STUN server
-    [iceServers addICEServer:@"stun:turn1.spidr.com:3478?transport=udp"];
-    [iceServers addICEServer:@"stun:turn2.spidr.com:3478?transport=udp"];
+    [iceServers addICEServer:@"$ICESERVER1$"];
+    [iceServers addICEServer:@"$ICESERVER2$"];
 
     configuration.ICEServers = iceServers;
-  ```
-  ```obj-c
+
     //Integer value in seconds to limit the ICE collection duration. Default is 0 (no timeout)
     configuration.ICECollectionTimeout = 4;
 
@@ -3733,7 +3721,7 @@ func manageConfiguration() {
     //password for authorization
     configuration.password = "password"
     //server IP value for SPiDR/Kandy Link
-    configuration.restServerIP = "127.0.0.1"
+    configuration.restServerIP = "$SUBSCRIPTIONFQDN$"
     //server port value for SPiDR/Kandy Link
     configuration.restServerPort = "443"
     //logger implementation defined by application
@@ -3744,7 +3732,7 @@ func manageConfiguration() {
     configuration.connectionType = .websocket
 
     //IP used in websocket connection creation
-    configuration.webSocketServerIP  = "127.0.0.1"
+    configuration.webSocketServerIP  = "$WEBSOCKETFQDN$"
     //port used in websocket connection creation
     configuration.webSocketServerPort  = "443"
     //set to WS or WSS protocol
@@ -3752,12 +3740,8 @@ func manageConfiguration() {
 
     //SPiDR TURN server in WebRTC's peer connection
     let iceServers = SMICEServers()
-    iceServers.addICEServer("turns:turn1.spidr.com:443?transport=tcp")
-    iceServers.addICEServer("turns:turn2.spidr.com:443?transport=tcp")
-
-    // Adding SPiDR STUN server
-    iceServers.addICEServer("stun:turn1.spidr.com:3478?transport=udp")
-    iceServers.addICEServer("stun:turn2.spidr.com:3478?transport=udp")
+    iceServers.addICEServer("$ICESERVER1$")
+    iceServers.addICEServer("$ICESERVER2$")
 
     configuration.iceServers = iceServers;
 

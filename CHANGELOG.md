@@ -6,6 +6,9 @@ Kandy Link iOS SDK change log.
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
 
+## 5.1.0 - 2019-11-04
+
+
 ## 5.0.0 - 2019-10-03
 
 ### Added
