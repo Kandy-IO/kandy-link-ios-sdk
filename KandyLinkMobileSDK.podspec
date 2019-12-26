@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
     s.platform          = :ios
     s.source            = { :git => 'https://github.com/Kandy-IO/kandy-link-ios-sdk.git', :tag => '5.2.0'}
     s.dependency  'KandyWebRTC', '~> 0.78'
-    s.ios.deployment_target   = '9.0'
+    s.ios.deployment_target   = '10.0'
     s.library = ['c++','icucore','z']
     s.ios.frameworks = ['AvFoundation','SystemConfiguration','GLKit','VideoToolbox','AudioToolbox','PushKit']
     s.vendored_frameworks = ['MobileSDK.framework', 'WebRTC.framework']
