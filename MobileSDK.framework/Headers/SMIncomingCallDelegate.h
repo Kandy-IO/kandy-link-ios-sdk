@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.2.0
+ * @version: 5.3.0
  *
  */
 
@@ -61,6 +61,12 @@
  * @since 2.0.0
  */
 - (void) rejectCall;
+
+/**
+ * @brief Forwards incoming call
+ * @since 2.0.0
+ */
+- (void) forwardCall:(SMUriAddress*)address;
 
 /**
  * @brief Sets Id value of Incoming call

@@ -1,14 +1,20 @@
 # Kandy Link iOS SDK
 
+<p>
+    <img alt="Cocoapods platforms" src="https://img.shields.io/cocoapods/p/KandyLinkMobileSDK">
+    <img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/kandy-io/kandy-link-ios-sdk">
+    <img alt="Cocoapods" src="https://img.shields.io/cocoapods/v/KandyLinkMobileSDK">
+</p>
+
 SDK framework file can be found in the [SDK collection](https://github.com/Kandy-IO/kandy-link-ios-sdk/tree/master/dist).
 
 Compatible iOS versions :
 
-* iOS 10.X+
+* iOS 10.X+ (please note iOS 13 is not yet supported for push relevant scenarios)
 
 Compatible XCode Versions :
 
-* XCode 10.x+ (please note Xcode 11 is not yet supported for push relevant scenarios)
+* XCode 10.X+
 
 Tested on :
 

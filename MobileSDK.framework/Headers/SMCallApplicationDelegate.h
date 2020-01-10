@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.2.0
+ * @version: 5.3.0
  *
  */
 
@@ -325,6 +325,23 @@ NS_ASSUME_NONNULL_BEGIN
  * @since 2.0.0
  */
 - (void) transferCallFailed:(id<SMCallDelegate>) call withError:(SMMobileError *)error;
+
+/**
+ * Method invoked when attempt to forward a call has succeeded.
+ * @param call performed forward call successfully
+ * @see [CallDelegate transferCall:]
+ * @since 2.0.0
+ */
+- (void) forwardCallSucceed:(id<SMCallDelegate>) call;
+
+/**
+ * Method invoked when attempt to forward a call has failed.
+ * @param call couldn't made forward
+ * @param error reason of the failure
+ * @see [CallDelegate transferCall:]
+ * @since 2.0.0
+ */
+- (void) forwardCallFailed:(id<SMCallDelegate>) call withError:(SMMobileError *)error;
 
 NS_ASSUME_NONNULL_END
 

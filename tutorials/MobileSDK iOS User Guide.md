@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **5.2.0**
+Version Number: **5.3.0**
 <br>
-Revision Date: **November 29, 2019**
+Revision Date: **January 9, 2020**
 
 ## Mobile SDK overview
 
@@ -777,7 +777,7 @@ func establishCallFailed(_ call: SMOutgoingCallDelegate, withError error: SMMobi
 
 #### Receive an incoming call
 
-When incoming call received from SPiDR/Kandy Link, `SMCallApplicationDelegate` will be notified via `incomingCall` method. Incoming call can be accepted, rejected or ignored. When call is ignored, delegate will not be notified about that call anymore. If incoming call will be accepted, `localVideoView` and `remoteVideoView` should be assigned to related views.
+When incoming call received from SPiDR/Kandy Link, `SMCallApplicationDelegate` will be notified via `incomingCall` method. Incoming call can be accepted, rejected, ignored or forwarded to another user. When call is ignored, delegate will not be notified about that call anymore. If incoming call will be accepted, `localVideoView` and `remoteVideoView` should be assigned to related views.
 
 <div class="page-break"></div>
 
@@ -949,6 +949,69 @@ class CallController: NSObject, SMCallApplicationDelegate {
 }
 ```
 
+###### Example: Forwarding the incoming call
+
+```obj-c
+Objective-C
+
+#import <MobileSDK/MobileSDK.h>
+
+@interface CallController () <SMCallApplicationDelegate>
+@end
+
+@implementation CallController
+
+//method implementation based on SMCallApplicationDelegate protocol
+//called when an incoming call notification (type = call) is received
+- (void) incomingCall:(id<SMIncomingCallDelegate>)call {
+
+    // To forward the call
+
+    SMUriAddress *newAddress = [[SMUriAddress alloc] initWithUsername:@"username" withDomain:@"domain"];
+    [call forwardCall:newAddress];
+}
+
+- (void) forwardCallSucceed:(id<SMIncomingCallDelegate>)call
+{
+    //called when forward call succeeds
+}
+
+- (void) forwardCallFailed:(id<SMIncomingCallDelegate>)call withError:(SMMobileError *)error
+{
+    //called when forward call fails
+}
+@end
+```
+
+```swift
+Swift
+
+import MobileSDK
+
+class CallController: NSObject, SMCallApplicationDelegate {
+
+    //method implementation based on SMCallApplicationDelegate protocol
+    //called when an incoming call notification (type = call) is received
+    func incomingCall(_ call: SMIncomingCallDelegate) {
+
+        // To forward the call
+
+        let newAddress = SMUriAddress(username: "username", withDomain: "domain")
+        call.forwardCall(newAddress)
+
+    }
+
+    func forwardCallSucceed(_ call: SMCallDelegate) {
+        //called when forward call succeeds
+    }
+
+    func forwardCallFailed(_ call: SMCallDelegate, withError error: SMMobileError) {
+        //called when forward call fails
+    }
+
+}
+```
+
 #### End the call
 
 Use the End Call functionality to stop the current call. Call can be ended with or without reason.
@@ -1078,6 +1141,7 @@ The following Mobile SDK-call specific status codes are mapped to CALLSTATES_END
 | 9905       | SESSION_COMPLETED           | Transfer completed, transferer left the call    |
 | 9906       | ENDED_BY_ERROR           | Call ended due to error    |
 | 9907       | ENDED_BY_UNREGISTER           | Call ended due to unregistration    |
+| 9908       | CALL_FORWARDED           | Local user forwarded the call    |
 
 Other SIP-specific sessionParam statusCode values mapped to CALLSTATES_ENDED (e.g. statusCode 480, equivalent to previous NOT_AVAILABLE) are forwarded directly to the application layer.
 
