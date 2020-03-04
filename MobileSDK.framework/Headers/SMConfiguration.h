@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.3.0
+ * @version: 5.4.0
  *
  */
 
@@ -221,7 +221,15 @@ extern NSString * _Nonnull const kRingingFeedback;
  * @modified 4.0.2
  */
 @property (nonatomic, strong) NSString * _Nullable videoResolution;
-
+/**
+ *Configuration to set HTTP Connection header in rest request
+ *Default value is true
+ *true for Connection: keep alive
+ *false for Connection:  close
+ *
+ *@since 5.4.0
+ */
+@property(nonatomic) BOOL httpPersistentConnection;
 /**
  * Subscription expire time
  *
@@ -393,6 +401,13 @@ extern NSString * _Nonnull const kRingingFeedback;
 @property (nonatomic, strong) SMCallReceiveBandwidthLimit * _Nullable receiveBandwidthLimit;
 
 /**
+* Push Notification Configuration Parameter
+*
+* @since 5.0.0
+*/
+@property (nonatomic) BOOL isPushEnabled;
+
+/**
  * This method returns (creates if necessary) singleton instance of Configuration class
  *
  * @return shared Configuration instance
@@ -400,7 +415,6 @@ extern NSString * _Nonnull const kRingingFeedback;
  * @since 2.0.0
  */
 + (nonnull SMConfiguration *)getInstance;
-
 
 
 @end

@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **5.3.0**
+Version Number: **5.4.0**
 <br>
-Revision Date: **January 9, 2020**
+Revision Date: **March 2, 2020**
 
 ## Mobile SDK overview
 
@@ -157,8 +157,10 @@ Objective-C
 
     // add ICE Server
     SMICEServers * servers = [[SMICEServers alloc] init];
-    [servers addICEServer:@"$ICESERVER1$"];
-    [servers addICEServer:@"$ICESERVER2$"];
+    [servers addICEServer:@"$TURNSERVER1$"];
+    [servers addICEServer:@"$TURNSERVER2$"];
+    [servers addICEServer:@"$STUNSERVER1$"];
+    [servers addICEServer:@"$STUNSERVER2$"];
     [configuration setICEServers:servers];
 }
 ```
@@ -197,8 +199,10 @@ func manageConfiguration() {
 
     // add ICE Server
     let servers = SMICEServers()
-    servers.addICEServer("$ICESERVER1$")
-    servers.addICEServer("$ICESERVER2$")
+    iceServers.addICEServer("$TURNSERVER1$")
+    iceServers.addICEServer("$TURNSERVER2$")
+    iceServers.addICEServer("$STUNSERVER1$")
+    iceServers.addICEServer("$STUNSERVER2$")
     configuration.iceServers = servers
 }
 ```
@@ -1064,7 +1068,7 @@ func endCallFailed(_ call: SMCallDelegate, withError error: SMMobileError) {
 
 #### End call with reason
 
-Applications can use the `endCallWithReason` API to send the end call reason to SPiDR/Kandy Link, then SPiDR/Kandy Link will send the SIP BYE message with the reason to the remote user. The remote user gets the reason using the `callStatusChanged` API.
+Applications can use the `endCallWithReason` API to send the end call reason to SPiDR/Kandy Link, then SPiDR/Kandy Link will send message with the reason to the remote user. The remote user gets the reason using the `callStatusChanged` API.
 If the call end reason string length exceeds the character limitation defined in SPiDR/Kandy Link Core, then SPiDR/Kandy Link Core will not send the excess characters.
 
 <div class="page-break"></div>
@@ -3739,8 +3743,10 @@ Objective-C
 
     //SPiDR TURN server in WebRTC's peer connection
     SMICEServers *iceServers = [[SMICEServers alloc] init];
-    [iceServers addICEServer:@"$ICESERVER1$"];
-    [iceServers addICEServer:@"$ICESERVER2$"];
+    [servers addICEServer:@"$TURNSERVER1$"];
+    [servers addICEServer:@"$TURNSERVER2$"];
+    [servers addICEServer:@"$STUNSERVER1$"];
+    [servers addICEServer:@"$STUNSERVER2$"];
 
     configuration.ICEServers = iceServers;
 
@@ -3804,8 +3810,10 @@ func manageConfiguration() {
 
     //SPiDR TURN server in WebRTC's peer connection
     let iceServers = SMICEServers()
-    iceServers.addICEServer("$ICESERVER1$")
-    iceServers.addICEServer("$ICESERVER2$")
+    iceServers.addICEServer("$TURNSERVER1$")
+    iceServers.addICEServer("$TURNSERVER2$")
+    iceServers.addICEServer("$STUNSERVER1$")
+    iceServers.addICEServer("$STUNSERVER2$")
 
     configuration.iceServers = iceServers;
 

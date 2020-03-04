@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.3.0
+ * @version: 5.4.0
  *
  */
 
@@ -16,6 +16,7 @@
 
 @class SMMobileError;
 @class SMUriAddress;
+@class SMNotificationMessage;
 
 @protocol SMCallApplicationDelegate;
 
@@ -131,5 +132,4 @@
  * @since 4.0
  */
 - (nonnull NSArray<id<SMCallDelegate>> *) getActiveCalls;
-
 @end
