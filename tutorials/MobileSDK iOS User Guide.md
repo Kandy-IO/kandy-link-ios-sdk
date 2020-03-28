@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **5.4.0**
+Version Number: **5.5.0**
 <br>
-Revision Date: **March 2, 2020**
+Revision Date: **March 30, 2020**
 
 ## Mobile SDK overview
 

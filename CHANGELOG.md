@@ -5,6 +5,11 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.5.0 - 2020-03-30
+
+### Added
+- New PushService parse api for CallKit was implemented `KAE-605`
+
 ## 5.4.0 - 2020-03-02
 
 ### Added

@@ -7,22 +7,59 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.4.0
+ * @version: 5.5.0
  *
  */
 
 #import <Foundation/Foundation.h>
+
 
 @protocol SMPushSubscriptionDelegate;
 @class SMMobileError;
 @class SMNotificationMessage;
 @class PKPushCredentials;
 
+
+/**
+* Contains informations about  incoming call by parsing the VOIP push notification.
+* The datas in this class will be used to inform CallKit after receiving each voip notification
+* - Since: 5.5.0
+*/
+@interface SMCKInfo: NSObject
+ 
+/*
+* Caller Display Information is for showing the caller info on CallKit Screen.
+* In case of error this parameter will be nil
+* - Returns: String
+* - Since: 5.5.0
+*/
+@property (nonatomic) NSString* _Nullable callerDisplayInfo;
+
+/*
+* Unique Identifier for the incoming call. You should set this value to CallKit's UUID parameter while reporting.
+* In case of error, this parameter will be nil
+* - Returns: UUID
+* - Since: 5.5.0
+*/
+@property (nonatomic) NSUUID * _Nullable callUUID;
+
+/*
+* In case of an error while parsing push notification.This parameter will be filled
+* If there are no errors this parameter will be nil
+* - Returns: SMMobileError
+* - Since: 5.5.0
+*/
+@property (nonatomic) SMMobileError * _Nullable error;
+
+@end
+
+
+
 /**
  * Push Service enables push message and event injection to MobileSDK from Application layer
  *
  * @since 3.0.5
- * @updated 4.6.0
+ * @updated 5.5.0
  **/
 @interface SMPushService : NSObject
 
@@ -94,5 +131,15 @@
  * Constructing is disallowed from API level.
  */
 - (nullable id)init __attribute__((unavailable("init is not a supported initializer for this class.")));
+
+
+/**
+* Parses Incoming Call Voip Push Notification(PushKit) and returns the information neccesary to trigger CallKit
+*
+* @param pushMessage payload dictionary for incoming notification
+* @return CallKit Information Object
+* @since 5.5.0
+*/
+-(SMCKInfo *_Nonnull) parsePushNotification:(NSDictionary* _Nonnull)pushMessage;
 
 @end

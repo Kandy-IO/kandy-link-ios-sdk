@@ -10,7 +10,7 @@ SDK framework file can be found in the [SDK collection](https://github.com/Kandy
 
 Compatible iOS versions :
 
-* iOS 10.X+
+* iOS 10.X+ (please note iOS 13 is not yet supported for push relevant scenarios)
 
 Compatible XCode Versions :
 
@@ -34,4 +34,4 @@ The information about tutorials and documents can be found in the links below
 
 * `Documents`: [API Docs](https://kandy-io.github.io/kandy-link-ios-sdk/docs)
 
-* `Tutorials`: Choose your configuration ( [Kandy-US](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=spidr-ucc.genband.com&WEBSOCKETFQDN=spidr-ucc.genband.com&ICESERVER1=turn-ucc-1.genband.com&ICESERVER2=turn-ucc-2.genband.com) | [Kandy-EMEA](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=spidr-em.genband.com&WEBSOCKETFQDN=spidr-em.genband.com&ICESERVER1=turn-em-1.genband.com&ICESERVER2=turn-em-2.genband.com) )
+* `Tutorials`: Choose your configuration ( [Kandy-US](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=spidr-ucc.genband.com&WEBSOCKETFQDN=spidr-ucc.genband.com&ICESERVER1=turn-ucc-1.genband.com&ICESERVER2=turn-ucc-2.genband.com) | [Kandy-EMEA](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=spidr-em.genband.com&WEBSOCKETFQDN=spidr-em.genband.com&ICESERVER1=turn-em-1.genband.com&ICESERVER2=turn-em-2.genband.com) | [Kandy-UAE](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=ct-webrtc.etisalat.ae&WEBSOCKETFQDN=ct-webrtc.etisalat.ae&ICESERVER1=ct-turn1.etisalat.ae&ICESERVER2=ct-turn2.etisalat.ae) )
