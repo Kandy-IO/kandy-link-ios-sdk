@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
     s.dependency  'KandyWebRTC', '~> 0.78'
     s.ios.deployment_target   = '10.0'
     s.library = ['c++','icucore','z']
-    s.ios.frameworks = ['AvFoundation','SystemConfiguration','GLKit','VideoToolbox','AudioToolbox','PushKit']
+    s.ios.frameworks = ['AVFoundation','SystemConfiguration','GLKit','VideoToolbox','AudioToolbox','PushKit']
     s.vendored_frameworks = ['MobileSDK.framework', 'WebRTC.framework']
     s.pod_target_xcconfig = {
       'ENABLE_BITCODE' => 'NO',
