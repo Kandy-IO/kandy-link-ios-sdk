@@ -22,11 +22,9 @@ Tested on :
 
 Compatible KandyLink Server versions :
 
-* Kandy Link 4.5 MR1 + Patch 6
+* Kandy Link 4.6.1
 
-* Kandy Link 4.6
-
-* Kandy Link 4.7
+* Kandy Link 4.7.0 + Patch 4
 
 ## Reference
 
