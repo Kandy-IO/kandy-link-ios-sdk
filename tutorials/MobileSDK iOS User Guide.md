@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
-Version Number: **5.5.0**
+Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **March 30, 2020**
+Revision Date: **May 4, 2020**
 
 ## Mobile SDK overview
 
@@ -55,7 +55,17 @@ This section contains the required steps for beginning your mobile application d
 7. Select a location for your project and click Create.
 8. Select one of the installation methods below
 
+#### Cocoapods
+1. Add below pods to your Podfile (If you dont have any Podfile, visit this link to install cocoapods: https://guides.cocoapods.org/using/using-cocoapods.html)
+
+* pod 'KandyLinkMobileSDK', '~> $SDK_VERSION$'
+
+2. Go to project folder via command line and run "pod install" command and wait for cocoapods to finish installation of MobileSDK, WebRTC frameworks and their dependencies
+
 #### Manual Installation
+
+Before those steps you need to download **Kandy Link iOS SDK** framework file from [this link](https://raw.githubusercontent.com/Kandy-IO/kandy-link-ios-sdk/$SDK_VERSION$/dist/MobileSDK_$SDK_VERSION$.zip)
+
 1. Navigate to Build Phases and scroll down to Link binary with libraries.
 2. Add MobileSDK.framework under Link binary with libraries.
 3. Add WebRTC.framework under the **Embedded Binaries** section in **General** tab on Project Settings. Select **Copy items if needed**.
@@ -81,13 +91,6 @@ This section contains the required steps for beginning your mobile application d
 6. "-ObjC" flag should be added to "Other Linker Flags" options under the "Build Settings".
 
 ![alt text](images/get_started_4.png "")
-
-#### Cocoapods
-1. Add below pods to your Podfile (If you dont have any Podfile, visit this link to install cocoapods: https://guides.cocoapods.org/using/using-cocoapods.html)
-
-* pod 'KandyLinkMobileSDK'
-
-2. Go to project folder via command line and run "pod install" command and wait for cocoapods to finish installation of MobileSDK, WebRTC frameworks and their dependencies
 
 ### Post Installation Steps
 
