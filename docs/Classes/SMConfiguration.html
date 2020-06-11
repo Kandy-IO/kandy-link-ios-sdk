@@ -14,7 +14,7 @@
 		<div class="container" class="hide-in-xcode">
 			
 			<h1 id="library-title">
-				<a href="../index.html">MobileSDK 5.6.0 </a>
+				<a href="../index.html">MobileSDK 5.7.0 </a>
 			</h1>
 
 			<p id="developer-home">
@@ -67,6 +67,8 @@
 		<option value="//api/name/auditEnable">auditEnable</option>
 		
 		<option value="//api/name/auditFrequency">auditFrequency</option>
+		
+		<option value="//api/name/authToken">authToken</option>
 		
 		<option value="//api/name/authorizationName">authorizationName</option>
 		
@@ -147,6 +149,8 @@
 		<option value="//api/name/webSocketServerIP">webSocketServerIP</option>
 		
 		<option value="//api/name/webSocketServerPort">webSocketServerPort</option>
+		
+		<option value="//api/name/websocketWithTokenAuthentication">websocketWithTokenAuthentication</option>
 		
 	</optgroup>
 	
@@ -2316,7 +2320,8 @@ Default value is 600 and can be between 40 and 6000</p>
 			
 			<div class="method-subsection brief-description">
 				<p>Specifies timeout value of ICE Collection
-Default value is 0 and it means that waits until ice gathering completion.</p>
+Default value is 10 and it means that waits 10 seconds for ice gathering.
+if it is set as 0, it means that waits until ice gathering completion.</p>
 			</div>
 			
 		    
@@ -2331,7 +2336,8 @@ Default value is 0 and it means that waits until ice gathering completion.</p>
 			
 			<div class="method-subsection availability">
 				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>3.1.3</p>
+				<p>3.1.3
+@modified 5.6.0</p>
 			</div>
 			
 
@@ -2339,7 +2345,8 @@ Default value is 0 and it means that waits until ice gathering completion.</p>
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>Specifies timeout value of ICE Collection
-Default value is 0 and it means that waits until ice gathering completion.</p>
+Default value is 10 and it means that waits 10 seconds for ice gathering.
+if it is set as 0, it means that waits until ice gathering completion.</p>
 			</div>
 			
 
@@ -2628,6 +2635,108 @@ Default value will be AudioSupported that means Slow Start Incoming Calls will b
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/authToken" title="authToken"></a>
+	<h3 class="method-title"><code><a href="#//api/name/authToken">&nbsp;&nbsp;authToken</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Authentication Token Configuration Parameter</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSString *authToken</code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>5.7.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Authentication Token Configuration Parameter</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/websocketWithTokenAuthentication" title="websocketWithTokenAuthentication"></a>
+	<h3 class="method-title"><code><a href="#//api/name/websocketWithTokenAuthentication">&nbsp;&nbsp;websocketWithTokenAuthentication</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Websocket  Token  Authentication Configuration Parameter</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL websocketWithTokenAuthentication</code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>5.7.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Websocket  Token  Authentication Configuration Parameter</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/getInstance" title="getInstance"></a>
 	<h3 class="method-title"><code><a href="#//api/name/getInstance">+&nbsp;getInstance</a></code>
 </h3>
@@ -2698,7 +2807,7 @@ Default value will be AudioSupported that means Slow Start Incoming Calls will b
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 GENBAND. All rights reserved. Updated: 2020-05-05</p>
+						<p class="copyright">Copyright &copy; 2020 GENBAND. All rights reserved. Updated: 2020-06-11</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>

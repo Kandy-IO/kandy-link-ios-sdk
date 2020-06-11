@@ -12,7 +12,7 @@
 
 [CocoaPods](https://cocoapods.org/pods/KandyLinkMobileSDK) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate *Kandy Link iOS SDK* into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
-`pod 'KandyLinkMobileSDK', '~> 5.6.0'`
+`pod 'KandyLinkMobileSDK', '~> 5.7.0'`
 
 ### Manual
 

@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.6.0
+ * @version: 5.7.0
  *
  */
 
@@ -361,9 +361,11 @@ extern NSString * _Nonnull const kRingingFeedback;
 
 /**
  * Specifies timeout value of ICE Collection
- * Default value is 0 and it means that waits until ice gathering completion.
+ * Default value is 10 and it means that waits 10 seconds for ice gathering.
+ * if it is set as 0, it means that waits until ice gathering completion.
  *
  * @since 3.1.3
+ * @modified 5.6.0
  */
 @property (nonatomic) NSTimeInterval ICECollectionTimeout;
 
@@ -406,6 +408,21 @@ extern NSString * _Nonnull const kRingingFeedback;
 * @since 5.0.0
 */
 @property (nonatomic) BOOL isPushEnabled;
+
+/**
+* Authentication Token Configuration Parameter
+*
+* @since 5.7.0
+*/
+@property (nonatomic) NSString * _Nullable authToken;
+
+
+/**
+* Websocket  Token  Authentication Configuration Parameter
+*
+* @since 5.7.0
+*/
+@property (nonatomic) BOOL websocketWithTokenAuthentication;
 
 /**
  * This method returns (creates if necessary) singleton instance of Configuration class

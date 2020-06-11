@@ -7,6 +7,8 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <!-- Code Styles -->
+    <style>:root{--docsifytabs-tab-color--active:#42b983}.docsify-tabs__tab{outline:0}code[class*=language-],pre[class*=language-]{color:#266389;font-size:13px;text-shadow:none;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::mozselection,code[class*=language-]::selection,pre[class*=language-]::mozselection,pre[class*=language-]::selection{text-shadow:none;background:#5f93d3}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;background:#fff}:not(pre)>code[class*=language-]{padding:.1em .3em;border-radius:.3em;color:#d07c7c;background:#f9f2f4}.namespace{opacity:.7}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#000}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#2541d2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#c23d2a}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#000;background:#fff}.token.atrule,.token.attr-value,.token.keyword{color:#a048a0}.token.function{color:#dd4a68}.token.important,.token.regex,.token.variable{color:#a87c29}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}pre[data-line]{position:relative}pre[class*=language-]>code[class*=language-]{position:relative;z-index:1}.line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:#f7ebc6;box-shadow:inset 5px 0 0 #f7d87c;z-index:0;pointer-events:none;line-height:inherit;white-space:pre}</style>
 </head>
 <body>
   <div id="app"></div>
@@ -17,7 +19,7 @@
     params.set('WEBSOCKETFQDN', 'spidr-ucc.genband.com');
     params.set('ICESERVER1', 'turn-ucc-1.genband.com');
     params.set('ICESERVER2', 'turn-ucc-2.genband.com');
-    params.set('SDK_VERSION', '5.6.0');
+    params.set('SDK_VERSION', '5.7.0');
 
     var url = new URL(window.location.href);
     var searchParams = new URLSearchParams(url.search);
@@ -41,7 +43,7 @@
       homepage: 'MobileSDK iOS User Guide.md',
       name: document.title,
       nameLink: window.location.href,
-      repo: '',
+      repo: 'https://github.com/Kandy-IO/kandy-link-ios-sdk',
       plugins: [
         function(hook) {
 
@@ -61,6 +63,12 @@
       ]
     }
   </script>
+
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify-tabs@1.4.2/dist/docsify-tabs.min.js"></script>
+  <script src="//unpkg.com/docsify-copy-code@2"></script>
+  <script src="//unpkg.com/prismjs@1.20.0/components/prism-c.js"></script>
+  <script src="//unpkg.com/prismjs@1.20.0/components/prism-objectivec.js"></script>
+  <script src="//unpkg.com/prismjs@1.20.0/components/prism-swift.js"></script>
 </body>
 </html>
