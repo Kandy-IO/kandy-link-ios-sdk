@@ -5,6 +5,8 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.8.0 - 2020-07-03
+
 ## 5.7.0 - 2020-06-12
 
 ## 5.6.0 - 2020-05-04
