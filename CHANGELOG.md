@@ -7,6 +7,9 @@ Kandy Link iOS SDK change log.
 
 ## 5.10.0 - 2020-08-28
 
+### Limitation
+- There is known issue on iOS14 about Recording Indicator is still green when camera off
+
 ## 5.9.0 - 2020-07-22
 
 ## 5.8.0 - 2020-07-03
