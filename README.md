@@ -12,7 +12,7 @@
 
 [CocoaPods](https://cocoapods.org/pods/KandyLinkMobileSDK) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate *Kandy Link iOS SDK* into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
-`pod 'KandyLinkMobileSDK', '~> 5.9.0'`
+`pod 'KandyLinkMobileSDK', '~> 5.10.0'`
 
 ### Manual
 
@@ -30,11 +30,11 @@ The information about tutorials and documents can be found in the links below
 
 Compatible iOS versions :
 
-* iOS 10.X+
+* iOS 10.x+ (Note: There is known issue on iOS14 about Recording Indicator is still green when camera off)
 
 Compatible XCode Versions :
 
-* XCode 11.X+
+* XCode 11.0 - 11.6
 
 Compatible KandyLink Server versions :
 
