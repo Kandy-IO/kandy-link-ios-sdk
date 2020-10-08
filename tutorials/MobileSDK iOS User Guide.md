@@ -62,7 +62,7 @@ This section contains the required steps for beginning your mobile application d
 ...
 
 target 'YOUR_TARGET_NAME' do
-    pod 'KandyLinkMobileSDK', '~> $SDK_VERSION$'
+    pod 'KandyLinkMobileSDK', '~> $SDK_VERSION$ '
 end
 
 post_install do |installer|
