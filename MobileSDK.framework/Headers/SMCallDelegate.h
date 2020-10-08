@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.10.0
+ * @version: 5.11.0
  *
  */
 
@@ -283,11 +283,11 @@
  *
  * @param completion Completion Block
  *
- * @return array which contains RTP/RTCP Statistics
+ * @return array which contains RTP/RTCP Statistics as JSON formatted String
  *
  * @since 3.1.4
  */
-- (void) getRTPStatistics:(void (^_Nonnull)(NSArray * _Nullable statistics))completion;
+- (void) getRTPStatistics:(void (^_Nonnull)(NSString * _Nullable statistics))completion;
 
 /**
  * @brief Gets id value of call

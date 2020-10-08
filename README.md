@@ -12,7 +12,23 @@
 
 [CocoaPods](https://cocoapods.org/pods/KandyLinkMobileSDK) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate *Kandy Link iOS SDK* into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
-`pod 'KandyLinkMobileSDK', '~> 5.10.0'`
+```ruby
+...
+
+target 'YOUR_TARGET_NAME' do
+    pod 'KandyLinkMobileSDK', '~> 5.11.0'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+
+...
+```
 
 ### Manual
 
@@ -30,11 +46,11 @@ The information about tutorials and documents can be found in the links below
 
 Compatible iOS versions :
 
-* iOS 10.x+ 
+* iOS 10.x+
 
 Compatible XCode Versions :
 
-* XCode 11.0 - 11.6 (Note: There is known issue with Xcode 12. It is in progress.)
+* XCode 12.x+
 
 Compatible KandyLink Server versions :
 

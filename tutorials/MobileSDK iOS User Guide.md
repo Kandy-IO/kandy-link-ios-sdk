@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **August 28, 2020**
+Revision Date: **October 05, 2020**
 
 ## Mobile SDK overview
 
@@ -58,7 +58,23 @@ This section contains the required steps for beginning your mobile application d
 #### Cocoapods
 1. Add below pods to your Podfile (If you dont have any Podfile, visit this link to install cocoapods: https://guides.cocoapods.org/using/using-cocoapods.html)
 
-* pod 'KandyLinkMobileSDK', '~> $SDK_VERSION$'
+```ruby
+...
+
+target 'YOUR_TARGET_NAME' do
+    pod 'KandyLinkMobileSDK', '~> $SDK_VERSION$'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+
+...
+```
 
 2. Go to project folder via command line and run "pod install" command and wait for cocoapods to finish installation of MobileSDK, WebRTC frameworks and their dependencies
 
