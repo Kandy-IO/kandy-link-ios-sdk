@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **October 05, 2020**
+Revision Date: **November 04, 2020**
 
 ## Mobile SDK overview
 
@@ -3354,42 +3354,202 @@ The Mobile SDK can retrieve audio and video RTP/RTCP statistics providing inform
 * Local/Remote network addresses and ports
 * Audio/Video codec names
 
-**Note:** The Mobile SDK does not keep the statistics after the call ends.
+**Note:** The Mobile SDK does not keep the statistics after the call ends.It is application developer's responsibility to keep them. Since the statistics could be too long to log due to character limitation, it is adviced to write them to a file instead of logging for further usage. You can use the following class to see how to write it to a file :
 
-Use the "getRTPStatistics" method in an SMCall object to retrieve an array containing RTP/RTCP statistics. The array includes objects of the SMCallStatistic class—a class which stores statistic details. This class has the following public variables:
+<!-- tabs:start -->
 
-* id (string)
-* type (string)
-* timestamp (double)
-* values (value[]) - a class containing "name" and "value" variables
+#### ** Objective-C Code **
 
-The following are RTP/RTCP statistics related to camera and video resolution:
+```objectivec
 
-* googFrameWidthInput: Video width value fed by the camera
-* googFrameWidthSent: Video width value sent to the remote side
-* googFrameHeightInput: Video height value fed by the camera
-* googFrameHeightSent: Video height value sent to the remote side
-* googFrameRateInput: Frames per second (FPS) value fed by the camera
-* googFrameRateSent: FPS value sent to the remote side
-* googBandwidthLimitedResolution: If true, video resolution is decreased due to bandwidth limitations
-* googCpuLimitedResolution: If true, video resolution is decreased due to CPU limitations
+#import "CallStatistics.h"
+#import "SSZipArchive.h"
 
-See [Appendix E: Examples of call statistic data](#appendix-e-examples-of-call-statistic-data) for additional information.
+
+#define CONSOLE_RTP_LOG_PATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"CallStatistics.log"]
+
+void logRTP(NSString *format, ...){
+    va_list args;
+    va_start(args, format);
+    NSString *logString = [[NSString alloc] initWithFormat:format arguments:args];
+    [[CallStatistics getInstance] writeLogToFile: logString];
+    va_end(args);
+}
+@interface CallStatistics(){
+    NSFileHandle *handler;
+}
+
+@end
+
+@implementation CallStatistics
+
+__strong static id _instance = nil;
+
++ (instancetype)getInstance{
+    @synchronized (self) {
+        if(!_instance){
+            _instance = [[self alloc] init];
+        };
+    }
+    return _instance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initLogFile];
+    }
+    return self;
+}
+
+-(void) initLogFile{
+    if(![[NSFileManager defaultManager] fileExistsAtPath:CONSOLE_RTP_LOG_PATH]){
+        [@"" writeToFile:CONSOLE_RTP_LOG_PATH atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+    handler = [NSFileHandle fileHandleForUpdatingAtPath:CONSOLE_RTP_LOG_PATH];
+}
+
+- (void)writeLogToFile:(NSString *)log{
+    NSString *dateStr = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterMediumStyle];
+    NSString *logStr = [NSString stringWithFormat:@"[%@]: %@ \n", dateStr, log];
+    [handler seekToEndOfFile];
+    [handler writeData:[logStr dataUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"%@", logStr);
+    
+}
+
+- (NSString *)createZipFile{
+    NSString *dest = [CONSOLE_RTP_LOG_PATH stringByAppendingString:@".zip"];
+    [SSZipArchive createZipFileAtPath:dest withFilesAtPaths:@[CONSOLE_RTP_LOG_PATH]];
+    return dest;
+    
+}
+- (void)clearLogs{
+    [@"" writeToFile:CONSOLE_RTP_LOG_PATH atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    [self initLogFile];
+    logRTP(@"RTP Logs Cleaned");
+}
+- (void)closeFile{
+    [handler closeFile];
+}
+@end
+```
+
+#### ** Swift Code **
+
+```swift
+import Foundation
+
+class CallStatistics: NSObject {
+    
+    public static let sharedInstance = CallStatistics()
+    private var handler: FileHandle?
+    
+    override init() {
+        super.init()
+        initLogFile()
+    }
+    
+    private func initLogFile() {
+        let destPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let fullDestPath = NSURL(fileURLWithPath: destPath).appendingPathComponent("CallStatistics.log")
+        let fullDestPathString = fullDestPath!.path
+        if !FileManager.default.fileExists(atPath: fullDestPathString) {
+            do {
+                try "".write(toFile: fullDestPathString, atomically: true, encoding: String.Encoding.utf8)
+            } catch {
+                NSLog("Can't write to file to device directory - Error: \(error.localizedDescription)")
+            }
+        }
+        handler = FileHandle.init(forUpdatingAtPath: fullDestPathString)
+    }
+    
+    fileprivate func writeLogToFile(file: String, function: String, line: Int, queue: String, _ format: String, _ args: CVarArg...) {
+        let dateStr = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
+        let fileNameArr = file.components(separatedBy: "/")
+        let onlyTheFileName = fileNameArr.last ?? ""
+        let logStr = String(format: "[\(dateStr)]: [FUNCTION: \(function) AT \(onlyTheFileName).\(line) QUEUE: \(queue)] \(format) \n", args)
+        handler?.seekToEndOfFile()
+        if let logData = logStr.data(using: String.Encoding.utf8) {
+            handler?.write(logData)
+        }
+        let willLogged = String(format: format, args)
+        print(willLogged)
+    }
+    
+    func createZipFile() -> String {
+        let destPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let fullDestPath = NSURL(fileURLWithPath: destPath).appendingPathComponent("CallStatistics.log")
+        let fullDestPathString = fullDestPath!.path
+        let zipDest = fullDestPathString.appending(".zip")
+        SSZipArchive.createZipFile(atPath: zipDest, withFilesAtPaths: [fullDestPathString])
+        return zipDest
+    }
+    
+    func clearLogs() {
+        let destPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let fullDestPath = NSURL(fileURLWithPath: destPath).appendingPathComponent("CallStatistics.log")
+        let fullDestPathString = fullDestPath!.path
+        do {
+            try "".write(toFile: fullDestPathString, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            NSLog("Can't write to file to device directory - Error: \(error.localizedDescription)")
+        }
+        initLogFile()
+        logWith("RTP Logs Cleaned")
+    }
+    func closeFile(){
+        handler?.closeFile()
+    }
+}
+
+func logRTP(_ format: String, file: String = #file, function: String = #function, line: Int = #line, args: CVarArg...) {
+    let queueName = OperationQueue.current?.name ?? ""
+    CallStatistics.sharedInstance.writeLogToFile(file: file, function: function, line: line, queue: queueName, format, args)
+    
+}
+```
+<!-- tabs:end -->
+
+
+Use the "getRTPStatistics" method in an Call object to retrieve a string in the JSON format containing RTP/RTCP statistics. The JSON-String includes objects of the RTCStatsReport class—a class which stores statistic details. This class has the following public variables:
+
+ * timestamp -- Indicates the time at which the sample was taken for this statistics object.
+ * type      -- Indicates the type of statistics the object contains. Types are listed below.
+ * id        -- Uniquely identifies the object.
+
+
+ ```javascript
+type {
+    "codec",            
+    "inbound-rtp",
+    "outbound-rtp",
+    "remote-inbound-rtp",
+    "remote-outbound-rtp",
+    "media-source",
+    "csrc",
+    "peer-connection",
+    "data-channel",
+    "stream",
+    "track",
+    "transceiver",
+    "sender",
+    "receiver",
+    "transport",
+    "sctp-transport",
+    "candidate-pair",
+    "local-candidate",
+    "remote-candidate",
+    "certificate",
+    "ice-server"
+}
+```
 
 <hr/>
 <h5>WARNING</h5>
 If there is a bandwidth or CPU limitation, WebRTC will decrease video resolution and FPS values automatically. The Mobile SDK does not inform the application of the automatic change; the application must check the values using the getRTPStatistics method.
 <hr/>
-
-
-###### Example: SMCallStatistic object
-
-```
-id: Conn-audio-1-0,
-type: googCandidatePair,
-timestamp: 1.444311978571412E12,
-values: [googActiveConnection: true], [bytesReceived: 92193], [byesSent: 87940], [packetsSent: 796]
-```
 
 ###### Example: Retrieving statistics
 
@@ -3398,32 +3558,23 @@ values: [googActiveConnection: true], [bytesReceived: 92193], [byesSent: 87940],
 #### ** Objective-C Code **
 
 ```objectivec
-[[currentCall getRTPStatistics:^(NSArray *statistics) {
-
-    SMCallStatistic *statistic = statistic.firstObject;
-
-    NSLog(@"Report id : %@", statistic.reportId);
-    NSLog(@"Report type : %@", statistic.type);
-    NSLog(@"Report timestamp : %f", statistic.timestamp);
-    NSLog(@"Report values : %@",statistic.values);
-}];
+ [call getRTPStatistics:^(NSString * _Nullable statistics) {
+                if([call getCallState].type != CALLSTATES_ENDED && call != nil){
+                    logRTP(statistics);
+            }
+                }];
 ```
 
 #### ** Swift Code **
 
 ```swift
-currentCall.getRTPStatistics({ (statistics) in
-    let statistic = statistic.firstObject as! SMCallStatistic;
-
-    NSLog("Report id : \(statistic.reportId)")
-    NSLog("Report type : \(statistic.type)")
-    NSLog("Report timestamp \(statistic.timestamp)")
-    NSLog("Report values : \(statistic.values)")
-})
+     call.getRTPStatistics { (stat) in
+            if(call.getCallState().type != .ended && (call != nil)) {
+                logRTP(stat!)
+            }
+        }
 ```
 <!-- tabs:end -->
-
-For a full example of the data received, see [Appendix E: Examples of call statistic data](#appendix-e-examples-of-call-statistic-data).
 
 <div class="page-break"></div>
 
@@ -4301,404 +4452,3 @@ func manageConfiguration() {
 <!-- tabs:end -->
 
 <div class="page-break" />
-
-### Appendix E: Examples of call statistic data
-
-This section provides an example of statistic data retrieved for audio calls and video calls. See [Retrieve audio and video RTP/RTCP statistics](#retrieve-audio-and-video-rtprtcp-statistics) for the method used to retrieve call statistic data.
-
-###### Example (Sample) statistic data for an audio call
-
-```javascript
-id: googTrack_ARDAMSa0, type: googTrack, timestamp: 1445079424793.019043, values: (
-    "googTrackId: ARDAMSa0"
-),
-id: googLibjingleSession_3498004751352045309, type: googLibjingleSession, timestamp: 1445079424793.019043, values: (
-    "googInitiator: true"
-),
-id: Channel-audio-1, type: googComponent, timestamp: 1445079424793.019043, values: (
-    "selectedCandidatePairId: Conn-audio-1-0",
-    "googComponent: 1"
-),
-id: Conn-audio-1-0, type: googCandidatePair, timestamp: 1445079424793.019043, values: (
-    "googActiveConnection: true",
-    "bytesReceived: 67136",
-    "bytesSent: 65617",
-    "packetsSent: 587",
-    "googReadable: true",
-    "googChannelId: Channel-audio-1",
-    "googLocalAddress: 10.254.20.195:61074",
-    "localCandidateId: Cand-Ab3LbCOD",
-    "googLocalCandidateType: local",
-    "googRemoteAddress: 10.254.16.20:57624",
-    "remoteCandidateId: Cand-TQH102WG",
-    "googRemoteCandidateType: local",
-    "googRtt: 12",
-    "packetsDiscardedOnSend: 0",
-    "googTransportType: udp",
-    "googWritable: true"
-),
-id: Cand-Ab3LbCOD, type: localcandidate, timestamp: 1445079412616.024902, values: (
-    "ipAddress: 10.254.20.195",
-    "networkType: unknown",
-    "portNumber: 61074",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-```
-```javascript
-id: Cand-jyPmgIgv, type: remotecandidate, timestamp: 1445079412616.024902, values: (
-    "ipAddress: 10.254.16.20",
-    "portNumber: 57624",
-    "priority: 1853824767",
-    "transport: udp",
-    "candidateType: peerreflexive"
-),
-id: Channel-audio-2, type: googComponent, timestamp: 1445079413203.319092, values: (
-    "googComponent: 2"
-),
-id: Channel-video-1, type: googComponent, timestamp: 1445079413203.319092, values: (
-    "selectedCandidatePairId: Conn-video-1-0",
-    "googComponent: 1"
-),
-id: Channel-video-2, type: googComponent, timestamp: 1445079413203.319092, values: (
-    "googComponent: 2"
-),
-id: ssrc_586305605_send, type: ssrc, timestamp: 1445079424793.019043, values: (
-    "audioInputLevel: 8966",
-    "bytesSent: 59363",
-    "packetsLost: 0",
-    "packetsSent: 573",
-    "ssrc: 586305605",
-    "transportId: Channel-audio-1",
-    "googCodecName: opus",
-    "googEchoCancellationQualityMin: 0",
-    "googEchoCancellationEchoDelayMedian: 0",
-    "googEchoCancellationEchoDelayStdDev: 0",
-    "googEchoCancellationReturnLoss: 0",
-    "googEchoCancellationReturnLossEnhancement: 0",
-    "googJitterReceived: 6",
-    "googRtt: 38",
-    "googTrackId: ARDAMSa0",
-    "googTypingNoiseState: false"
-),
-id: bweforvideo, type: VideoBwe, timestamp: 1445079424793.019043, values: (
-    "googActualEncBitrate: 0",
-    "googAvailableReceiveBandwidth: 0",
-    "googAvailableSendBandwidth: 300000",
-    "googBucketDelay: 0",
-    "googRetransmitBitrate: 0",
-    "googTargetEncBitrate: 0",
-    "googTransmitBitrate: 0"
-),
-id: Cand-TQH102WG, type: remotecandidate, timestamp: 1445079413203.319092, values: (
-    "ipAddress: 10.254.16.20",
-    "portNumber: 57624",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: Conn-video-1-0, type: googCandidatePair, timestamp: 1445079413203.319092, values: (
-    "googActiveConnection: true",
-    "bytesReceived: 0",
-    "bytesSent: 0",
-    "packetsSent: 0",
-    "googReadable: false",
-    "googChannelId: Channel-video-1",
-    "googLocalAddress: 10.254.20.195:53869",
-    "localCandidateId: Cand-+0vP4WAy",
-    "googLocalCandidateType: local",
-    "googRemoteAddress: 10.254.16.20:57624",
-    "remoteCandidateId: Cand-EoPuaL+p",
-    "googRemoteCandidateType: local",
-    "googRtt: 2251",
-    "packetsDiscardedOnSend: 0",
-    "googTransportType: udp",
-    "googWritable: true"
-),
-id: Cand-+0vP4WAy, type: localcandidate, timestamp: 1445079413203.319092, values: (
-    "ipAddress: 10.254.20.195",
-    "networkType: unknown",
-    "portNumber: 53869",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: Cand-EoPuaL+p, type: remotecandidate, timestamp: 1445079413203.319092, values: (
-    "ipAddress: 10.254.16.20",
-    "portNumber: 57624",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: googTrack_eb9de414-8e72-4c91-959e-311e87535120, type: googTrack, timestamp: 1445079424793.019043, values: (
-    "googTrackId: eb9de414-8e72-4c91-959e-311e87535120"
-),
-id: googTrack_579706d2-916c-4743-8675-5a0cd1b9d077, type: googTrack, timestamp: 1445079424793.019043, values: (
-    "googTrackId: 579706d2-916c-4743-8675-5a0cd1b9d077"
-),
-id: ssrc_3857903642_recv, type: ssrc, timestamp: 1445079424793.019043, values: (
-    "audioOutputLevel: 3587",
-    "bytesReceived: 60735",
-    "packetsLost: 0",
-    "packetsReceived: 580",
-    "ssrc: 3857903642",
-    "transportId: Channel-audio-1",
-    "googAccelerateRate: 0.0177612",
-    "googCaptureStartNtpTimeMs: 3654068213162",
-    "googCodecName: opus",
-    "googCurrentDelayMs: 91",
-    "googDecodingCNG: 0",
-    "googDecodingCTN: 1156",
-    "googDecodingCTSG: 0",
-    "googDecodingNormal: 1139",
-    "googDecodingPLC: 16",
-    "googDecodingPLCCNG: 1",
-    "googExpandRate: 0.0105591",
-    "googJitterBufferMs: 70",
-    "googJitterReceived: 1",
-    "googPreemptiveExpandRate: 0.0045166",
-    "googPreferredJitterBufferMs: 20",
-    "googSecondaryDecodedRate: 0",
-    "googSpeechExpandRate: 0.0105591",
-    "googTrackId: eb9de414-8e72-4c91-959e-311e87535120"
-),
-id: ssrc_2201928905_recv, type: ssrc, timestamp: 1445079424793.019043, values: (
-    "bytesReceived: 0",
-    "packetsLost: 0",
-    "packetsReceived: 0",
-    "ssrc: 2201928905",
-    "transportId: Channel-audio-1",
-    "googCaptureStartNtpTimeMs: 0",
-    "googCurrentDelayMs: 0",
-    "googDecodeMs: 0",
-    "googFirsSent: 0",
-    "googFrameHeightReceived: -1",
-    "googFrameRateDecoded: 0",
-    "googFrameRateOutput: 0",
-    "googFrameRateReceived: 0",
-    "googFrameWidthReceived: -1",
-    "googJitterBufferMs: 0",
-    "googMaxDecodeMs: 0",
-    "googMinPlayoutDelayMs: 0",
-    "googNacksSent: 0",
-    "googPlisSent: 0",
-    "googRenderDelayMs: 10",
-    "googTargetDelayMs: 10",
-    "googTrackId: 579706d2-916c-4743-8675-5a0cd1b9d077"
-)
-```
-
-###### Example (Sample)  statistic data for a video call
-
-```javascript
-id: googTrack_ARDAMSa0, type: googTrack, timestamp: 1445079500335.081055, values: (
-    "googTrackId: ARDAMSa0"
-),
-id: googLibjingleSession_8093042484470420018, type: googLibjingleSession, timestamp: 1445079500335.081055, values: (
-    "googInitiator: true"
-),
-id: Channel-audio-1, type: googComponent, timestamp: 1445079500335.081055, values: (
-    "selectedCandidatePairId: Conn-audio-1-0",
-    "googComponent: 1"
-),
-id: Conn-audio-1-0, type: googCandidatePair, timestamp: 1445079500335.081055, values: (
-    "googActiveConnection: true",
-    "bytesReceived: 132837",
-    "bytesSent: 262260",
-    "packetsSent: 540",
-    "googReadable: true",
-    "googChannelId: Channel-audio-1",
-    "googLocalAddress: 10.254.20.195:54073",
-    "localCandidateId: Cand-zBqBr3MR",
-    "googLocalCandidateType: local",
-    "googRemoteAddress: 10.254.16.20:52444",
-    "remoteCandidateId: Cand-JpDFew8o",
-    "googRemoteCandidateType: local",
-    "googRtt: 721",
-    "packetsDiscardedOnSend: 0",
-    "googTransportType: udp",
-    "googWritable: true"
-),
-id: Cand-zBqBr3MR, type: localcandidate, timestamp: 1445079494022.980957, values: (
-    "ipAddress: 10.254.20.195",
-    "networkType: unknown",
-    "portNumber: 54073",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: Cand-6MH4gGBl, type: remotecandidate, timestamp: 1445079494022.980957, values: (
-    "ipAddress: 10.254.16.20",
-    "portNumber: 52444",
-    "priority: 1853824767",
-    "transport: udp",
-    "candidateType: peerreflexive"
-),
-id: Channel-audio-2, type: googComponent, timestamp: 1445079494560.142090, values: (
-    "googComponent: 2"
-),
-id: Channel-video-1, type: googComponent, timestamp: 1445079494560.142090, values: (
-    "selectedCandidatePairId: Conn-video-1-0",
-    "googComponent: 1"
-),
-id: Channel-video-2, type: googComponent, timestamp: 1445079494560.142090, values: (
-    "googComponent: 2"
-),
-id: ssrc_2166116287_send, type: ssrc, timestamp: 1445079500335.081055, values: (
-    "audioInputLevel: 3993",
-    "bytesSent: 27518",
-    "packetsLost: 0",
-    "packetsSent: 286",
-    "ssrc: 2166116287",
-    "transportId: Channel-audio-1",
-    "googCodecName: opus",
-    "googEchoCancellationQualityMin: 0",
-    "googEchoCancellationEchoDelayMedian: 0",
-    "googEchoCancellationEchoDelayStdDev: 0",
-    "googEchoCancellationReturnLoss: 0",
-    "googEchoCancellationReturnLossEnhancement: 0",
-    "googJitterReceived: 19",
-    "googRtt: 762",
-    "googTrackId: ARDAMSa0",
-    "googTypingNoiseState: false"
-),
-id: ssrc_515953527_send, type: ssrc, timestamp: 1445079500335.081055, values: (
-    "bytesSent: 253747",
-    "packetsLost: 0",
-    "packetsSent: 269",
-    "ssrc: 515953527",
-    "transportId: Channel-audio-1",
-    "googAdaptationChanges: 0",
-    "googAvgEncodeMs: 43",
-//If true, video resolution is decreased due to bandwidth limitations
-    "googBandwidthLimitedResolution: false",
-    "googCodecName: VP8",
-//If true, video resolution is decreased due to CPU limitations
-    "googCpuLimitedResolution: false",
-    "googEncodeUsagePercent: 70",
-    "googFirsReceived: 0",
-//video height value fed by camera
-    "googFrameHeightInput: 640",
-//video height value sent to remote side
-    "googFrameHeightSent: 640",
-//FPS value fed by camera
-    "googFrameRateInput: 23",
-//FPS value sent to remote side
-    "googFrameRateSent: 20",
-//video width value fed by camera
-    "googFrameWidthInput: 480",
-//video width value sent to remote side
-    "googFrameWidthSent: 480",
-    "googNacksReceived: 0",
-    "googPlisReceived: 0",
-    "googRtt: 702",
-    "googTrackId: ARDAMSv0",
-    "googViewLimitedResolution: false"
-),
-id: bweforvideo, type: VideoBwe, timestamp: 1445079500335.081055, values: (
-    "googActualEncBitrate: 381882",
-    "googAvailableReceiveBandwidth: 116883",
-    "googAvailableSendBandwidth: 338258",
-    "googBucketDelay: 0",
-    "googRetransmitBitrate: 0",
-    "googTargetEncBitrate: 338258",
-    "googTransmitBitrate: 380040"
-),
-id: Cand-JpDFew8o, type: remotecandidate, timestamp: 1445079494560.142090, values: (
-    "ipAddress: 10.254.16.20",
-    "portNumber: 52444",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: Conn-video-1-0, type: googCandidatePair, timestamp: 1445079494560.142090, values: (
-    "googActiveConnection: true",
-    "bytesReceived: 0",
-    "bytesSent: 0",
-    "packetsSent: 0",
-    "googReadable: false",
-    "googChannelId: Channel-video-1",
-    "googLocalAddress: 10.254.20.195:52759",
-    "localCandidateId: Cand-xMjVXfM2",
-    "googLocalCandidateType: local",
-    "googRemoteAddress: 10.254.16.20:52444",
-    "remoteCandidateId: Cand-VMyvLE3v",
-    "googRemoteCandidateType: local",
-    "googRtt: 2251",
-    "packetsDiscardedOnSend: 0",
-    "googTransportType: udp",
-    "googWritable: true"
-),
-id: Cand-xMjVXfM2, type: localcandidate, timestamp: 1445079494560.142090, values: (
-    "ipAddress: 10.254.20.195",
-    "networkType: unknown",
-    "portNumber: 52759",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: Cand-VMyvLE3v, type: remotecandidate, timestamp: 1445079494560.142090, values: (
-    "ipAddress: 10.254.16.20",
-    "portNumber: 52444",
-    "priority: 2122260223",
-    "transport: udp",
-    "candidateType: host"
-),
-id: googTrack_6adfc0a7-8ad6-47a0-b523-f62a59edf961, type: googTrack, timestamp: 1445079500335.081055, values: (
-    "googTrackId: 6adfc0a7-8ad6-47a0-b523-f62a59edf961"
-),
-id: googTrack_00dc3a53-4f92-44b4-a71e-3291716e2ae0, type: googTrack, timestamp: 1445079500335.081055, values: (
-    "googTrackId: 00dc3a53-4f92-44b4-a71e-3291716e2ae0"
-),
-id: ssrc_2707401590_recv, type: ssrc, timestamp: 1445079500335.081055, values: (
-    "audioOutputLevel: 0",
-    "bytesReceived: 18924",
-    "packetsLost: 0",
-    "packetsReceived: 181",
-    "ssrc: 2707401590",
-    "transportId: Channel-audio-1",
-    "googAccelerateRate: 0.0055542",
-    "googCaptureStartNtpTimeMs: -1",
-    "googCodecName: opus",
-    "googCurrentDelayMs: 563",
-    "googDecodingCNG: 0",
-    "googDecodingCTN: 599",
-    "googDecodingCTSG: 0",
-    "googDecodingNormal: 378",
-    "googDecodingPLC: 76",
-    "googDecodingPLCCNG: 145",
-    "googExpandRate: 0.354492",
-    "googJitterBufferMs: 3",
-    "googJitterReceived: 31",
-    "googPreemptiveExpandRate: 0.0315552",
-    "googPreferredJitterBufferMs: 520",
-    "googSecondaryDecodedRate: 0",
-    "googSpeechExpandRate: 0.11969",
-    "googTrackId: 6adfc0a7-8ad6-47a0-b523-f62a59edf961"
-),
-id: ssrc_279863464_recv, type: ssrc, timestamp: 1445079500335.081055, values: (
-    "bytesReceived: 105125",
-    "packetsLost: 0",
-    "packetsReceived: 142",
-    "ssrc: 279863464",
-    "transportId: Channel-audio-1",
-    "googCaptureStartNtpTimeMs: 0",
-    "googCurrentDelayMs: 235",
-    "googDecodeMs: 4",
-    "googFirsSent: 0",
-    "googFrameHeightReceived: 240",
-    "googFrameRateDecoded: 30",
-    "googFrameRateOutput: 28",
-    "googFrameRateReceived: 0",
-    "googFrameWidthReceived: 320",
-    "googJitterBufferMs: 215",
-    "googMaxDecodeMs: 10",
-    "googMinPlayoutDelayMs: 38",
-    "googNacksSent: 0",
-    "googPlisSent: 3",
-    "googRenderDelayMs: 10",
-    "googTargetDelayMs: 235",
-    "googTrackId: 00dc3a53-4f92-44b4-a71e-3291716e2ae0"
-)
-```
