@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **November 04, 2020**
+Revision Date: **December 02, 2020**
 
 ## Mobile SDK overview
 
@@ -2553,8 +2553,8 @@ If you do not add any codecs to the preferredCodecSet variable, Mobile SDK will 
 
 If you create the preferredCodecSet variable with a default constructor, the Mobile SDK uses the default codecs in the following priority order:
 
-* Audio Codecs: AC_OPUS, AC_G722, AC_PCMA, AC_PCMU, AC_ISAC, AC_ILBC
-* Video Codecs: VC_VP8, VC_VP9, VC_H264
+* Audio Codecs: $AUDIO_CODECS$
+* Video Codecs: $VIDEO_CODECS$
 
 ###### Example: Setting codec priority
 
@@ -2563,42 +2563,13 @@ If you create the preferredCodecSet variable with a default constructor, the Mob
 #### ** Objective-C Code **
 
 ```objectivec
-SMCodecSet *preferredCodecSet = [SMConfiguration getInstance].preferredCodecSet;
-[preferredCodecSet setAudioCodecs:@[[SMAudioCodec withType:AC_G722], [SMAudioCodec withType:AC_PCMA], [SMAudioCodec withType:AC_PCMU]]];
-[preferredCodecSet setVideoCodecs:@[[SMVideoCodec withType:VC_VP8]]];
+$CODEC_EXAMPLE_OBJC$
 ```
 
 #### ** Swift Code **
 
 ```swift
-let preferredCodecSet = SMConfiguration.getInstance().preferredCodecSet
-preferredCodecSet.audioCodecs = [SMAudioCodec.withType(.G722), SMAudioCodec.withType(.PCMA), SMAudioCodec.withType(.PCMU)]
-preferredCodecSet.videoCodecs = [SMVideoCodec.withType(.VP8)]
-```
-<!-- tabs:end -->
-
-Or
-
-<!-- tabs:start -->
-
-#### ** Objective-C Code **
-
-```objectivec
-SMCodecSet * preferredCodecSet = [SMCodecSet audioCodecs:@[[SMAudioCodec withType:AC_G722],
-                                                           [SMAudioCodec withType:AC_PCMA],
-                                                           [SMAudioCodec withType:AC_PCMU]]
-                                            videoCodecs:@[[SMVideoCodec withType:VC_VP8]]];
-[[SMConfiguration getInstance] setPreferredCodecSet:preferredCodecSet];
-```
-
-#### ** Swift Code **
-
-```swift
-let preferredCodecSet = SMCodecSet.audioCodecs([SMAudioCodec.withType(.G722),
-                                                SMAudioCodec.withType(.PCMA),
-                                                SMAudioCodec.withType(.PCMU)],
-                                    videoCodecs:[SMVideoCodec.withType(.VP8)])
-SMConfiguration.getInstance().preferredCodecSet = preferredCodecSet
+$CODEC_EXAMPLE_SWIFT$
 ```
 <!-- tabs:end -->
 
