@@ -3523,7 +3523,7 @@ If there is a bandwidth or CPU limitation, WebRTC will decrease video resolution
 <hr/>
 
 ###### Example: Retrieving statistics
-
+It is recommended to call this method every 10 seconds as long as call continues.
 <!-- tabs:start -->
 
 #### ** Objective-C Code **
