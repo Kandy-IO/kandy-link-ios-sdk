@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.13.0
+ * @version: 5.14.0
  *
  */
 
@@ -30,6 +30,19 @@
  * @brief Hold the notification engine object for reusing.
  */
 @property (readonly, nonnull) SMNotificationEngine *notificationEngine;
+
+/**
+ * @brief This method registers user to server with values set in configuration and valid parameters,
+ * Failure and success calls will be transmitted to completion block which can be null.
+ * After registration request succeeded and notification channel is connected completion block will be called without error.
+ * During registration process, registration registrationStateChanged of RegistrationApplicationDelegate will be triggered after registration request and notificationConnectionStateChanged of RegistrationApplicationDelegate will be triggered after notification connection is established.
+ *
+ * @param expirationTime, Expiration time for registration in seconds. This value is sent to SPiDR server to set the registration expiration value and SPiDR sends the suitable expiration value back in registration request response. If this value exceeds the maximum supported expiration time in SPiDR, it will send the maximum value of SPiDR server that is set. This value is generally 3600sec and the final value can be gathered by calling getExpirationTime method.
+ * @param completionBlock, block implementation that will be used by the registration service to trigger callback events. Listener can be null if user don't care the callbacks or failure reasons.
+ *
+ * @since 5.14.0
+ */
+- (void) registerToServer:(NSInteger) expiration completionHandler:(void (^_Nullable)(SMMobileError * _Nullable error))completionBlock;
 
 /**
  * @brief This method registers user to server with values set in configuration and valid parameters,

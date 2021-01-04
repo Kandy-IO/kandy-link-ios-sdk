@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.13.0
+ * @version: 5.14.0
  *
  */
 
@@ -49,14 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * This method returns (creates if necessary) an instance of PresenceService using Singleton Pattern
- * @return PresenceServiceDelegate
- * @since 2.0.0
- */
-- (id<SMPresenceServiceDelegate>) getPresenceService;
-
-
-/**
  * This method returns (creates if necessary) an instance of RegistrationService using Singleton Pattern
  * @return RegistrationServiceDelegate
  * @since 2.0.0
@@ -78,15 +70,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @since 2.0.0
  */
 - (id<SMCallLogServiceDelegate>) getCallLogService;
-
-
-/**
- * This method returns (creates if necessary) an instance of IMService using Singleton Pattern
- * @return IMServiceDelegate
- * @since 2.0.0
- */
-- (id<SMIMServiceDelegate>) getIMService;
-
 
 /**
  * This method returns (creates if necessary) an instance of PushService using Singleton Pattern

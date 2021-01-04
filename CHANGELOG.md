@@ -5,6 +5,20 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.14.0 - 2021-12-30
+
+### Deprecated
+- `registerToServer:(nonnull NSArray<NSString *> *)serviceTypes expirationTime:(NSInteger) expirationTime completionHandler:(void (^_Nullable)(SMMobileError * _Nullable error))completionBlock` API in the SMRegistrationService will be deprecated in the version 5.16.0. But a new `registerToServer:(NSInteger)expirationTime completionHandler:(void (^_Nullable)(SMMobileError * _Nullable))completionBlock` is introduced. Therefore developers should take the necessary action. `KAE-806`
+
+- `DTLS`, `securedWSProtocol`, `requestProtocolHttp`, `kandyVersion`, `kandyToken`, `deviceId`, `deviceNativeId`, `sendKandyTokenInRestHeader`,`subscriptionLocalization`,`stateChangesHandler`, `connectionType`, `auditEnable`, `supportedCallFeautes`, `notificationType` parameters removed from SMConfiguration class. `KAE-869`
+
+### Added
+- `isRingingFeedbackEnabled` and `setRingingFeedbackEnabled` added to SMConfiguration class in order to set and/or check ringing feedback feature.
+- `registerToServer:(NSInteger)expirationTime completionHandler:(void (^_Nullable)(SMMobileError * _Nullable))completionBlock` API added to SMRegistrationService. `KAE-806`
+
+### Renamed
+- `replaceCodecSet` parameter renamed as `codecPayloadTypeSet` in SMConfiguration class. `KAE-869`
+
 ## 5.13.0 - 2020-12-02
  
 ## 5.12.0 - 2020-11-04

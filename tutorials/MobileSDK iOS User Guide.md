@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **December 02, 2020**
+Revision Date: **December 30, 2020**
 
 ## Mobile SDK overview
 
@@ -397,11 +397,8 @@ The registration service renews registration according to the expiration time wi
     SMRegistrationService *regService = [[SMServiceProvider getInstance] getRegistrationService];
     //Get registration service notifications
     [regService setRegistrationApplicationDelegate:self];
-    //Service types used in registration
-    NSArray *services = @[[SMServiceTypes getCallService]];
 
-    [regService registerToServer:services
-                  expirationTime:3600
+    [regService registerToServer:3600
                completionHandler:^(SMMobileError *error) {
         if(error){
             //Handle registration error
@@ -442,8 +439,7 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
     func registerExample() {
         let regService = SMServiceProvider.getInstance().getRegistrationService()
         regService.registrationApplicationDelegate = self
-        let services = [SMServiceTypes.getCallService()]
-        regService.register(toServer: services, expirationTime: 3600) { (error) in
+        regService.register(expirationTime: 3600) { (error) in
             if let error = error {
                 // Handle registration error
                 return
@@ -569,12 +565,8 @@ SMConfiguration.getInstance().password = @"password";
 
 //Get registration service notifications
 [regService setRegistrationApplicationDelegate:self];
-//Service types used in registration
-NSArray *services = @[[SMServiceTypes getCallService],
-                      [SMServiceTypes getIMService]];
 
-[regService registerToServer:services
-              expirationTime:3600
+[regService registerToServer:3600
            completionHandler:^(SMMobileError *error) {
     if(error){
         //Handle registration error
@@ -596,9 +588,7 @@ SMConfiguration.getInstance().userName = "username"
 SMConfiguration.getInstance().password = "password"
 
 regService.registrationApplicationDelegate = self
-let services = [SMServiceTypes.getCallService(),
-                SMServiceTypes.getIMService()]
-regService.register(toServer: services, expirationTime: 3600) { (error) in
+regService.register(expirationTime: 3600) { (error) in
     if let error = error {
         // Handle registration error
         return
@@ -2392,7 +2382,7 @@ SMConfiguration.getInstance().iceOption = .trickle
 
 #### Ringing feedback
 
-If preferred, when remote party receives an incoming call, callee can notify caller about received call by calling `sendRingingFeedback` method. To enable, `ringingFeedback` feature should be added to `supportedCallFeatures` before starting registration.
+If preferred, when remote party receives an incoming call, callee can notify caller about received call by calling `sendRingingFeedback` method. To enable, `isRingingFeedbackEnabled` parameter should be set to YES in  `SMConfiguration` before starting registration.
 
 When ringing feedback is disabled, SPiDR/Kandy Link sends the Ringing notification to the caller immediately after sending the callStart notification to the callee.
 
@@ -2405,14 +2395,14 @@ When ringing feedback is disabled, SPiDR/Kandy Link sends the Ringing notificati
 #### ** Objective-C Code **
 
 ```objectivec
-[[SMConfiguration getInstance] setSupportedCallFeatures:@[kRingingFeedback]];
+[[SMConfiguration getInstance] setIsRingingFeedbackEnabled:YES];
 //User can register now
 ```
 
 #### ** Swift Code **
 
 ```swift
-SMConfiguration.getInstance().supportedCallFeatures = [kRingingFeedback]
+SMConfiguration.getInstance().isRingingFeedbackEnabled = YES
 //User can register now
 ```
 <!-- tabs:end -->
@@ -2459,29 +2449,6 @@ func sendRingingFeedbackFailed(_ call: SMCallDelegate, withError error: SMMobile
 #### Early media
 
 The Mobile SDK supports early media (for example, hearing a ringing tone or an announcement from the network instead of a local ringing tone before a call is established) and transitions to call state SESSION_PROGRESS after receiving the 183 Session Progress notification. See [Appendix B: Call state transitions](#appendix-b-call-state-transitions) for call state diagrams.
-
-To support early media, feature should be added to `supportedCallFeatures` before starting call.
-
-<div class="page-break"></div>
-
-###### Example: Enabling early media feature
-
-<!-- tabs:start -->
-
-#### ** Objective-C Code **
-
-```objectivec
-[[SMConfiguration getInstance] setSupportedCallFeatures:@[kEarlyMedia]];
-//User can make call now
-```
-
-#### ** Swift Code **
-
-```swift
-SMConfiguration.getInstance().supportedCallFeatures = [kEarlyMedia]
-//User can make call now
-```
-<!-- tabs:end -->
 
 <div class="page-break"></div>
 
@@ -2579,9 +2546,9 @@ Using "CodecToReplace" feature of Mobile SDK, applications can manipulate the co
 
 Note that, it is strongly recommended **not** to use this API during an ongoing call operation (e.g. mid-call events). A configuration change will affect the ongoing call and this may cause unstable WebRTC behavior.
 
-For the replacing codec payload number feature, the MobileSDK user have to create an instance of the CodecToReplace model class and set the codecDefinition (the definition of the codec that can be seen on the rtpmap in SDP, e.g. "telephone-event/8000" or "opus/48000/2") and payloadNumber (e.g. "101" or "96" etc.) parameters. After creation of CodecToReplace object(s), they should be set to Mobile SDK through `setReplaceCodecSet` API on `Configuration` class.
+For the replacing codec payload number feature, the MobileSDK user have to create an instance of the CodecToReplace model class and set the codecDefinition (the definition of the codec that can be seen on the rtpmap in SDP, e.g. "telephone-event/8000" or "opus/48000/2") and payloadNumber (e.g. "101" or "96" etc.) parameters. After creation of CodecToReplace object(s), they should be set to Mobile SDK through `setcodecPayloadTypeSet` API on `Configuration` class.
 
-After the Mobile SDK user set the ReplaceCodecSet configuration, all of the local offer call SDPs will be generated with the specified codec payload numbers and there will be no modification done on remote SDPs and local answer SDPs.
+After the Mobile SDK user set the codecPayloadTypeSet configuration, all of the local offer call SDPs will be generated with the specified codec payload numbers and there will be no modification done on remote SDPs and local answer SDPs.
 
 <hr/>
 <h5>NOTE</h5>
@@ -2610,7 +2577,7 @@ NSMutableArray<SMCodecToReplace *> *codecsToReplace = [[NSMutableArray alloc] in
 NSDictionary *customProperties = [NSDictionary dictionaryWithObjectsAndKeys: @"42e029", @"profile-level-id", @"1", @"packetization-mode", nil];
 [codecsToReplace addObject: [SMCodecToReplace createWithCodecDefinition:@"H264/90000" payloadNumber:@"120" andCustomProperties:customProperties]];
 
-[[SMConfiguration getInstance] setReplaceCodecSet:codecsToReplace];
+[[SMConfiguration getInstance] setCodecPayloadTypeSet:codecsToReplace];
 ```
 
 #### ** Swift Code **
@@ -2625,7 +2592,7 @@ codecsToReplace.addObject(SMCodecToReplace.create(codecdefinition: "VP8/90000", 
 var customProperties: [NSObject : AnyObject] = NSDictionary(objectsAndKeys: "42e029","profile-level-id","1","packetization-mode",nil)
 codecsToReplace.addObject(SMCodecToReplace.create(codecdefinition: "H264/90000", payloadNumber: "120", andCustomProperties: customProperties))
 
-SMConfiguration.getInstance().replaceCodecSet = codecsToReplace
+SMConfiguration.getInstance().codecPayloadTypeSet = codecsToReplace
 ```
 <!-- tabs:end -->
 
@@ -3524,6 +3491,7 @@ If there is a bandwidth or CPU limitation, WebRTC will decrease video resolution
 
 ###### Example: Retrieving statistics
 It is recommended to call this method every 10 seconds as long as call continues.
+
 <!-- tabs:start -->
 
 #### ** Objective-C Code **
@@ -3992,7 +3960,7 @@ Please note that in order to inject push payload, app should wait until Mobile S
         } else {
             // note: set your configurations before registration
             [[[SMServiceProvider getInstance] getRegistrationService]
-             registerToServer:@[[SMServiceTypes getCallService] expirationTime:3600 completionHandler:^(SMMobileError *error) {
+             registerToServer:3600 completionHandler:^(SMMobileError *error) {
                 
                 if(error) {
                     // handle the error
@@ -4307,17 +4275,11 @@ This section contains usage of all configurations that Mobile SDK provides.
     configuration.restServerPort = @"443";
     //logger implementation defined by application
     configuration.logger = nil;
-    //HTTP or HTTPS while accessing REST server
-    configuration.requestProtocolHttp = NO; // HTTPS
-    //connection type for notification
-    configuration.connectionType = WEBSOCKET;
 
     //IP used in websocket connection creation
     configuration.webSocketServerIP = @"$WEBSOCKETFQDN$";
     //port used in websocket connection creation
     configuration.webSocketServerPort = @"443";
-    //set to WS or WSS protocol
-    configuration.securedWSProtocol = YES; // WSS
 
     //SPiDR TURN server in WebRTC's peer connection
     SMICEServers *iceServers = [[SMICEServers alloc] init];
@@ -4330,10 +4292,6 @@ This section contains usage of all configurations that Mobile SDK provides.
 
     //Integer value in seconds to limit the ICE collection duration. Default is 0 (no timeout)
     configuration.ICECollectionTimeout = 4;
-
-    //Set supported call features (early media)
-    //SPiDR/Kandy Link core must support these features.
-    configuration.supportedCallFeatures = @[kEarlyMedia];
 
     //Set one of the ice candidate negotiation types (ICE_VANILLA or ICE_TRICKLE)
     //The default is ICE_VANILLA
@@ -4348,8 +4306,7 @@ This section contains usage of all configurations that Mobile SDK provides.
     //Set WebRTC audio session configuration
     configuration.audioSessionConfiguration = audioSessionConfig;
 
-    // Audit Configuration. Default is enabled and 30 secs.
-    configuration.auditEnable = YES;
+    // Audit Configuration. Default value is 30 secs.
     configuration.auditFrequency = 30;
 }
 ```
@@ -4374,17 +4331,11 @@ func manageConfiguration() {
     configuration.restServerPort = "443"
     //logger implementation defined by application
     configuration.logger = self
-    //HTTP or HTTPS while accessing REST server
-    configuration.requestProtocolHttp = false // HTTPS
-    //connection type for notification
-    configuration.connectionType = .websocket
 
     //IP used in websocket connection creation
     configuration.webSocketServerIP  = "$WEBSOCKETFQDN$"
     //port used in websocket connection creation
     configuration.webSocketServerPort  = "443"
-    //set to WS or WSS protocol
-    configuration.securedWSProtocol = true // WSS
 
     //SPiDR TURN server in WebRTC's peer connection
     let iceServers = SMICEServers()
@@ -4397,10 +4348,6 @@ func manageConfiguration() {
 
     //Integer value in seconds to limit the ICE collection duration. Default is 0 (no timeout)
     configuration.iceCollectionTimeout = 4
-
-    //Set supported call features (early media)
-    //SPiDR/Kandy Link core must support these features.
-    configuration.supportedCallFeatures = [kEarlyMedia]
 
     //Set one of the ice candidate negotiation types (ICE_VANILLA or ICE_TRICKLE)
     //The default is ICE_VANILLA
@@ -4415,8 +4362,7 @@ func manageConfiguration() {
     //Set WebRTC audio session configuration
     configuration.audioSessionConfiguration = audioSessionConfig
 
-    // Audit Configuration. Default is enabled and 30 secs.
-    configuration.auditEnable = true;
+    // Audit Configuration. Default value is 30 secs.
     configuration.auditFrequency = 30;
 }
 ```

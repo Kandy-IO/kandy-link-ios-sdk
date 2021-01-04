@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.13.0
+ * @version: 5.14.0
  *
  */
 
@@ -56,20 +56,6 @@ FOUNDATION_EXPORT const unsigned char MobileSDKVersionString[];
 #import <MobileSDK/SMContact.h>
 #import <MobileSDK/SMAddressBookApplicationDelegate.h>
 #import <MobileSDK/SMAddressBookServiceDelegate.h>
-
-//IM
-#import <MobileSDK/SMIMApplicationDelegate.h>
-#import <MobileSDK/SMOutGoingIMDelegate.h>
-#import <MobileSDK/SMInComingIMDelegate.h>
-#import <MobileSDK/SMIMDelegate.h>
-#import <MobileSDK/SMIMServiceDelegate.h>
-
-//Presence
-#import <MobileSDK/SMPresenceApplicationDelegate.h>
-#import <MobileSDK/SMPresenceDelegate.h>
-#import <MobileSDK/SMPresenceStates.h>
-#import <MobileSDK/SMPresenceActivityType.h>
-#import <MobileSDK/SMPresenceServiceDelegate.h>
 
 // Push
 #import <MobileSDK/SMPushService.h>

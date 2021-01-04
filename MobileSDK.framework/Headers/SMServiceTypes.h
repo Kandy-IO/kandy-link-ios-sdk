@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.13.0
+ * @version: 5.14.0
  *
  */
 
@@ -20,20 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @since 2.0.0
  */
 @interface SMServiceTypes : NSObject
-
-/**
- * Retrive name of the IM service to registration
- * @return name of the IM Service
- * @since 2.0.0
- */
-+(NSString *) getIMService;
-
-/**
- * Retrive name of the presence service to registration
- * @return name of the persence Service
- * @since 2.0.0
- */
-+(NSString *) getPresenceService;
 
 /**
  * Retrive name of the call service to registration

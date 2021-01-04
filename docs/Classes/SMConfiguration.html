@@ -14,7 +14,7 @@
 		<div class="container" class="hide-in-xcode">
 			
 			<h1 id="library-title">
-				<a href="../index.html">MobileSDK 5.13.0 </a>
+				<a href="../index.html">MobileSDK 5.14.0 </a>
 			</h1>
 
 			<p id="developer-home">
@@ -64,8 +64,6 @@
 		
 		<option value="//api/name/audioSessionConfiguration">audioSessionConfiguration</option>
 		
-		<option value="//api/name/auditEnable">auditEnable</option>
-		
 		<option value="//api/name/auditFrequency">auditFrequency</option>
 		
 		<option value="//api/name/authToken">authToken</option>
@@ -74,17 +72,11 @@
 		
 		<option value="//api/name/cameraPosition">cameraPosition</option>
 		
-		<option value="//api/name/connectionType">connectionType</option>
+		<option value="//api/name/codecPayloadTypeSet">codecPayloadTypeSet</option>
 		
 		<option value="//api/name/defaultICEPassword">defaultICEPassword</option>
 		
 		<option value="//api/name/defaultICEUsername">defaultICEUsername</option>
-		
-		<option value="//api/name/deviceId">deviceId</option>
-		
-		<option value="//api/name/deviceNativeId">deviceNativeId</option>
-		
-		<option value="//api/name/dtls">dtls</option>
 		
 		<option value="//api/name/dtmfToneDuration">dtmfToneDuration</option>
 		
@@ -98,9 +90,7 @@
 		
 		<option value="//api/name/isPushEnabled">isPushEnabled</option>
 		
-		<option value="//api/name/kandyToken">kandyToken</option>
-		
-		<option value="//api/name/kandyVersion">kandyVersion</option>
+		<option value="//api/name/isRingingFeedbackEnabled">isRingingFeedbackEnabled</option>
 		
 		<option value="//api/name/logLevel">logLevel</option>
 		
@@ -116,29 +106,15 @@
 		
 		<option value="//api/name/receiveBandwidthLimit">receiveBandwidthLimit</option>
 		
-		<option value="//api/name/replaceCodecSet">replaceCodecSet</option>
-		
-		<option value="//api/name/requestProtocolHttp">requestProtocolHttp</option>
-		
 		<option value="//api/name/restServerIP">restServerIP</option>
 		
 		<option value="//api/name/restServerPort">restServerPort</option>
-		
-		<option value="//api/name/securedWSProtocol">securedWSProtocol</option>
-		
-		<option value="//api/name/sendKandyTokenInRestHeader">sendKandyTokenInRestHeader</option>
 		
 		<option value="//api/name/serverCertificate">serverCertificate</option>
 		
 		<option value="//api/name/slowStartCallPolicy">slowStartCallPolicy</option>
 		
-		<option value="//api/name/stateChangesHandler">stateChangesHandler</option>
-		
 		<option value="//api/name/subscriptionExpires">subscriptionExpires</option>
-		
-		<option value="//api/name/subscriptionLocalization">subscriptionLocalization</option>
-		
-		<option value="//api/name/supportedCallFeatures">supportedCallFeatures</option>
 		
 		<option value="//api/name/userName">userName</option>
 		
@@ -397,6 +373,8 @@ Default value is nil</p>
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>server port information of the baseUrl used for REST request.</p>
+
+<p>Default value is 443.</p>
 			</div>
 			
 
@@ -550,6 +528,8 @@ Default value is nil</p>
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>port information used in web socket connection creation.</p>
+
+<p>Default value is 443.</p>
 			</div>
 			
 
@@ -601,59 +581,6 @@ Default value is nil</p>
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>ip information used in web socket connection creation.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/securedWSProtocol" title="securedWSProtocol"></a>
-	<h3 class="method-title"><code><a href="#//api/name/securedWSProtocol">&nbsp;&nbsp;securedWSProtocol</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Web socket protocol selection.
-Default value is TRUE.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL securedWSProtocol</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>3.0.3</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Web socket protocol selection.
-Default value is TRUE.</p>
 			</div>
 			
 
@@ -764,112 +691,6 @@ NSString *cerPath = &#91;&#91;NSBundle mainBundle&#92; pathForResource:@&ldquo;m
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>LoggingDelegate reference used by LogManager.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/requestProtocolHttp" title="requestProtocolHttp"></a>
-	<h3 class="method-title"><code><a href="#//api/name/requestProtocolHttp">&nbsp;&nbsp;requestProtocolHttp</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Is Request Protocol http.
-Default return value is FALSE (meaning use HTTPS)</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL requestProtocolHttp</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>2.0.0</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Is Request Protocol http.
-Default return value is FALSE (meaning use HTTPS)</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/dtls" title="dtls"></a>
-	<h3 class="method-title"><code><a href="#//api/name/dtls">&nbsp;&nbsp;dtls</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Is DTLS enabled.
-Default value is FALSE</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL dtls</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>2.0.0</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Is DTLS enabled.
-Default value is FALSE</p>
 			</div>
 			
 
@@ -1097,263 +918,6 @@ if “iceOption” is selected as Vanilla ICE or used default value.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/kandyVersion" title="kandyVersion"></a>
-	<h3 class="method-title"><code><a href="#//api/name/kandyVersion">&nbsp;&nbsp;kandyVersion</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Version number of Kandy.
-Default value is &ldquo;none&rdquo; or nil</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSString *kandyVersion</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>3.0.4</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Version number of Kandy.
-Default value is &ldquo;none&rdquo; or nil</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/kandyToken" title="kandyToken"></a>
-	<h3 class="method-title"><code><a href="#//api/name/kandyToken">&nbsp;&nbsp;kandyToken</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Identifier of authenticated session for Kandy.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSString *kandyToken</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>3.0.4</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Identifier of authenticated session for Kandy.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/deviceId" title="deviceId"></a>
-	<h3 class="method-title"><code><a href="#//api/name/deviceId">&nbsp;&nbsp;deviceId</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Identifier of device ID for Kandy.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSString *deviceId</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>4.4.7.2</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Identifier of device ID for Kandy.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/deviceNativeId" title="deviceNativeId"></a>
-	<h3 class="method-title"><code><a href="#//api/name/deviceNativeId">&nbsp;&nbsp;deviceNativeId</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Identifier of device Native Id for Kandy.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSString *deviceNativeId</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>4.4.7.2</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Identifier of device Native Id for Kandy.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/sendKandyTokenInRestHeader" title="sendKandyTokenInRestHeader"></a>
-	<h3 class="method-title"><code><a href="#//api/name/sendKandyTokenInRestHeader">&nbsp;&nbsp;sendKandyTokenInRestHeader</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Configuration to send <a href="#//api/name/kandyToken">kandyToken</a> in rest request header or not.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL sendKandyTokenInRestHeader</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>4.4.7.2</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Configuration to send <a href="#//api/name/kandyToken">kandyToken</a> in rest request header or not.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/videoResolution" title="videoResolution"></a>
 	<h3 class="method-title"><code><a href="#//api/name/videoResolution">&nbsp;&nbsp;videoResolution</a></code>
 </h3>
@@ -1368,7 +932,7 @@ Default value is &ldquo;none&rdquo; or nil</p>
 				<p>Sets initial video resolution for video
 Value should be one of the AVCaptureSessionPreset strings.</p>
 
-<p>If camera does not support the specified value or videoResolution value is to nil medium resolution will be used</p>
+<p>If videoResolution value is to nil high resolution (720p) will be used by default.</p>
 			</div>
 			
 		    
@@ -1512,161 +1076,6 @@ false for Connection:  close</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/subscriptionLocalization" title="subscriptionLocalization"></a>
-	<h3 class="method-title"><code><a href="#//api/name/subscriptionLocalization">&nbsp;&nbsp;subscriptionLocalization</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Subscription localization parameter</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly) NSString *subscriptionLocalization</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>2.0.0</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Subscription localization parameter</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/connectionType" title="connectionType"></a>
-	<h3 class="method-title"><code><a href="#//api/name/connectionType">&nbsp;&nbsp;connectionType</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Type of connection to be used for notification mechanism.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) TypeOfConnection connectionType</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>2.0.0</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Type of connection to be used for notification mechanism.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/stateChangesHandler" title="stateChangesHandler"></a>
-	<h3 class="method-title"><code><a href="#//api/name/stateChangesHandler">&nbsp;&nbsp;stateChangesHandler</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Manages app state changes (ex: entering background or foreground)
-This is an instance of ApplicationStateChangesHandler</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) id _Nullable stateChangesHandler</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>2.0.0</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Manages app state changes (ex: entering background or foreground)
-This is an instance of ApplicationStateChangesHandler</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/serverCertificate" title="serverCertificate"></a>
 	<h3 class="method-title"><code><a href="#//api/name/serverCertificate">&nbsp;&nbsp;serverCertificate</a></code>
 </h3>
@@ -1726,57 +1135,6 @@ NSString *cerPath = &#91;&#91;NSBundle mainBundle&#92; pathForResource:@&ldquo;m
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/auditEnable" title="auditEnable"></a>
-	<h3 class="method-title"><code><a href="#//api/name/auditEnable">&nbsp;&nbsp;auditEnable</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Sends audit message to call control.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL auditEnable</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>2.0.0</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Sends audit message to call control.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/auditFrequency" title="auditFrequency"></a>
 	<h3 class="method-title"><code><a href="#//api/name/auditFrequency">&nbsp;&nbsp;auditFrequency</a></code>
 </h3>
@@ -1811,6 +1169,8 @@ NSString *cerPath = &#91;&#91;NSBundle mainBundle&#92; pathForResource:@&ldquo;m
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>Sending audit message frequency (seconds)</p>
+
+<p>Default value is 30.</p>
 			</div>
 			
 
@@ -1932,8 +1292,8 @@ MOH issues on PSTN calls</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/replaceCodecSet" title="replaceCodecSet"></a>
-	<h3 class="method-title"><code><a href="#//api/name/replaceCodecSet">&nbsp;&nbsp;replaceCodecSet</a></code>
+	<a name="//api/name/codecPayloadTypeSet" title="codecPayloadTypeSet"></a>
+	<h3 class="method-title"><code><a href="#//api/name/codecPayloadTypeSet">&nbsp;&nbsp;codecPayloadTypeSet</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1943,12 +1303,12 @@ MOH issues on PSTN calls</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Sets ReplaceCodecSet to modify payload numbers of audio and video codecs</p>
+				<p>Sets codecPayloadTypeSet to modify payload numbers of audio and video codecs</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSArray&lt;SMCodecToReplace*&gt; *replaceCodecSet</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSArray&lt;SMCodecToReplace*&gt; *codecPayloadTypeSet</code></div>
 
 		    
 			
@@ -1965,7 +1325,7 @@ MOH issues on PSTN calls</p>
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>Sets ReplaceCodecSet to modify payload numbers of audio and video codecs</p>
+				<p>Sets codecPayloadTypeSet to modify payload numbers of audio and video codecs</p>
 			</div>
 			
 
@@ -2103,7 +1463,8 @@ anything.</p>
 			
 			<div class="method-subsection brief-description">
 				<p>Sets fps value of the video source
-If invalid value is set, it will cause no video on call</p>
+If invalid value is set, it will cause no video on call
+Default value is 30.</p>
 			</div>
 			
 		    
@@ -2126,7 +1487,8 @@ If invalid value is set, it will cause no video on call</p>
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>Sets fps value of the video source
-If invalid value is set, it will cause no video on call</p>
+If invalid value is set, it will cause no video on call
+Default value is 30.</p>
 			</div>
 			
 
@@ -2231,6 +1593,8 @@ Default value is 600 and can be between 40 and 6000</p>
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>Sets log level of Mobile SDK</p>
+
+<p>If not set, TRACE level is used as default.</p>
 			</div>
 			
 
@@ -2245,57 +1609,6 @@ Default value is 600 and can be between 40 and 6000</p>
 					
 				</ul>
 			</div>
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/supportedCallFeatures" title="supportedCallFeatures"></a>
-	<h3 class="method-title"><code><a href="#//api/name/supportedCallFeatures">&nbsp;&nbsp;supportedCallFeatures</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Includes supported features for call</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSArray *supportedCallFeatures</code></div>
-
-		    
-			
-
-			
-
-			
-			<div class="method-subsection availability">
-				<h4 class="method-subtitle parameter-title">Availability</h4>
-				<p>3.1.2</p>
-			</div>
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Includes supported features for call</p>
-			</div>
-			
-
-			
-
 			
 
 			
@@ -2737,6 +2050,59 @@ Default value will be AudioSupported that means Slow Start Incoming Calls will b
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/isRingingFeedbackEnabled" title="isRingingFeedbackEnabled"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isRingingFeedbackEnabled">&nbsp;&nbsp;isRingingFeedbackEnabled</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Ringing feedback configuration parameter.
+Default value is true.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL isRingingFeedbackEnabled</code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>5.14.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Ringing feedback configuration parameter.
+Default value is true.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMConfiguration.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/getInstance" title="getInstance"></a>
 	<h3 class="method-title"><code><a href="#//api/name/getInstance">+&nbsp;getInstance</a></code>
 </h3>
@@ -2807,7 +2173,7 @@ Default value will be AudioSupported that means Slow Start Incoming Calls will b
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 GENBAND. All rights reserved. Updated: 2020-12-07</p>
+						<p class="copyright">Copyright &copy; 2020 GENBAND. All rights reserved. Updated: 2020-12-30</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>

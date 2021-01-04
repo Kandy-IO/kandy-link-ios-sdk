@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.13.0
+ * @version: 5.14.0
  *
  */
 
@@ -26,16 +26,6 @@
 @class SMAudioCodecConfiguration;
 @class SMCodecToReplace;
 @class SMCallReceiveBandwidthLimit;
-
-/**
- * Supported feature constant for EarlyMedia
- */
-extern NSString * _Nonnull const kEarlyMedia;
-
-/**
- * Supported feature constant for RingingFeedback
- */
-extern NSString * _Nonnull const kRingingFeedback;
 
 /**
  * @brief Utility class for configuration management.
@@ -69,6 +59,8 @@ extern NSString * _Nonnull const kRingingFeedback;
 /**
  * server port information of the baseUrl used for REST request.
  *
+ * Default value is 443.
+ *
  * @since 2.0.0
  */
 @property (nonatomic, strong) NSString * _Nullable restServerPort;
@@ -90,6 +82,8 @@ extern NSString * _Nonnull const kRingingFeedback;
 /**
  * port information used in web socket connection creation.
  *
+ * Default value is 443.
+ *
  * @since 2.0.0
  */
 @property (nonatomic, strong) NSString * _Nullable webSocketServerPort;
@@ -100,14 +94,6 @@ extern NSString * _Nonnull const kRingingFeedback;
  * @since 2.0.0
  */
 @property (nonatomic, strong) NSString * _Nullable webSocketServerIP;
-
-/**
- * Web socket protocol selection.
- * Default value is TRUE.
- *
- * @since 3.0.3
- */
-@property (nonatomic) BOOL securedWSProtocol;
 
 /**
  * Web socket Self signed certificate file data. Can be fetched from a file or string
@@ -126,22 +112,6 @@ extern NSString * _Nonnull const kRingingFeedback;
  * @since 2.0.0
  */
 @property (nonatomic, strong) id<SMLoggingDelegate> _Nonnull logger;
-
-/**
- * Is Request Protocol http.
- * Default return value is FALSE (meaning use HTTPS)
- *
- * @since 2.0.0
- */
-@property (nonatomic)BOOL requestProtocolHttp;
-
-/**
- * Is DTLS enabled.
- * Default value is FALSE
- *
- * @since 2.0.0
- */
-@property (nonatomic)BOOL dtls;
 
 /**
  * Sets the ice options as ICE_VANILLA or ICE_TRICKLE.
@@ -175,46 +145,10 @@ extern NSString * _Nonnull const kRingingFeedback;
 @property (nonatomic, strong) NSString * _Nullable defaultICEPassword;
 
 /**
- * Version number of Kandy.
- * Default value is "none" or nil
- *
- * @since 3.0.4
- */
-@property (nonatomic, strong) NSString * _Nullable kandyVersion;
-
-/**
- * Identifier of authenticated session for Kandy.
- *
- * @since 3.0.4
- */
-@property (nonatomic, strong) NSString * _Nullable kandyToken;
-
-/**
- * Identifier of device ID for Kandy.
- *
- * @since 4.4.7.2
- */
-@property (nonatomic, strong) NSString * _Nullable deviceId;
-
-/**
- * Identifier of device Native Id for Kandy.
- *
- * @since 4.4.7.2
- */
-@property (nonatomic, strong) NSString * _Nullable deviceNativeId;
-
-/**
- * Configuration to send kandyToken in rest request header or not.
- *
- * @since 4.4.7.2
- */
-@property(nonatomic) BOOL  sendKandyTokenInRestHeader;
-
-/**
  * @brief Sets initial video resolution for video
  * Value should be one of the AVCaptureSessionPreset strings.
  *
- * If camera does not support the specified value or videoResolution value is to nil medium resolution will be used
+ * If videoResolution value is to nil high resolution (720p) will be used by default.
  * @see AVCaptureSessionPreset
  *
  * @since 2.0.0
@@ -238,29 +172,6 @@ extern NSString * _Nonnull const kRingingFeedback;
 @property (nonatomic, strong) NSNumber * _Nullable subscriptionExpires;
 
 /**
- * Subscription localization parameter
- *
- * @since 2.0.0
- */
-@property (nonatomic, strong, readonly) NSString * _Nullable subscriptionLocalization;
-
-/**
- * Type of connection to be used for notification mechanism.
- *
- * @since 2.0.0
- */
-@property (nonatomic) TypeOfConnection connectionType;
-
-/**
- * Manages app state changes (ex: entering background or foreground)
- * This is an instance of ApplicationStateChangesHandler
- *
- * @see ApplicationStateChangesHandler
- * @since 2.0.0
- */
-@property(nonatomic, strong) id _Nullable stateChangesHandler;
-
-/**
  * Server certificate to be used in HTTPS connection.Certificate must be .DER format
  * @code
  * NSString *cerPath = &#91;&#91;NSBundle mainBundle&#92; pathForResource:@"myOwnCertificate" ofType:@"der"&#92;;
@@ -272,14 +183,9 @@ extern NSString * _Nonnull const kRingingFeedback;
 @property(nonatomic, strong) NSData * _Nullable serverCertificate;
 
 /**
- * Sends audit message to call control.
- *
- * @since 2.0.0
- */
-@property(nonatomic) BOOL  auditEnable;
-
-/**
  * Sending audit message frequency (seconds)
+ *
+ * Default value is 30.
  *
  * @since 2.0.0
  */
@@ -301,11 +207,11 @@ extern NSString * _Nonnull const kRingingFeedback;
 @property (nonatomic, strong) SMCodecSet * _Nullable preferredCodecSet;
 
 /**
- * Sets ReplaceCodecSet to modify payload numbers of audio and video codecs
+ * Sets codecPayloadTypeSet to modify payload numbers of audio and video codecs
  *
  * @since 4.5.8
  */
-@property (nonatomic, strong) NSArray<SMCodecToReplace *> * _Nullable replaceCodecSet;
+@property (nonatomic, strong) NSArray<SMCodecToReplace *> * _Nullable codecPayloadTypeSet;
 
 /**
  * Sets the camera orientation type of video capturer. 
@@ -329,6 +235,7 @@ extern NSString * _Nonnull const kRingingFeedback;
 /**
  * Sets fps value of the video source
  * If invalid value is set, it will cause no video on call
+ * Default value is 30.
  *
  * @since 4.5.1.2
  */
@@ -346,18 +253,13 @@ extern NSString * _Nonnull const kRingingFeedback;
 /**
  * Sets log level of Mobile SDK
  *
+ * If not set, TRACE level is used as default.
+ *
  * @see SMLogLevel
  *
  * @since 3.0.2
  */
 @property (nonatomic) SMLogLevel logLevel;
-
-/**
- * Includes supported features for call
- *
- * @since 3.1.2
- */
-@property (nonatomic, strong) NSArray * _Nullable supportedCallFeatures;
 
 /**
  * Specifies timeout value of ICE Collection
@@ -423,6 +325,14 @@ extern NSString * _Nonnull const kRingingFeedback;
 * @since 5.7.0
 */
 @property (nonatomic) BOOL websocketWithTokenAuthentication;
+
+/**
+ Ringing feedback configuration parameter.
+ Default value is true.
+ 
+ @since 5.14.0
+ */
+@property (nonatomic) BOOL isRingingFeedbackEnabled;
 
 /**
  * This method returns (creates if necessary) singleton instance of Configuration class
