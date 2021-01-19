@@ -50,7 +50,7 @@ Compatible iOS versions :
 
 Compatible XCode Versions :
 
-* XCode 12.x+
+* XCode 12.x+ (iOS Simulator arm64 architecture is ***not supported*** yet)
 
 Compatible KandyLink Server versions :
 
