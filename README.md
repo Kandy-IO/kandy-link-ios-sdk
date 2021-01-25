@@ -52,6 +52,14 @@ Compatible XCode Versions :
 
 * XCode 12.x+ (iOS Simulator arm64 architecture is ***not supported*** yet)
 
+Known Issues in XCode 12.3 :
+- When building your project you will get these errors 
+</br>`Building for iOS Simulator, but the linked and embedded framework ‘MobileSDK.framework’ was built for iOS + iOS Simulator.` 
+</br>`Building for iOS Simulator, but the linked and embedded framework ‘WebRTC.framework’ was built for iOS + iOS Simulator.`
+
+Workaround :
+- Set `Validate Workspace` to `YES` in the Build Settings tab to avoid these errors
+
 Compatible KandyLink Server versions :
 
 * Kandy Link 4.6.1
