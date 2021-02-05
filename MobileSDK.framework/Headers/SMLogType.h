@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.14.0
+ * @version: 5.15.0
  *
  */
 
@@ -24,7 +24,6 @@
  * WARNING --> potentially harmful situations
  * INFO --> informational messages that highlight the progress of the application at coarse-grained level
  * TRACE --> finer-grained informational events
- * VERBOSE --> method start and finishes
  * TRACE_WEBRTC --> enables webrtc sensitive logging
  *
  * @since 2.0.0
@@ -42,9 +41,6 @@ typedef NS_ENUM(NSInteger, SMLogLevel) {
     
     /** Finer-grained informational events */
     TRACE NS_SWIFT_NAME(trace),
-    
-    /** Method start and finishes */
-    VERBOSE NS_SWIFT_NAME(verbose),
     
     /** Enables webrtc sensitive logging */
     TRACE_WEBRTC NS_SWIFT_NAME(traceWebRTC)

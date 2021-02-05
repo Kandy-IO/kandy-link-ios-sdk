@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.14.0
+ * @version: 5.15.0
  *
  */
 
@@ -19,6 +19,7 @@
 #import "SMLogType.h"
 #import "SMConnectionType.h"
 #import "SMLoggingDelegate.h"
+#import "SMRingingFeedbackOptions.h"
 
 @class SMICEServers;
 @class SMCodecSet;
@@ -197,7 +198,7 @@
  *
  * @since 4.5.5
  */
-@property(nonatomic) BOOL  forceDisableMediaOnHold;
+@property(nonatomic) BOOL forceDisableMediaOnHold;
 
 /**
  * codecSet stores available codecs for audio and video.
@@ -332,7 +333,16 @@
  
  @since 5.14.0
  */
-@property (nonatomic) BOOL isRingingFeedbackEnabled;
+
+@property(nonatomic) BOOL isRingingFeedbackEnabled __deprecated_msg("Use ringingFeedbackOption instead");
+
+/**
+ *Ringing feedback configuration parameter.
+ *Default value is CLIENT.
+ *
+ *@since 5.15.0
+ */
+@property(nonatomic) SMRingingFeedbackOptions ringingFeedbackOption;
 
 /**
  * This method returns (creates if necessary) singleton instance of Configuration class

@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.14.0
+ * @version: 5.15.0
  *
  */
 
@@ -118,12 +118,22 @@
                  completion:(nonnull void (^)(id<SMOutgoingCallDelegate> _Nullable call, SMMobileError * _Nullable error))callHandler;
 
 /**
+ @brief Rotates camera to specified orientation.
+ Calling this method with parameters UIDeviceOrientationUnknown, UIDeviceOrientationFaceUpand UIDeviceOrientationFaceDown will not cause any changes on the camera.
+ 
+ @param orientation  UIDeviceOrientation value that will be used for camera orientation.
+ 
+ @since 5.14.0
+ */
+-(void) rotateCameraWithOrientation:(UIDeviceOrientation) orientation;
+
+/**
  * @brief Rotates camera to specified orientation
  *
  * @param orientation AVCaptureVideoOrientation value that will be used for camera orientation
  * @since 2.0.0
  */
--(void) rotateCameraOrientationToPosition:(AVCaptureVideoOrientation) orientation;
+-(void) rotateCameraOrientationToPosition:(AVCaptureVideoOrientation) orientation __deprecated_msg("Use rotateCameraWithOrientation: instead");
 
 /**
  * Returns the active call objects.

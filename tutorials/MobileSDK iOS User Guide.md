@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **December 30, 2020**
+Revision Date: **February 04, 2021**
 
 ## Mobile SDK overview
 
@@ -235,15 +235,6 @@ func manageConfiguration() {
 
 Logging provides a way to trace process execution. The Log Manager is defined to handle logging requests made by the Mobile SDK. The Log Manager does not process the logging messages, rather it receives logging message requests and delivers them to the logger defined in the Configuration utility (logger is initially "null"; you must set an object which conforms to LoggingInterface methods in the Configuration utility).
 
-The Mobile SDK supports the following log levels:
-
-* ERROR (all exceptions are logged at this level)
-* WARNING
-* INFO (used for tracing issues)
-* TRACE
-* VERBOSE
-* TRACE_WEBRTC
-
 ###### Example: Define logger
 
 <!-- tabs:start -->
@@ -359,6 +350,25 @@ func initializeAndUseLogger() {
 }
 ```
 <!-- tabs:end -->
+##### Log Levels
+###### Trace_WebRTC
+The application developer should use this level to view all webrtc and SDK logs.
+###### Trace
+This is really fine-grained information. When you're at this level, you're basically looking to capture every detail you possibly can about the application's behavior. Think of this level as the method you should use for all the logging you will do while tracking a specific problem and most likely get rid of it once you find the problem.
+
+App developer should use this level to view all messages on the sdk side. The logs coming from this level will lead to the solution of the SDK error. However, it should be noted that webrtc logs will not be displayed at this level.
+###### Info
+Info messages correspond to normal application behavior. They provide the skeleton of what happened. A service started or stopped. The notification engine started, you got a new message or network status changed. Think of it as all the messages you'd like to see in the log when creating call for example, or in other words - anything that might help you resolve or at least identify a problem without looking in the source code.
+
+Logs at this level can either solve the problem or have ideas to solve the problem, but this is not guaranteed. It contains less information than the trace level.However, it should be noted that webrtc logs will not be displayed at this level.
+###### Warning
+Use this log level to indicate that you might have a problem and that you've detected an unusual situation. Maybe you were trying to invoke a service and it failed a couple of times before connecting on an automatic retry or you were trying to start a service which already running. It's unexpected and unusual, but no real harm done, and it's not known whether the issue will persist or recur. The application can tolerate warning messages, but they should always be justified and examined.
+
+This level can be use to see errors and warnings from Sdk. Developer can view where the error is, but may not be able to find root cause of an error.Webrtc logs will not be displayed at this level
+###### Error
+An error is a serious issue and represents the failure of something important going on in your application. No system can tolerate items logged on this level. Maybe you've got something like dropped WebSocket connections or the inability to access a service.
+
+This level can be use to see only errors from Sdk. Developer can view where the error is, but may not be able to find root cause of an error.Webrtc logs will not be displayed at this level
 
 
 <div class="page-break"></div>
@@ -1907,10 +1917,10 @@ Smartphones can change the screen view to portrait or landscape based on how the
 * CAMERA_ORIENTATION_USES_DEVICE : Video orientation changes when the user rotates their device, even if the application interface orientation is not changed.
 * CAMERA_ORIENTATION_USES_STATUS_BAR : Video orientation changes according to the application interface orientation.
 To change video orientation manually, call rotateCameraOrientationToPosition. The following values are supported:
-* AVCaptureVideoOrientationLandscapeLeft
-* AVCaptureVideoOrientationPortrait
-* AVCaptureVideoOrientationLandscapeRight
-* AVCaptureVideoOrientationPortraitUpsideDown
+* UIDeviceOrientationPortrait
+* UIDeviceOrientationPortraitUpsideDown
+* UIDeviceOrientationLandscapeLeft
+* UIDeviceOrientationLandscapeRight
 
 <div class="page-break"></div>
 
@@ -1934,7 +1944,7 @@ To change video orientation manually, call rotateCameraOrientationToPosition. Th
 - (void)changeOrientationToLanscape
 {
     [[[SMServiceProvider getInstance] getCallService]
-    rotateCameraOrientationToPosition:AVCaptureVideoOrientationLandscapeLeft];
+    rotateCameraWithOrientation:UIDeviceOrientationLandscapeLeft];
 }
 @end
 ```
@@ -1952,7 +1962,7 @@ class CallViewController: UIViewController
 
     // to change camera orientation to landscape mode, you can define a method //like this
     func changeOrientationToLanscape() {
-        SMServiceProvider.getInstance().getCallService().rotateCameraOrientation(toPosition: AVCaptureVideoOrientationLandscapeLeft)
+        SMServiceProvider.getInstance().getCallService().rotateCamera(with: UIDeviceOrientation.landscapeLeft)
     }
 
 }
@@ -2382,27 +2392,47 @@ SMConfiguration.getInstance().iceOption = .trickle
 
 #### Ringing feedback
 
-If preferred, when remote party receives an incoming call, callee can notify caller about received call by calling `sendRingingFeedback` method. To enable, `isRingingFeedbackEnabled` parameter should be set to YES in  `SMConfiguration` before starting registration.
+If the receiving party prefers the information that it has successfully received the call, it can notify the calling party by the `ringingFeedbackOption` method.
 
-When ringing feedback is disabled, SPiDR/Kandy Link sends the Ringing notification to the caller immediately after sending the callStart notification to the callee.
+Possible values of the ringingFeedbackOption configuration parameter are NONE, SERVER and CLIENT.
+
+When ringingFeedbackOption is SERVER, SPiDR/Kandy Link sends the Ringing notification to the caller immediately after sending the callStart notification to the callee.
+
+When ringingFeedbackOption is NONE, SPiDR / Kandy Link will not send ringing feedback.
+
+* NONE: There will be no ringing feedback.
+
+* SERVER: Server based ringing feedback.
+
+* CLIENT: Client based ringing feedback.
 
 <div class="page-break"></div>
 
-###### Example: Enabling ringing feedback feature
+###### Example: Setting ringing feedback feature
 
 <!-- tabs:start -->
 
 #### ** Objective-C Code **
 
 ```objectivec
-[[SMConfiguration getInstance] setIsRingingFeedbackEnabled:YES];
+// There will be no ringing feedback.
+[[SMConfiguration getInstance] setRingingFeedbackOption:NONE];
+// Server based ringing feedback.
+[[SMConfiguration getInstance] setRingingFeedbackOption:SERVER];
+// Client based ringing feedback.
+[[SMConfiguration getInstance] setRingingFeedbackOption:CLIENT];
 //User can register now
 ```
 
 #### ** Swift Code **
 
 ```swift
-SMConfiguration.getInstance().isRingingFeedbackEnabled = YES
+// There will be no ringing feedback.
+SMConfiguration.getInstance().ringingFeedbackOption = .none
+// Server based ringing feedback.
+SMConfiguration.getInstance().ringingFeedbackOption = .server
+// Client based ringing feedback.
+SMConfiguration.getInstance().ringingFeedbackOption = .client
 //User can register now
 ```
 <!-- tabs:end -->
@@ -3490,6 +3520,7 @@ If there is a bandwidth or CPU limitation, WebRTC will decrease video resolution
 <hr/>
 
 ###### Example: Retrieving statistics
+
 It is recommended to call this method every 10 seconds as long as call continues.
 
 <!-- tabs:start -->
@@ -4297,6 +4328,10 @@ This section contains usage of all configurations that Mobile SDK provides.
     //The default is ICE_VANILLA
     configuration.iceOption = ICE_TRICKLE;
 
+    //Set supported call features (ringing feedback)
+    //SPiDR server must support this feature
+    configuration.ringingFeedbackOption = CLIENT;
+
     //Configure WebRTC audio sessions
     SMAudioSessionConfiguration *audioSessionConfig = [[SMAudioSessionConfiguration alloc] init];
     audioSessionConfig.mode = AVAudioSessionModeVideoChat;
@@ -4352,6 +4387,10 @@ func manageConfiguration() {
     //Set one of the ice candidate negotiation types (ICE_VANILLA or ICE_TRICKLE)
     //The default is ICE_VANILLA
     configuration.iceOption = .trickle;
+
+    //Set supported call features (ringing feedback)
+    //SPiDR server must support this feature
+    configuration.ringingFeedbackOption = CLIENT;
 
     //Configure WebRTC audio sessions
     let audioSessionConfig = SMAudioSessionConfiguration()
