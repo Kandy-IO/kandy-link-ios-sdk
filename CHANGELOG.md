@@ -5,6 +5,12 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.17.0 - 2021-03-26
+
+### Added
+- XCFramework support was added
+- `(NSArray<NSDictionary *> *) getAvailableCodecs:(SMCodecType)codecType` added to SMCallDelegate class in order to get available codec attributes.
+
 ## 5.16.0 - 2021-02-26
 
 ### Removed

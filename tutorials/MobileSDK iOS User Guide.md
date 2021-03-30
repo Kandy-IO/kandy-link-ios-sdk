@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **February 26, 2021**
+Revision Date: **March 26, 2021**
 
 ## Mobile SDK overview
 
@@ -81,8 +81,9 @@ end
 If you have a trouble with getting latest version of Kandy Link Mobile SDK plaese run these suggested commands [here](https://gist.github.com/mbinna/4202236) in project directory where Podfile is located.
 
 #### Manual Installation
+**IMPORTANT:** This installation section applies to **Kandy Link iOS SDK** versions prior to v5.17.0. If you are using a more recent version, follow the instructions [here](?id=manual-installation-after-v5170).
 
-Before those steps you need to download **Kandy Link iOS SDK** framework file from [this link](https://raw.githubusercontent.com/Kandy-IO/kandy-link-ios-sdk/$SDK_VERSION$/dist/MobileSDK_$SDK_VERSION$.zip)
+Before those steps you need to download **Kandy Link iOS SDK** framework file from [this link](https://raw.githubusercontent.com/Kandy-IO/kandy-link-ios-sdk/$SDK_VERSION$/dist/MobileSDK_$SDK_VERSION$.zip).
 
 1. Navigate to Build Phases and scroll down to Link binary with libraries.
 2. Add MobileSDK.framework under Link binary with libraries.
@@ -107,6 +108,36 @@ Before those steps you need to download **Kandy Link iOS SDK** framework file fr
 ![alt text](images/get_started_3.png "")
 
 6. "-ObjC" flag should be added to "Other Linker Flags" options under the "Build Settings".
+
+![alt text](images/get_started_4.png "")
+
+### Manual Installation (After v5.17.0)
+Support for XCFramework has been added to **Kandy Link iOS SDK** with the v5.17.0 release. You can install **Kandy Link iOS SDK** as XCFramework by following the steps below. (More information about XCFramework, see [link](https://help.apple.com/xcode/mac/11.4/#/dev6f6ac218b)).
+
+First of all, you must have the **Kandy Link iOS SDK** XCFramework file for installation. You can download from [this link](https://raw.githubusercontent.com/Kandy-IO/kandy-link-ios-sdk/$SDK_VERSION$/dist/MobileSDK_$SDK_VERSION$.zip).
+
+1. Go to project settings and navigate to **General**.
+2. Add **MobileSDK.xcframework** and **WebRTC.xcframework** under **Framework, Libraries, and Embedded Content** section.
+
+![Adding MobileSDK XCFramework to Project](images/get_started_5.png "")
+
+3. Add the following iOS SDK frameworks to your application:
+
+* AvFoundation.framework
+* SystemConfiguration.framework
+* GLKit.framework
+* VideoToolbox.framework
+* AudioToolbox.framework
+* PushKit.framework
+* libc++.tbd
+* libicucore.tbd
+* libz.tbd
+
+4. Mobile SDK doesn't support bitcode, under the "Build Settings" search for "Bitcode", and change "Enable Bitcode" option to NO.
+
+![alt text](images/get_started_3.png "")
+
+5. "-ObjC" flag should be added to "Other Linker Flags" options under the "Build Settings".
 
 ![alt text](images/get_started_4.png "")
 
