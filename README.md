@@ -14,6 +14,7 @@
 
 ```ruby
 ...
+use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
     pod 'KandyLinkMobileSDK', '~> 5.17.0'
