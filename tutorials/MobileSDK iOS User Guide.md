@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **March 26, 2021**
+Revision Date: **April 26, 2021**
 
 ## Mobile SDK overview
 
@@ -60,7 +60,6 @@ This section contains the required steps for beginning your mobile application d
 
 ```ruby
 ...
-use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
     pod 'KandyLinkMobileSDK', '~> $SDK_VERSION$ '
@@ -2233,6 +2232,8 @@ The SMAudioSessionConfiguration class contains three properties used to define t
 The following example shows configuring and setting the audio session for a video call using the default speaker. Set the audio session before creating the call.
 
 **Note**: For voice calls, recommended Audio Session Mode is `AVAudioSessionModeVoiceChat`, and `AVAudioSessionModeVideoChat` for video calls.
+
+**Advice**: In order to not have a problem with AudioSession, we recommend to implement AudioSessionConfiguration into the `reportNewIncomingCall` function for CallKit integration.
 
 ###### Example: Configuring and setting the audio session
 

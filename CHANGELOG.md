@@ -5,6 +5,11 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.18.0 - 2021-04-26
+
+### Removed
+- BlackBerry Dynamics Support was removed.
+
 ## 5.17.0 - 2021-03-26
 
 ### Added
