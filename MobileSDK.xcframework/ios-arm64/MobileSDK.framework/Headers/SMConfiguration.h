@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.18.0
+ * @version: 5.19.0
  *
  */
 
@@ -313,11 +313,11 @@
 @property (nonatomic) BOOL isPushEnabled;
 
 /**
-* Authentication Token Configuration Parameter
+* Bearer Token Configuration Parameter
 *
 * @since 5.7.0
 */
-@property (nonatomic) NSString * _Nullable authToken;
+@property (nonatomic) NSString * _Nullable bearerToken;
 
 
 /**

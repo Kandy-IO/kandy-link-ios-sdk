@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.18.0
+ * @version: 5.19.0
  *
  */
 
@@ -82,6 +82,9 @@ typedef NS_ENUM(NSInteger, SMErrorTypes) {
     
     /** Method called in invalid state */
     ERROR_INVALID_STATE NS_SWIFT_NAME(invalidState),
+    
+    /** Registration token is expired or invalid */
+    ERROR_TOKEN_EXPIRED_OR_INVALID NS_SWIFT_NAME(tokenExpiredOrInvalid),
     
     /** Websocket could not be connected */
     ERROR_WEBSOCKET_TIMEOUT NS_SWIFT_NAME(websocketTimeout),
