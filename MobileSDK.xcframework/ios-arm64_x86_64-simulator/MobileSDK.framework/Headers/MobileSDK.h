@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.19.0
+ * @version: 5.20.0
  *
  */
 
@@ -40,6 +40,7 @@ FOUNDATION_EXPORT const unsigned char MobileSDKVersionString[];
 //Utilities
 #import <MobileSDK/SMMobileError.h>
 #import <MobileSDK/SMConfiguration.h>
+#import <MobileSDK/SMScalingType.h>
 #import <MobileSDK/SMCameraModes.h>
 #import <MobileSDK/SMLoggingDelegate.h>
 #import <MobileSDK/SMUriAddress.h>

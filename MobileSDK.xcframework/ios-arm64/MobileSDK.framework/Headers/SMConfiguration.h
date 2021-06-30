@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.19.0
+ * @version: 5.20.0
  *
  */
 
@@ -20,6 +20,7 @@
 #import "SMConnectionType.h"
 #import "SMLoggingDelegate.h"
 #import "SMRingingFeedbackOptions.h"
+#import "SMScalingType.h"
 
 @class SMICEServers;
 @class SMCodecSet;
@@ -224,6 +225,12 @@
  */
 @property(nonatomic) SMCameraOrientationMode orientationMode;
 
+/**
+ * Scaling type parameter for local and remote video views.
+ *
+ * @since 5.20.0
+ */
+@property(nonatomic) SMScalingType scalingType;
 
 /**
  * Sets the default camera position mode

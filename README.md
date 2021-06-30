@@ -17,7 +17,7 @@
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'KandyLinkMobileSDK', '~> 5.18.0'
+    pod 'KandyLinkMobileSDK', '~> 5.20.0'
 end
 
 post_install do |installer|
@@ -41,7 +41,7 @@ The information about tutorials and documents can be found in the links below
 
 * Documents: [API Docs](https://kandy-io.github.io/kandy-link-ios-sdk/docs)
 
-* Tutorials: Choose your configuration ( [Kandy-US](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=spidr-ucc.genband.com&WEBSOCKETFQDN=spidr-ucc.genband.com&ICESERVER1=turn-ucc-1.genband.com&ICESERVER2=turn-ucc-2.genband.com) | [Kandy-EMEA](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=spidr-em.genband.com&WEBSOCKETFQDN=spidr-em.genband.com&ICESERVER1=turn-em-1.genband.com&ICESERVER2=turn-em-2.genband.com) | [Kandy-UAE](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=ct-webrtc.etisalat.ae&WEBSOCKETFQDN=ct-webrtc.etisalat.ae&ICESERVER1=ct-turn1.etisalat.ae&ICESERVER2=ct-turn2.etisalat.ae) )
+* Tutorials: Choose your configuration ( [Kandy-US](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=webrtc-na.kandy.io&WEBSOCKETFQDN=webrtc-na.kandy.io&ICESERVER1=turn-na-1.kandy.io&ICESERVER2=turn-na-2.kandy.io) | [Kandy-EMEA](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=webrtc-em.kandy.io&WEBSOCKETFQDN=webrtc-em.kandy.io&ICESERVER1=turn-em-1.kandy.io&ICESERVER2=turn-em-2.kandy.io) | [Kandy-UAE](https://kandy-io.github.io/kandy-link-ios-sdk/tutorials/?SUBSCRIPTIONFQDN=ct-webrtc.etisalat.ae&WEBSOCKETFQDN=ct-webrtc.etisalat.ae&ICESERVER1=ct-turn1.etisalat.ae&ICESERVER2=ct-turn2.etisalat.ae) )
 
 ## Compatibility
 
@@ -55,9 +55,9 @@ Compatible XCode Versions :
 
 Compatible KandyLink Server versions :
 
-* Kandy Link 4.7.1
+* Kandy Link 4.7.1 Patch 6
 
-* Kandy Link 4.8
+* Kandy Link 4.8 Patch 4
 
 Tested on :
 

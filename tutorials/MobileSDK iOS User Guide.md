@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **April 26, 2021**
+Revision Date: **June 29, 2021**
 
 ## Mobile SDK overview
 
@@ -481,6 +481,109 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
         let regService = SMServiceProvider.getInstance().getRegistrationService()
         regService.registrationApplicationDelegate = self
         regService.register(expirationTime: 3600) { (error) in
+            if let error = error {
+                // Handle registration error
+                return
+            }
+
+            // Handle registration success
+            // Developer can get expiration time, which is gathered from registration response
+            let expirationTime = regService.getExpirationTime()
+        }
+    }
+
+    func registrationStateChanged(_ registrationState: SMRegistrationStates) {
+        //Handle registration state changes
+    }
+
+    func notificationStateChanged(_ notificationState: SMNotificationStates) {
+        //Handle notification state changes
+    }
+
+    func internalErrorDidOccur(_ error: SMMobileError) {
+    	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
+    }
+
+}
+```
+<!-- tabs:end -->
+
+### Register the client with HMAC Token
+
+ MobileSDK can register to SPiDR/Kandy Link server with a valid HMAC Token obtained from SPiDR/Kandy Link. You can get information on how to get HMAC Token, see [here](#appendix-e-obtaining-a-hmac-token).
+
+ Use the `registerToServer` method to register the client to the server with the values set in configuration. After the client is registered, the notification state will be changed to "CONNECTED", and the registration state is "REGISTERED". The client will try to stay in "REGISTERED" and "CONNECTED" states until the client is unregistered. After registering with HMAC Token, in case the registration state is "UNREGISTERED", you must obtain a new HMAC token to register again. Because the obtained HMAC Tokens are disposable.
+
+The `SMRegistrationApplicationDelegate` should be set to receive registration service notifications.
+
+The registration service renews registration according to the expiration time with the help of SPiDR/Kandy Link's ping messages. The `getExpirationTime` method may be called after successful registration to retrieve the expiration time (in seconds) for registration.
+
+<div class="page-break"></div>
+
+###### Example: Registering to SPiDR/Kandy Link with HMAC Token
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+#import <MobileSDK/MobileSDK.h>
+
+@interface RegistrationController () <SMRegistrationApplicationDelegate>
+@end
+
+@implementation RegistrationController
+
+- (void) registerExample {
+    SMRegistrationService *regService = [[SMServiceProvider getInstance] getRegistrationService];
+    NSString *token = @"dV85NzEyNzcxMjI5NkBpbnN0YXByYWN0LmV0aXNhbGF0LmFlOkluc3RhQDIwMjA"; // Sample HMAC token
+
+    //Get registration service notifications
+    [regService setRegistrationApplicationDelegate:self];
+
+    [regService registerToServer:3600 hmacToken:token completionHandler:^(SMMobileError *error) {
+        if(error){
+            //Handle registration error
+            return;
+        }
+
+        //Handle registration success
+
+        //Developer can get expiration time, which is gathered from registration response
+        NSInteger expirationTime = [regService getExpirationTime];
+    }];
+}
+
+- (void) registrationStateChanged:(SMRegistrationStates)registrationState {
+    //Handle registration state changes
+}
+
+- (void) notificationStateChanged:(SMNotificationStates)notificationState
+{
+    //Handle notification state changes
+}
+
+- (void) internalErrorDidOccur:(SMMobileError*) error
+{
+	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
+}
+
+@end
+```
+
+#### ** Swift Code **
+
+```swift
+import MobileSDK
+
+class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
+
+    func registerExample() {
+        let regService = SMServiceProvider.getInstance().getRegistrationService()
+        let token = "dV85NzEyNzcxMjI5NkBpbnN0YXByYWN0LmV0aXNhbGF0LmFlOkluc3RhQDIwMjA" // Sample HMAC token
+
+        regService.registrationApplicationDelegate = self
+        regService.register(toServer: , HMACToken: token) { (error) in
             if let error = error {
                 // Handle registration error
                 return
@@ -1907,6 +2010,27 @@ func transferCallFailed(_ call: SMCallDelegate, withError error: SMMobileError) 
 ```
 <!-- tabs:end -->
 
+#### Available Codecs
+
+To get available codec list, getAvailableCodecs method can be called. The codec type can be customized with a parameter to the getAvailableCodecs method. But only Video type is allowed for now.
+
+<!-- tabs:start -->
+
+#### ** Swift Code **
+
+```swift
+
+call.getAvailableCodecs(SMCodecType.videoCodec)
+```
+
+#### ** Objective-C Code **
+
+```objectivec
+
+[call getAvailableCodecs:VIDEO_CODEC];
+```
+<!-- tabs:end -->
+
 #### Change default camera position (front or back)
 
 New calls are started using the default camera device (front or back). The default is set to the front camera (AVCaptureDevicePositionFront), however, you can also change the default for new calls.
@@ -1944,10 +2068,17 @@ open var cameraPosition: AVCaptureDevice.Position
 
 Smartphones can change the screen view to portrait or landscape based on how the user is holding their device. There are two different video camera orientation settings—device orientation and application orientation—with three different handling options. The three handling options are:
 
-* CAMERA_ORIENTATION_USES_NONE : Video orientation does not change when the user rotates their device.
-* CAMERA_ORIENTATION_USES_DEVICE : Video orientation changes when the user rotates their device, even if the application interface orientation is not changed.
-* CAMERA_ORIENTATION_USES_STATUS_BAR : Video orientation changes according to the application interface orientation.
-To change video orientation manually, call rotateCameraOrientationToPosition. The following values are supported:
+
+* CAMERA_ORIENTATION_USES_NONE :Local video orientation does not change when the user rotates their device.Only the displayed video changes towards the camera.After the video call establish if the camera is in a vertical(portrait) angle, the local video orientation will be in a vertical position, and if the camera is in a horizontal(landscape) angle, the local video orientation will be in a horizontal position and local video orientation will no longer change.
+
+* CAMERA_ORIENTATION_USES_DEVICE : Only Local video view orientation changes when the user rotates their device , remote video orientation doesn't change on the device used.
+
+* CAMERA_ORIENTATION_USES_STATUS_BAR : Local and Remote video views orientation change according to the application interface orientation.With this option,UIApplicationInterface will force video view orientation according to status bar position.
+
+**Note:** The default option is set to `CAMERA_ORIENTATION_USES_DEVICE:`.
+ 
+To change local video view orientation manually, call rotateCameraOrientationToPosition. The following values are supported:
+
 * UIDeviceOrientationPortrait
 * UIDeviceOrientationPortraitUpsideDown
 * UIDeviceOrientationLandscapeLeft
@@ -4513,6 +4644,236 @@ func manageConfiguration() {
     // Audit Configuration. Default value is 30 secs.
     configuration.auditFrequency = 30;
 }
+```
+<!-- tabs:end -->
+
+<div class="page-break" />
+
+### Appendix E: Obtaining a HMAC Token
+
+HMAC Token is a token that allows you to register on the SPiDR/Kandy Link server. This section contains information about how to obtain a HMAC Token from SPiDR/Kandy Link server. In order to obtain HMAC token, the user to receive HMAC token must have the necessary settings made on the Kandy Link web portal. The adapter and authentication scheme key values obtained as a result of the settings made on the portal will be used to obtain the HMAC token. 
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+#import "CryptoUtils.h"
+
+- (void) obtainHMACToken
+{
+    // Sample required variables
+    NSString *server = @"lab.kandy.io";
+    NSString *user = @"joedoey@kandy.io";
+    NSString *adapter = @"SampleAdapter";
+    NSString *schemeKey = @"SampleSchemeKey";
+
+    NSData *requestBody = [createRequestBodyWithUser: user];
+
+    // Create a HMAC key with request body and scheme key
+    NSString *hmacKey = [hmacSHA1forData:requestBody withKey:schemeKey];
+
+    // Create the URL to send the REST request
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/rest/version/1/application/%@/authenticationToken",server,adapter]];
+
+    // Create the request object
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15.0];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:hmac forHTTPHeaderField:@"hmac"]; // Add the HMAC key to request as a header.
+    [request setHTTPBody:jsonData];
+
+    // Execute the REST request
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse* response,NSData* data,NSError* error)
+     {
+        if (error!=nil) {
+            NSLog(@"Retrieving token from server is failed. Error: %@",error);
+            // Handle the error
+        } else {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+            
+            if (httpResponse.statusCode != 201) {
+                NSError *error = [NSError
+                                  errorWithDomain:@"KandyIO"
+                                  code:1
+                                  userInfo:@{
+                                      NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Fail response returned from server. Response code: %ld",(long)httpResponse.statusCode]
+                                  }];
+                // Handle the error
+            } else {
+                NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+                NSDictionary *responseBody = [resultsDictionary objectForKey:@"authenticationTokenResponse"];
+                NSString *token = [responseBody objectForKey:@"token"];
+                
+                NSLog(@"Retrieving token from server successfully. Token: %@", token);
+                
+                // Use the generated token as you wish
+            }
+        }
+     }];
+}
+
+- (NSData*) createRequestBodyWithUser:(NSString *)user {
+    
+    // Split the user address
+    NSString *subscriberId = [[user componentsSeparatedByString:@"@"] firstObject]; // joedoey
+    NSString *organizationId = [[user componentsSeparatedByString:@"@"] lastObject]; // kandy.io
+
+    // Create request body
+    // Request body format:
+    // {
+    //    "authenticationTokenRequest":
+    //        {
+    //            "subscriberId":"joedoey",
+    //            "organizationId":"kandy.io"
+    //        }
+    //  }
+    NSDictionary *subscriberDict = @{ @"subscriberId": subscriberId, @"organizationId": organizationId };
+    NSDictionary *tokenRequestDict = @{ @"authenticationTokenRequest": subscriberDict };
+
+    // Serialize the request body dictionary as JSON.
+    NSError *error;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:tokenRequestDict options:nil error: &error];
+
+    if (error) {
+        // Handle the error
+    }
+
+    return requestBody;
+}
+
+// Encrypts the given data using the HMAC SHA1 algorithm
+// See about HMAC SHA1, [CCHMAC Documentation](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCHmac.3cc.html)
+- (NSString*) hmacSHA1forData:(NSData*)data withKey:(NSString *)key {
+    NSData *keyData = [key dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData *hMacOut = [NSMutableData dataWithLength:CC_SHA1_DIGEST_LENGTH];
+
+    CCHmac(kCCHmacAlgSHA1, keyData.bytes, keyData.length, data.bytes, data.length, hMacOut.mutableBytes);
+
+    NSString *hexString = @"";
+    if (data) {
+        uint8_t *dataPointer = (uint8_t *)(hMacOut.bytes);
+        for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
+            hexString = [hexString stringByAppendingFormat:@"%02x", dataPointer[i]];
+        }
+    }
+
+    return hexString;
+}
+```
+
+#### ** Swift Code **
+
+```swift
+import CryptoUtils
+
+func obtainHMACToken() {
+    // Sample required variables
+    let server = "lab.kandy.io"
+    let user = "joedoey@kandy.io"
+    let adapter = "SampleAdapter"
+    let schemeKey = "SampleSchemeKey"
+
+    let requestBody = createRequestBody(user)
+
+    // Create a HMAC key with request body and scheme key
+    let hmacKey = hmacSHA1forData(requestBody, withKey: schemeKey)
+
+    // Create the URL to send the REST request
+    let url = URL(string: "https://\(server)/rest/version/1/application/\(adapter)/authenticationToken")
+
+    // Create the request object
+    let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15.0)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue(hmac, forHTTPHeaderField: "hmac") // Add the HMAC key to request as a header.
+    request.httpBody = jsonData
+
+    // Execute the REST request
+    NSURLConnection.sendAsynchronousRequest(request, queue: OperationQueue(), completionHandler: { response, data, error in
+        
+        if let error = error {
+            print("Retrieving token from server is failed. Error: \(error)")
+            // Handle the error
+        } else {
+            let httpResponse = response as? HTTPURLResponse
+
+            if httpResponse.statusCode != 201 {
+                let error = NSError(domain: "SPiDRMobile", code: 1, userInfo: [
+                    NSLocalizedDescriptionKey: String(format: "Fail response returned from server. Response code: %ld", httpResponse.statusCode)
+                ])
+                // Handle the error
+            } else {
+                var resultsDictionary: [AnyHashable : Any]? = nil
+                do {
+                    resultsDictionary = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [AnyHashable : Any]
+                } catch {
+                    // Handle the error
+                }
+                let responseBody = resultsDictionary?["authenticationTokenResponse"] as? [AnyHashable : Any]
+                let token = responseBody?["token"] as? String
+
+                print("Retrieving token from server successfully. Token: \(token ?? "null token")")
+
+                // Use the generated token as you wish
+            }
+        }
+    })
+}
+
+func createRequestBody(_ user: String) -> Data? {
+
+    // Split the user address
+    let subscriberId = user.components(separatedBy: "@").first // joedoey
+    let organizationId = user.components(separatedBy: "@").last // kandy.io
+    
+    // Create request body
+    // Request body format:
+    // {
+    //    "authenticationTokenRequest":
+    //        {
+    //            "subscriberId":"joedoey",
+    //            "organizationId":"kandy.io"
+    //        }
+    //  }
+    let subscriberDict = [
+        "subscriberId": subscriberId,
+        "organizationId": organizationId
+    ]
+    let tokenRequestDict = [
+        "authenticationTokenRequest": subscriberDict
+    ]
+
+    // Serialize the request body dictionary as JSON.
+    var requestBody: Data? = nil
+    do {
+        requestBody = try JSONSerialization.data(withJSONObject: tokenRequestDict, options: nil)
+    } catch {
+        // Handle the error
+    }
+
+    return requestBody
+}
+
+// Encrypts the given data using the HMAC SHA1 algorithm
+// See about HMAC SHA1, https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCHmac.3cc.html
+func hmacSHA1forData(_ data: Data, withKey key: String) -> String {
+    let keyData = key.data(using: .utf8)
+    var hMacOut = Data(length: CC_SHA1_DIGEST_LENGTH)
+
+    CCHmac(kCCHmacAlgSHA1, keyData.bytes, keyData.length, data.bytes, data.length, hMacOut.mutableBytes)
+
+    var hexString = ""
+    if data {
+        let dataPointer = UnsafePointer<UInt8>(UInt8(hMacOut.bytes))
+        for i in 0..<CC_SHA1_DIGEST_LENGTH {
+            hexString = hexString + String(format: "%02x", dataPointer[i])
+        }
+    }
+
+    return hexString
+}
+
 ```
 <!-- tabs:end -->
 

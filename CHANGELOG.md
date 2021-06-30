@@ -5,6 +5,16 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.20.0 - 2021-06-29
+
+### Added
+- Remote video scaling type change support added.
+
+## 5.19.0 - 2021-06-01
+
+### Added
+- Authentication with hmac token support added.
+
 ## 5.18.0 - 2021-04-26
 
 ### Removed
@@ -21,10 +31,16 @@ Kandy Link iOS SDK change log.
 ### Removed
 - `registerToServer:(nonnull NSArray<NSString *> *)serviceTypes expirationTime:(NSInteger) expirationTime completionHandler:(void (^_Nullable)(SMMobileError * _Nullable error))completionBlock` is removed.
 
+### Fixed
+- Use Manual Audio Mode automatically turns on after ended call issue is fixed. `KAE-940`
+
 ## 5.15.0 - 2021-02-04
 
 ### Deprecated
 - `isRingingFeedbackEnabled` and `setRingingFeedbackEnabled` added to Configuration class methods are deprecated and will be removed in future releases. Instead `ringingFeedbackOptions` and `setRingingFeedbackOptions` should be used. 
+
+### Fixed
+- WebRTC video orientation parameter should sync with Call Service video orientation is fixed. `KAE-916`
 
 ## 5.14.0 - 2020-12-30
 
@@ -40,8 +56,14 @@ Kandy Link iOS SDK change log.
 ### Renamed
 - `replaceCodecSet` parameter renamed as `codecPayloadTypeSet` in SMConfiguration class. `KAE-869`
 
+### Fixed
+- The status of the call still display Remotely Held after unhold on caller issue is fixed. `KAE-884`
+
 ## 5.13.0 - 2020-12-02
- 
+
+### Fixed
+- Default DTLS setting is set to false is fixed. `KAE-882`
+
 ## 5.12.0 - 2020-11-04
 
 ## 5.11.0 - 2020-10-05
