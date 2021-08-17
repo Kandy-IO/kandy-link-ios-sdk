@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **June 29, 2021**
+Revision Date: **August 16, 2021**
 
 ## Mobile SDK overview
 
@@ -273,14 +273,14 @@ Logging provides a way to trace process execution. The Log Manager is defined to
 #### ** Objective-C Code **
 
 ```objectivec
-#define CONSOLE_LOG_PATH [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"consoleLog.log"]
+#define CONSOLE_LOG_PATH [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"consoleLog.ndjson"]
 
 @interface ExampleLogger : NSObject <SMLoggingDelegate>
 
 @end
 
 @implementation ExampleLogger
-    NSFileHandle *myHandle;
+    NSFileHandle *myFileHandle;
     - (id)init
     {
         self = [super init];
@@ -292,27 +292,61 @@ Logging provides a way to trace process execution. The Log Manager is defined to
         }
         return self;
     }
+
     - (void) initLogFile {
-        if(myHandle) [myHandle closeFile];
-        
-        if(![[NSFileManager defaultManager] fileExistsAtPath:CONSOLE_LOG_PATH])
-            [@"" writeToFile:CONSOLE_LOG_PATH atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        
-        NSLog(@"Log File Path: %@", CONSOLE_LOG_PATH);
-        myHandle = [NSFileHandle fileHandleForUpdatingAtPath:CONSOLE_LOG_PATH];
+        if(myFileHandle) [myFileHandle closeFile];
+
+    if(![[NSFileManager defaultManager] fileExistsAtPath:CONSOLE_LOG_PATH]){
+        [@"" writeToFile:CONSOLE_LOG_PATH atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        myFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:CONSOLE_LOG_PATH];
+        NSString *logStr = [NSString stringWithFormat:@"NDJson Log File Path: %@", CONSOLE_LOG_PATH];
+        // if the log file is first created we need to set true because should not insert a new blank line for the first message
+        [self writeLogToFile:logStr isCreateFirst:YES];
+    }else {
+        myFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:CONSOLE_LOG_PATH];
     }
+  }
 
     -(void)log:(SMLogLevel)logLevel withLogContext:(NSString *)logContext withMethodName:(SEL) methodName withMessage:(NSString*)logMessage{
         NSString *methodStr = NSStringFromSelector(methodName);
-        
+
         NSString *msg =[NSString stringWithFormat:@"[%@] <%@-%@>: %@",levelStr, logContext, methodStr, logMessage];
-        NSLog(@"%@", msg);
-        NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                          dateStyle:NSDateFormatterShortStyle
-                                                          timeStyle:NSDateFormatterMediumStyle];
-        [myHandle seekToEndOfFile];
-        [myHandle writeData:[[dateString stringByAppendingFormat:@": %@\n", msg] dataUsingEncoding:NSUTF8StringEncoding]];
+       [self writeLogToFile:msg isCreateFirst:NO];
+       NSLog(@"%@", msg);                                                  
     }
+        
+   /// Description Writes log line to log file
+   /// @param logLine Log line to write
+   /// @param isCreatingLogFile  Flag indicating that file should be creating at first to prevent adding line break at top of file
+   -(void) writeLogToFile:(NSString *)logLine isCreatingLogFile:(BOOL)isCreateFirst  {
+       NSString *logStrFormater = [self convertLogToNDJSONLog:logLine isCreatingLogFile:isCreateFirst];
+       [myFileHandle seekToEndOfFile];
+       [myFileHandle writeData:[logStrFormater dataUsingEncoding:NSUTF8StringEncoding]];
+  }
+
+
+   /// This function converts standart log line to NDJSON log format. This is useful when we need to debug for support.
+   /// @param logLine Log line to write
+   /// @param isCreatingLogFile  Flag indicating that file should be creating at first to prevent adding line break at top of file
+   -(NSString *)convertLogToNDJSONLog:(NSString *)logLine isCreatingLogFile:(BOOL)isCreateFirst  {
+       NSString *dateStr = [NSDateFormatter localizedStringFromDate:[NSDate date]
+                                                       dateStyle:NSDateFormatterShortStyle
+                                                       timeStyle:NSDateFormatterMediumStyle];
+    
+       NSString *logStr = [NSString stringWithFormat:@"[%@]: %@", dateStr, logLine];
+    
+       NSMutableDictionary *dictionaryForLog = [[NSMutableDictionary alloc] init];
+       [dictionaryForLog setObject:logStr forKey:@"line"];
+    
+       NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionaryForLog options:0 error:nil];
+       NSString *myString = [[NSString alloc] initWithData: jsonData  encoding:NSUTF8StringEncoding];
+       NSString *logStrFormater = [NSString stringWithFormat:@"\n%@", myString];
+       if (isCreateFirst) {
+        logStrFormater = [NSString stringWithFormat:@"%@", myString];
+       }
+       return logStrFormater;
+  }
+    
 @end
 ```
 
@@ -330,11 +364,14 @@ class ExampleLogger : NSObject, SMLoggingDelegate {
     }
     private func initLogFile() {
         let destPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let fullDestPath = NSURL(fileURLWithPath: destPath).appendingPathComponent("ExampleLogger.log")
+        let fullDestPath = NSURL(fileURLWithPath: destPath).appendingPathComponent("ExampleLogger.ndjson")
         let fullDestPathString = fullDestPath!.path
         if !FileManager.default.fileExists(atPath: fullDestPathString) {
             do {
                 try "".write(toFile: fullDestPathString, atomically: true, encoding: String.Encoding.utf8)
+                let logStr ="Log File Path: " + fullDestPath];
+                // if the log file is first created we need to set true because should not insert a new blank line for the first message
+                self.writeLogToFile(logStr, true);
             } catch {
                 NSLog("Can't write to file to device directory - Error: \(error.localizedDescription)")
             }
@@ -342,14 +379,38 @@ class ExampleLogger : NSObject, SMLoggingDelegate {
         handler = FileHandle.init(forUpdatingAtPath: fullDestPathString)
     }
 
+
     func log(_ logLevel: SMLogLevel, withLogContext logContext: String, withMethodName methodName: Selector?, withMessage logMessage: String) {
         let dateStr = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
         let logString = "\(dateStr) : \(logContext) - \(logMessage)"
         print(logString)
-        if let logData = logString.data(using: String.Encoding.utf8) {
+        self.writeLogToFile(logString, false)      
+    }
+
+
+     /// Description Writes log line to log file
+     /// @param logLine Log line to write
+     /// @param isCreatingLogFile  Flag indicating that file should be creating at first to prevent adding line break at top of file
+     func writeLogToFile(logLine: String, isCreatingLogFile:Bool) 
+        if let logData = self.convertLogToNDJSONLog(logLine, isCreatingLogFile){
             handler?.write(logData)
         }
-    }
+   }
+   
+   /// This function converts standart log line to NDJSON log format. This is useful when we need to debug for support.
+   /// @param logLine Log line to write
+   /// @param isCreatingLogFile  Flag indicating that file should be creating at first to prevent adding line break at top of file
+   func convertLogToNDJSONLog(logLine: String, isCreateFirst:Bool) -> String {
+        let dictionaryForLog = ["line" : logLine]
+        let jsonData = try! JSONSerialization.data(withJSONObject: dictionaryForLog)
+        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
+	let logData = jsonString.data(using: String.Encoding.utf8)
+	 if isCreateFirst {
+              return logData
+          } else {
+             return "\n" + logData
+          }
+   }
 
 }
 ```
