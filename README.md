@@ -57,9 +57,12 @@ Compatible KandyLink Server versions :
 
 * Kandy Link 4.7.1 Patch 6
 
-* Kandy Link 4.8 Patch 4
+* Kandy Link 4.8.1
 
 Tested on :
 
-* iPhone 6S, 7, 7+, 8, X, iPad mini, and iPad Air
+* iPhone 6S, 7, 7+, 8, X, 11, 11 Pro, iPad mini, and iPad Air
 
+## Known Issues
+
+* Build issues on systems using Apple Silicon M1 chip.
