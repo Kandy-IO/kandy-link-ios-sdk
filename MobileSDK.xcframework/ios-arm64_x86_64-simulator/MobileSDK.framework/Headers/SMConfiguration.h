@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.22.0
+ * @version: 5.23.0
  *
  */
 
@@ -334,14 +334,6 @@
 */
 @property (nonatomic) BOOL websocketWithTokenAuthentication;
 
-/**
- Ringing feedback configuration parameter.
- Default value is true.
- 
- @since 5.14.0
- */
-
-@property(nonatomic) BOOL isRingingFeedbackEnabled __deprecated_msg("Use ringingFeedbackOption instead");
 
 /**
  *Ringing feedback configuration parameter.
