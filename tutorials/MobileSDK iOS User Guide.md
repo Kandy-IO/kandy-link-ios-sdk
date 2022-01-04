@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **September 27, 2021**
+Revision Date: **January 3, 2022**
 
 ## Mobile SDK overview
 
@@ -2583,6 +2583,35 @@ func sendParametersToCall(call: SMOutgoingCallDelegate, parameters:[String:Strin
 ```
 <!-- tabs:end -->
 
+
+###### Example: Receiving Custom Parameters during an incoming call
+
+Custom Parameters can be retrieved and used during incoming call
+
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+- (void) incomingCall:(id<SMIncomingCallDelegate>)call
+{
+      NSDictionary *_Nullable sipHeaders = [NSDictionary dictionary];
+      sipHeaders = [call getCustomSIPHeaders]; 
+}
+```
+
+#### ** Swift Code **
+
+```swift
+func incomingCall(call: SMIncomingCallDelegate) {
+            let sipHeaders : Dictionary<String, String>?
+            sipHeaders = call.getCustomSIPHeaders
+        }
+```
+
+<!-- tabs:end -->
+
 #### Set ICE options
 
 The Configuration class has an "iceOption" attribute used to determine the ICE behavior. The following are the available ICE options:
@@ -4503,6 +4532,61 @@ class PushModule<SMPushSubscriptionDelegate> {
 <!-- tabs:end -->
 
 <div class="page-break"></div>
+
+## Public Request Service
+
+Sending requests via Kandylink with the parameters given in the appropriate format.
+
+### Fetch API
+
+Kandylink needs three parameters to use this API.
+
+* **RequestInfo:** RequestInfo includes the information required in the request's body to be sent
+* **ResourceURL:** ResourceURL is the information of which endpoint the request will be sent to
+* **MethodType:** MethodType defines which REST method type will use (Get, Put, Post, Delete)
+
+###### Example: Sending Public Request 
+
+```objectivec
+#import <MobileSDK/MobileSDK.h>
+
+NSString * serviceURL = @"/example";
+NSDictionary *requestInfo = @{@"test":@"123",@"name":"surname"} ;
+
+    [[[SMServiceProvider getInstance] getPublicRequestService] fetch:serviceURL withMethodType:POST withRequestInfo:requestInfo completionHandler:^(NSDictionary * _Nullable fetchResponse, SMMobileError * _Nullable error) {
+        if (error){
+            //Handle error
+            SPLog(@"Got Error in FetchResponse : %@",error);
+
+        }else{
+            // Handle fetch response and parsing dictionary
+            SPLog(@"FetchResponse : %@", fetchResponse);
+        }
+    }];
+
+```
+```swift
+import MobileSDK
+
+let serviceURL = "/example"
+let requestInfo = [
+    "test": "123",
+    "name": "surname"
+]
+
+SMServiceProvider.getInstance().getPublicRequestService().fetch(serviceURL, withMethodType: POST, withRequestInfo: requestInfo) { fetchResponse, error in
+    if let error = error {
+        //Handle error
+        SPLog("Got Error in FetchResponse : %@", error)
+    }else{
+        // Handle fetch response and parsing dictionary
+        SPLog(@"FetchResponse : %@", fetchResponse)
+    }
+}
+
+```
+
+
 
 ## Appendices
 

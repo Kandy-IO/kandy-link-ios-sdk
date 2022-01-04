@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 5.23.0
+ * @version: 5.24.0
  *
  */
 
@@ -17,6 +17,7 @@
 
 @class SMPushService;
 @class SMRegistrationService;
+@class SMPublicRequestService;
 
 @protocol SMCallServiceDelegate;
 @protocol SMAddressBookServiceDelegate;
@@ -81,10 +82,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * This method returns the version information about the SDK 
+ * This method returns the version information about the SDK
  * @return NSString
  * @since 2.0.0
  */
+
+- (SMPublicRequestService *) getPublicRequestService;
+/**
+ * This method returns (creates if necessary) an instance of PublicRequestService using Singleton Pattern
+ * @return PublicRequestService
+ * @since 5.24.0
+ */
+
+
+
 - (NSString *) getVersion;
 
 NS_ASSUME_NONNULL_END

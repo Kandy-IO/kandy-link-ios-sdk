@@ -5,6 +5,21 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.24.0 - 2022-03-01
+
+### Added 
+- Public Request API. `KAE-1165`
+
+## 5.23.0 - 2021-03-11
+
+### Removed
+- `setRingingFeedbackEnabled(boolean ringingFeedbackEnabled)` was removed.
+- `isRingingFeedbackEnabled()` was removed.
+
+### Known Issues
+
+- Build issues on systems using Apple Silicon M1 chip.
+
 ## 5.22.0 - 2021-09-27
 
 ### Known Issues
