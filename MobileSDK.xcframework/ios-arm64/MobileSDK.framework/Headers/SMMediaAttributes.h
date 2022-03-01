@@ -7,7 +7,7 @@
 
 /**
  *
- * @version: 5.24.0
+ * @version: 6.0.0
  * @brief class for media attributes of a Call
  * localVideo, holds boolean value that if the local video is activated for sending
  * remoteVideo, holds boolean value that if the remote video is receiving
