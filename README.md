@@ -17,7 +17,7 @@
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'KandyLinkMobileSDK', '~> 6.1.0'
+    pod 'KandyLinkMobileSDK', '~> 6.2.0'
 end
 
 post_install do |installer|
@@ -30,6 +30,10 @@ end
 
 ...
 ```
+#### Swift Package Manager
+1. File > Swift Packages > Add Package Dependency
+2. Add https://github.com/Kandy-IO/kandy-link-ios-sdk.git
+3. Select "Branch" with "master"
 
 ### Manual
 

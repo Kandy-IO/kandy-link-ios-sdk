@@ -5,6 +5,9 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.2.0 - 2022-25-04
+- Swift Package Manager support added.
+
 ## 6.1.0 - 2022-28-03
 
 ## 6.0.0 - 2022-28-02
