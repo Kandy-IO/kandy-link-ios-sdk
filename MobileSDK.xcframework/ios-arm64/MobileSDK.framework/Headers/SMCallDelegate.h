@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.3.0
+ * @version: 6.4.0
  *
  */
 
@@ -16,6 +16,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SMCallTypes.h"
 #import "SMCodecType.h"
+#import "SMVideoSourceTypes.h"
+
 
 @class SMCallState;
 @class SMUriAddress;
@@ -180,6 +182,19 @@
 - (void) setCaptureDevice:(AVCaptureDevicePosition)position withVideoResolution:(NSString * _Nonnull)videoResolution completionHandler: (void (^_Nullable)(SMMobileError * _Nullable error)) handler;
 
 /**
+ * @brief Allow applications to set image buffers as external video source.
+ *
+ * SDK can transmit any image to remote peer if application uses this API.
+ * Applications that want to use this API should set setVideoSourceType to EXTERNAL_VIDEO
+ *
+ * @param imageBuffer will be converted to RTCVideoFrame
+ * @param handler that returns error
+ * @since 6.4.0
+*/
+- (void) setExternalVideoSource:(CVImageBufferRef _Nullable )imageBuffer completionHandler: (void (^_Nullable)(SMMobileError * _Nullable error)) handler;
+;
+
+/**
  * @brief Returns callId that related with SIP session id
  * For the outgoing call, this value is not set until establish call is succeeded
  * @return callId unique identifier of call that related SIP session
@@ -307,5 +322,18 @@
  * @since 5.17.0
 */
 - (NSArray<NSDictionary *> *) getAvailableCodecs:(SMCodecType)codecType;
+
+/**
+ * @brief Allows applications to set VideoSourceTypes.
+ *
+ * MobileSDK supports multiple video source types. CAMERA is the default video source type.
+ * Alternatively, applications can select EXTERNAL_VIDEO and insert video frames as their desire.
+ * If EXTERNAL_VIDEO is chosen as the video source type, application must provide frames by using setExternalVideoSource API.
+ *
+ * @since 6.4.0
+ * @param videoSourceType videoSourceType enum
+ */
+- (void) setVideoSourceType:(SMVideoSourceTypes) videoSourceType;
+
 
 @end

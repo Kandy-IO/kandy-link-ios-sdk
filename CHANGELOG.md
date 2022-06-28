@@ -5,10 +5,20 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 6.3.0 - 2022-27-05
+## 6.4.0 - 2022-28-06
+    
+### Added
+- Streaming from external video sources support added. `KAE-1278`
 
-### Fixed
-- Reconnection of web socket when a abnormal error code occurs is fixed. `KAE-1287`
+### Removed
+- The SDK no longer will not operate the re-register operation when it receive gone notification. `KAE-1258`
+
+### Changed
+- Input parameters of `ringingFeedbackOption` changed as below; `KAE-1267`
+    - CLIENT to APP
+    - NONE to AUTO
+
+## 6.3.0 - 2022-27-05
 
 ## 6.2.0 - 2022-25-04
 - Swift Package Manager support added.

@@ -14,7 +14,7 @@
 		<div class="container" class="hide-in-xcode">
 			
 			<h1 id="library-title">
-				<a href="../index.html">MobileSDK 6.3.0 </a>
+				<a href="../index.html">MobileSDK 6.4.0 </a>
 			</h1>
 
 			<p id="developer-home">
@@ -117,6 +117,10 @@
 		<option value="//api/name/setCaptureDevice:withVideoResolution:completionHandler:">- setCaptureDevice:withVideoResolution:completionHandler:</option>
 		
 		<option value="//api/name/setCustomParameters:">- setCustomParameters:</option>
+		
+		<option value="//api/name/setExternalVideoSource:completionHandler:">- setExternalVideoSource:completionHandler:</option>
+		
+		<option value="//api/name/setVideoSourceType:">- setVideoSourceType:</option>
 		
 		<option value="//api/name/transferCall:">- transferCall:</option>
 		
@@ -1247,6 +1251,72 @@ Should be linked with GUI object which is a UIView</p>
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/setExternalVideoSource:completionHandler:" title="setExternalVideoSource:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setExternalVideoSource:completionHandler:">&ndash;&nbsp;setExternalVideoSource:completionHandler:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Allow applications to set image buffers as external video source.</p>
+
+<p>SDK can transmit any image to remote peer if application uses this API.
+Applications that want to use this API should set setVideoSourceType to EXTERNAL_VIDEO</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setExternalVideoSource:(CVImageBufferRef _Nullable)<em>imageBuffer</em> completionHandler:(void ( ^ _Nullable ) ( SMMobileError *_Nullable error ))<em>handler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>imageBuffer</code></th>
+						<td><p>will be converted to RTCVideoFrame</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>handler</code></th>
+						<td><p>that returns error</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>6.4.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/getCallId" title="getCallId"></a>
 	<h3 class="method-title"><code><a href="#//api/name/getCallId">&ndash;&nbsp;getCallId</a></code>
 <span class="task-item-suffix">required method</span></h3>
@@ -1871,6 +1941,68 @@ It is determined by Remote Session Description direction as follows</p>
 			
 		</div>
 	</div>
+</div><div class="section-method">
+	<a name="//api/name/setVideoSourceType:" title="setVideoSourceType:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setVideoSourceType:">&ndash;&nbsp;setVideoSourceType:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Allows applications to set VideoSourceTypes.</p>
+
+<p>MobileSDK supports multiple video source types. CAMERA is the default video source type.
+Alternatively, applications can select EXTERNAL_VIDEO and insert video frames as their desire.
+If EXTERNAL_VIDEO is chosen as the video source type, application must provide frames by using setExternalVideoSource API.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setVideoSourceType:(SMVideoSourceTypes)<em>videoSourceType</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoSourceType</code></th>
+						<td><p>videoSourceType enum</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>6.4.0</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
 </div>
 						</div>
 						
@@ -1886,7 +2018,7 @@ It is determined by Remote Session Description direction as follows</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2022 GENBAND. All rights reserved. Updated: 2022-05-27</p>
+						<p class="copyright">Copyright &copy; 2022 GENBAND. All rights reserved. Updated: 2022-06-28</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>

@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.3.0
+ * @version: 6.4.0
  *
  */
 
@@ -337,9 +337,10 @@
 
 /**
  *Ringing feedback configuration parameter.
- *Default value is CLIENT.
+ *Default value is AUTO.
  *
  *@since 5.15.0
+ *@updated 2022-06-20
  */
 @property(nonatomic) SMRingingFeedbackOptions ringingFeedbackOption;
 

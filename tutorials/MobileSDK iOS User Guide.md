@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **May 27, 2022**
+Revision Date: **June 28, 2022**
 
 ## Mobile SDK overview
 
@@ -2655,17 +2655,19 @@ SMConfiguration.getInstance().iceOption = .trickle
 
 If the receiving party prefers the information that it has successfully received the call, it can notify the calling party by the `ringingFeedbackOption` method.
 
-Possible values of the ringingFeedbackOption configuration parameter are NONE, SERVER and CLIENT.
+Possible values of the ringingFeedbackOption configuration parameter are APP, SERVER and AUTO.
 
 When ringingFeedbackOption is SERVER, SPiDR/Kandy Link sends the Ringing notification to the caller immediately after sending the callStart notification to the callee.
 
-When ringingFeedbackOption is NONE, SPiDR / Kandy Link will not send ringing feedback.
+When ringingFeedbackOption is APP, Ringing Feedback is reponsibility of application.
 
-* NONE: There will be no ringing feedback.
+The option selected during registration, cannot be changed after registration.
+
+* APP: The application side should manage the ringing feedback operations
 
 * SERVER: Server based ringing feedback.
 
-* CLIENT: Client based ringing feedback.
+* AUTO: Auto ringing feedback mechanism by SDK.
 
 <div class="page-break"></div>
 
@@ -2676,24 +2678,24 @@ When ringingFeedbackOption is NONE, SPiDR / Kandy Link will not send ringing fee
 #### ** Objective-C Code **
 
 ```objectivec
-// There will be no ringing feedback.
-[[SMConfiguration getInstance] setRingingFeedbackOption:NONE];
+// The application side should manage the ringing feedback operations
+[[SMConfiguration getInstance] setRingingFeedbackOption:APP];
 // Server based ringing feedback.
 [[SMConfiguration getInstance] setRingingFeedbackOption:SERVER];
-// Client based ringing feedback.
-[[SMConfiguration getInstance] setRingingFeedbackOption:CLIENT];
+// Auto ringing feedback mechanism by SDK.
+[[SMConfiguration getInstance] setRingingFeedbackOption:AUTO];
 //User can register now
 ```
 
 #### ** Swift Code **
 
 ```swift
-// There will be no ringing feedback.
-SMConfiguration.getInstance().ringingFeedbackOption = .none
+// The application side should manage the ringing feedback operations
+SMConfiguration.getInstance().ringingFeedbackOption = .app
 // Server based ringing feedback.
 SMConfiguration.getInstance().ringingFeedbackOption = .server
-// Client based ringing feedback.
-SMConfiguration.getInstance().ringingFeedbackOption = .client
+// Auto ringing feedback mechanism by SDK.
+SMConfiguration.getInstance().ringingFeedbackOption = .auto
 //User can register now
 ```
 <!-- tabs:end -->
@@ -3885,6 +3887,117 @@ It is recommended to call this method every 10 seconds as long as call continues
 
 <div class="page-break"></div>
 
+#### Use External Video Source
+
+The MobileSDK allows streaming external video sources instead of the default device camera while during the call.
+
+The MobileSDK supports [CVImageBufferRef](https://developer.apple.com/documentation/corevideo/cvimagebufferref) which is a reference to a [Core Video](https://developer.apple.com/documentation/corevideo) image buffer.
+
+The following API should be used for external video source.
+
+#### ** Objective-C Code **
+
+```objectivec
+
+/**
+ * @brief Enums that handle VideoSourceType in SDK.
+ * MobileSDK supports multiple video source types. CAMERA is the default video source type.
+ * Alternatively, applications can select EXTERNAL_VIDEO and insert video frames as their desire.
+ * If EXTERNAL_VIDEO is chosen as the video source type, application must provide frames by using setExternalVideoSource API.
+ *
+ * @since 6.4.0
+*/
+
+@property (nonatomic) SMVideoSourceTypes videoSourceType;
+
+```
+<!-- tabs:end -->
+
+SMVideoSourceType is an enum with the following two parameters.
+
+```objectivec
+
+typedef NS_ENUM(NSInteger, SMVideoSourceTypes) {
+
+    CAMERA NS_SWIFT_NAME(camera),
+
+    EXTERNAL_VIDEO NS_SWIFT_NAME(externalVideo),
+
+};
+
+```
+<!-- tabs:end -->
+
+To use an external video stream, it is necessary to call the setExternalVideoSource API after setting setVideoSourceType to EXTERNAL_VIDEO.
+
+When the setExternalVideoSource API is called when this type is not EXTERNAL_VIDEO, MobileSDK will print a log message to the developers and will not set the external video.
+
+#### ** Objective-C Code **
+
+```objectivec
+/**
+ * @brief Allow applications to set image buffers as external video source.
+ *
+ * SDK can transmit any image to remote peer if application uses this API.
+ * Applications that want to use this API should set setVideoSourceType to EXTERNAL_VIDEO
+ *
+ * @param imageBuffer will be converted to RTCVideoFrame
+ * @param handler that returns error
+ * @since 6.4.0
+*/
+- (void) setExternalVideoSource:(CVImageBufferRef)imageBuffer;
+```
+<!-- tabs:end -->
+
+**Note:** The application must call setExternalVideoSource API on every frame.
+
+
+###### Example: Use external video source
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+
+@property id<SMCallDelegate> call;
+
+CVImageBufferRef *sampleImage;
+
+  
+// Set Video Source Type to ExternalVideo to inform SDK video source.
+[call setVideoSourceType:EXTERNAL_VIDEO];
+
+
+- (void) startExternalVideo:(CVImageBufferRef)imageBuffer {
+    // Assuming that application call this function for each frame
+  [call setExternalVideoSource:sampleImage];
+}
+
+```
+
+#### ** Swift Code **
+
+```swift
+
+var call: SMCallDelegate
+var sampleImage: CVImageBufferRef
+
+  
+// Set Video Source Type to ExternalVideo to inform SDK video source.
+call.setVideoSourceType = .externalVideo
+
+func startExternalVideo(CVImageBufferRef: sampleImage
+    // Assuming that application call this function for each frame
+  call.setExternalVideoSource(CVImageBufferRef: sampleImage)
+}
+
+```
+
+<!-- tabs:end -->
+
+**Note:** Creating video stream objects from RTSP URL is explained in the Appendices F section.
+
 ## Push Service
 
 <hr/>
@@ -5025,6 +5138,97 @@ func hmacSHA1forData(_ data: Data, withKey key: String) -> String {
 
     return hexString
 }
+
+```
+<!-- tabs:end -->
+
+<div class="page-break" />
+
+### Appendix F: Obtaining a CVImageBufferRef object
+
+CVImageBufferRef is a kind of buffer type which is provided by CoreVideo framework on iOS. This section contains information on how to get CVImageBufferRef object with RTSP URL. We need a decoder architecture to get frames from RTSP stream. There are several frameworks that can do it such as Gstreamer, FFmpeg, Live555, EasyRTSP, etc.
+
+These frameworks are using their own decoding structure, but in general, they are all the same. The logic is to get an RTSP URL and decode NAL units inside this stream, and the NAL unit converting process is the same for all. 
+
+In order to use EasyRTSP, the following frameworks should be added to the project.
+
+* VideoToolBox.framework
+* CoreMedia.framework
+* SystemConfiguration.framework
+* MediaPlayer.framework
+* Foundation.framework
+* Security.framework
+* libswresample.a
+* libc++.tbd
+* libavfilter.a
+* libz.tbd
+* libavdevice.a
+* libavformat.a
+* libswscale.a
+* libiconv.tbd
+* libbz2.tbd
+* libEasyRTSPClient.a
+* libavutil.a
+* libavcodec.a
+
+EasyRTSP is used in the example below.
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+#import <MobileSDK/MobileSDK.h>
+#import "PlayerDataReader.h"
+#import "HWVideoDecoder.h"
+
+ PlayerDataReader *decoder;
+ SMCallDelegate *call;
+
+- (void) getVideoStream {
+    EasyRTSP_Activate("EasyPlayer key is free!");
+    [PlayerDataReader startUp]; 
+    decoder = [[PlayerDataReader alloc] initWithUrl:@"Your RTSP URL"];
+    decoder.useHWDecoder = YES; 
+    decoder.transportMode = EASY_RTP_OVER_TCP; 
+    decoder.sendOption = YES; 
+    [decoder start];
+}
+
+// Starts external video stream
+[call setVideoSourceType:EXTERNAL_VIDEO];
+[self getVideoStream];
+decoder.videoFrameOutputBlock = ^(CVImageBufferRef *imageBuffer) {
+        [call setExternalVideoSource:*imageBuffer];
+    };
+
+```
+
+#### ** Swift Code **
+
+```swift
+import MobileSDK
+
+var decoder: PlayerDataReader
+var call: SMCallDelegate
+
+func getVideoStream() {
+ EasyRTSP_Activate("EasyPlayer key is free!")
+ PlayerDataReader.startUp;
+ decoder = PlayerDataReader(initWithUrl: "rtsp://171.25.232.18/jibxjyTXkaG2DYRXGrBIZ3rGeFT0Si")
+ decoder.useHWDecoder = true
+ decoder.transportMode = EASY_RTP_OVER_TCP
+ decoder.sendOption = true
+ decoder.start
+}
+
+// Starts external video stream
+call.videoSourceType = .externalVideo
+self.getVideoStream()
+decoder.videoFrameOutputBlock = ^(CVImageBufferRef *imageBuffer) {
+        call.setExternalVideoSource(CVImageBufferRef: imageBuffer)
+    }
+
 
 ```
 <!-- tabs:end -->
