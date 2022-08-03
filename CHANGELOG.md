@@ -5,6 +5,11 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.5.0 - 2022-02-08
+
+### Fixed
+- Local Video corrupted stream fixed. `KAE-1278`
+
 ## 6.4.0 - 2022-28-06
     
 ### Added
