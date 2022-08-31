@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.5.0
+ * @version: 6.6.0
  *
  */
 
@@ -94,6 +94,22 @@
  * @since 2.0.0
  */
 - (void) unMute;
+
+/**
+ * @brief Starts the local video unmute
+ * The video unmute for the active call.
+ * The call should be a video call and it should be disabled previously. Otherwise, SDK will return an error
+ * @since 6.6.0
+ */
+- (void) videoUnMute;
+
+/**
+ * @brief Stops the local video track
+ * The video mute for the active call.
+ * The call should be a video call and it should be enabled previously. Otherwise, SDK will return an error
+ * @since 6.6.0
+ */
+- (void) videoMute;
 
 /**
  * @brief Stops the video for the call

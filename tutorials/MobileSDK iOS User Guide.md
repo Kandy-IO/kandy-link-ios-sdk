@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **August 02, 2022**
+Revision Date: **August 31, 2022**
 
 ## Mobile SDK overview
 
@@ -1748,6 +1748,78 @@ func videoStopSucceeded(_ call: SMCallDelegate) {
 
 func videoStopFailed(_ call: SMCallDelegate, withError error: SMMobileError) {
     NSLog("Video Stop failed")
+}
+```
+<!-- tabs:end -->
+
+<div class="page-break"></div>
+
+##### Video mute/UnMute Call
+
+Video Mute API disables the video track in a video call and stops sending the video frame to the remote side. A black screen appears instead of a local video view until the video track is enabled again using the video unMute API.
+
+###### Example: Video mute/UnMute the call
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+- (void) videoMuteUnMuteExample
+{
+    [call videoUnMute]; //unMute the video track 
+    [call videoMute]; //mute the video track 
+    //the result of the mute/unMute operations will be delivered by callback methods
+}
+
+//current class implements SMCallApplicationDelegate protocol
+//current class instance is used as call application delegate in call service
+- (void) videoUnMuteSucceed:(id<SMCallDelegate>)call
+{
+    NSLog(@"Video unMute succeeded");
+}
+
+- (void) videoUnMuteFailed:(id<SMCallDelegate>)call withError:(SMMobileError *) error
+{
+    NSLog(@"Video unMute failed");
+}
+
+- (void) videoMuteSucceed:(id<SMCallDelegate>)call
+{
+    NSLog(@"Video Mute succeeded");
+}
+
+- (void) videoMuteFailed:(id<SMCallDelegate>)call withError:(SMMobileError *) error
+{
+    NSLog(@"Video Mute failed");
+}
+```
+
+#### ** Swift Code **
+
+```swift
+func videoMuteUnMuteExample() {
+    call.videoUnMute() //unMute the video track  
+    call.videoMute() //mute the video track  the call
+    //the result of the mute/unMute operations will be delivered by callback methods
+}
+
+//current class implements SMCallApplicationDelegate protocol
+//current class instance is used as call application delegate in call service
+func videoUnMuteSucceed(_ call: SMCallDelegate) {
+    NSLog("Video unMute succeeded")
+}
+
+func videoUnMuteFailed(_ call: SMCallDelegate, withError error: SMMobileError) {
+    NSLog("Video unMute failed")
+}
+
+func videoMuteSucceed(_ call: SMCallDelegate) {
+    NSLog("Video Mute succeeded")
+}
+
+func videoMuteFailed(_ call: SMCallDelegate, withError error: SMMobileError) {
+    NSLog("Video Mute failed")
 }
 ```
 <!-- tabs:end -->

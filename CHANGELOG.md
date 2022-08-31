@@ -5,6 +5,11 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.6.0 - 2022-31-08
+
+### Added
+- Video mute/unMute API. `KAE-1338`
+
 ## 6.5.0 - 2022-02-08
 
 ### Fixed

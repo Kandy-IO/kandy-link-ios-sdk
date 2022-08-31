@@ -14,7 +14,7 @@
 		<div class="container" class="hide-in-xcode">
 			
 			<h1 id="library-title">
-				<a href="../index.html">MobileSDK 6.5.0 </a>
+				<a href="../index.html">MobileSDK 6.6.0 </a>
 			</h1>
 
 			<p id="developer-home">
@@ -124,6 +124,10 @@
 		
 		<option value="//api/name/unMuteCallSucceed:">- unMuteCallSucceed:</option>
 		
+		<option value="//api/name/videoMuteFailed:withError:">- videoMuteFailed:withError:</option>
+		
+		<option value="//api/name/videoMuteSucceed:">- videoMuteSucceed:</option>
+		
 		<option value="//api/name/videoStartFailed:withError:">- videoStartFailed:withError:</option>
 		
 		<option value="//api/name/videoStartSucceed:">- videoStartSucceed:</option>
@@ -131,6 +135,10 @@
 		<option value="//api/name/videoStopFailed:withError:">- videoStopFailed:withError:</option>
 		
 		<option value="//api/name/videoStopSucceed:">- videoStopSucceed:</option>
+		
+		<option value="//api/name/videoUnMuteFailed:withError:">- videoUnMuteFailed:withError:</option>
+		
+		<option value="//api/name/videoUnMuteSucceed:">- videoUnMuteSucceed:</option>
 		
 	</optgroup>
 	
@@ -1752,6 +1760,234 @@ This is the call back method for the endCall request</p>
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/videoUnMuteSucceed:" title="videoUnMuteSucceed:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoUnMuteSucceed:">&ndash;&nbsp;videoUnMuteSucceed:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The method that is called when an attempt to video unMute succeeded in a call.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)videoUnMuteSucceed:(id&lt;SMCallDelegate&gt;)<em>call</em></code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>6.6.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The method that is called when an attempt to video unMute succeeded in a call.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallApplicationDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/videoUnMuteFailed:withError:" title="videoUnMuteFailed:withError:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoUnMuteFailed:withError:">&ndash;&nbsp;videoUnMuteFailed:withError:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The method that is called when an attempt to video unMute fails in a call.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)videoUnMuteFailed:(id&lt;SMCallDelegate&gt;)<em>call</em> withError:(SMMobileError *)<em>error</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>error</code></th>
+						<td><p>definition of failure</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>6.6.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The method that is called when an attempt to video unMute fails in a call.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallApplicationDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/videoMuteSucceed:" title="videoMuteSucceed:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoMuteSucceed:">&ndash;&nbsp;videoMuteSucceed:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The method that is called when an attempt to video mute succeeded in a call.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)videoMuteSucceed:(id&lt;SMCallDelegate&gt;)<em>call</em></code></div>
+
+		    
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>6.6.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The method that is called when an attempt to video mute succeeded in a call.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallApplicationDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/videoMuteFailed:withError:" title="videoMuteFailed:withError:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoMuteFailed:withError:">&ndash;&nbsp;videoMuteFailed:withError:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The method that is called when an attempt to video mute fails in a call.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)videoMuteFailed:(id&lt;SMCallDelegate&gt;)<em>call</em> withError:(SMMobileError *)<em>error</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>error</code></th>
+						<td><p>definition of failure</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>6.6.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The method that is called when an attempt to video mute fails in a call.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SMCallApplicationDelegate.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/holdCallSucceed:" title="holdCallSucceed:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/holdCallSucceed:">&ndash;&nbsp;holdCallSucceed:</a></code>
 <span class="task-item-suffix">required method</span></h3>
@@ -2552,7 +2788,7 @@ This is the call back method for the endCall request</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2022 GENBAND. All rights reserved. Updated: 2022-08-03</p>
+						<p class="copyright">Copyright &copy; 2022 GENBAND. All rights reserved. Updated: 2022-08-31</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
