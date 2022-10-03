@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **August 31, 2022**
+Revision Date: **October 3, 2022**
 
 ## Mobile SDK overview
 
@@ -4601,6 +4601,89 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 <!-- tabs:end -->
 
 ### Standard Push Notification Callback
+
+###### Warning
+
+We highly suggested that call applications use only CallKit for an incoming call. Using custom incoming call screens is discouraged.
+
+Also we SDK generates uniq UUID for any call. We suggest the applications use that ID to report calls to the CallKit. Both pushParser and Incoming Call Delegate has this UUID parameter.
+
+##### Sample Usage
+
+###### Push Usage
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+...
+#import <PushKit/PushKit.h> 
+#import <MobileSDK/MobileSDK.h>
+  
+NSObject *callKitInfo = [pushService parsePushNotification:pushMessage];
+ [provider reportNewIncomingCallWithUUID:callKitInfo.callUUID update:update completion:^(NSError * _Nullable error){ 
+// Maintain UI
+}]
+...
+@end
+```
+
+#### ** Swift Code **
+
+```swift
+...
+import MobileSDK
+import PushKit
+...
+
+var callKitInfo:NSObject = pushService.parsePushNotification(NSDictionary:pushMessage)
+provider.reportNewIncomingCallWithUUID:callKitInfo.callUUID update:update completion:^(NSError * _Nullable error){ 
+// Maintain UI
+}
+```
+<!-- tabs:end -->
+
+###### Incoming Call Delegate Usage 
+
+<!-- tabs:start -->
+
+#### ** Objective-C Code **
+
+```objectivec
+...
+#import <PushKit/PushKit.h> 
+#import <MobileSDK/MobileSDK.h>
+  
+-(void) incomingCall:(id<SMIncomingCallDelegate>)call
+{
+NSUUID *callUUID = [[NSUUID alloc] initWithUUIDString:call.Id];
+[provider reportNewIncomingCallWithUUID:callUUID update:update completion:^(NSError * _Nullable error){ 
+// Maintain UI
+}
+}]
+...
+@end
+```
+
+#### ** Swift Code **
+
+```swift
+...
+import MobileSDK
+import PushKit
+...
+
+
+
+func incomingCall:(id<SMIncomingCallDelegate>)call{
+var callUUID: NSUUID = call.id
+provider.reportNewIncomingCallWithUUID:callUUID update:update completion:^(NSError * _Nullable error){ 
+// Maintain UI
+   }
+}
+```
+<!-- tabs:end -->
 
 If Standard push registration is completed successfully and subscribed to push channels with the correct device push token, device now should receive Standard push notifications. Standard push notifications are special type silent `Gone` notifications. Silent notifications are low priority and needs to be handled by app. Silent notifications which will not provide any alert on iOS device to end-user, include subscription cancellation messages. Silent notifications needs to handled by implementing `application(_:didReceiveRemoteNotification:fetchCompletionHandler:)`. 
 

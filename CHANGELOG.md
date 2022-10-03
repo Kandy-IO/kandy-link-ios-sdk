@@ -5,6 +5,15 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.7.0 - 2022-3-10
+
+### Added
+- Push parser implemented. `KAE-1349`
+
+### Fixed
+- Invalid custom parameter parsing bug is fixing. `KAE-1366`
+- SDK Will restart ICE when failed state received. `KAE-1263`
+
 ## 6.6.0 - 2022-31-08
 
 ### Added

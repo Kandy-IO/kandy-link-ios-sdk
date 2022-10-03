@@ -17,7 +17,7 @@
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'KandyLinkMobileSDK', '~> 6.6.0'
+    pod 'KandyLinkMobileSDK', '~> 6.7.0'
 end
 
 post_install do |installer|
@@ -56,6 +56,9 @@ Compatible iOS versions :
 Compatible XCode Versions :
 
 * XCode 12.x+
+
+* Xcode 14 is not supported currently.
+  * There is a known issue with XCode 14+, which cause a crash on iOS 16. JIRA ID: KAE-1367
 
 Compatible KandyLink Server versions :
 
