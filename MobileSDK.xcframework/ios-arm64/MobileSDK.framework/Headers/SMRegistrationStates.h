@@ -7,12 +7,15 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.7.0
+ * @version: 6.8.0
  *
  */
 
 /**
  * @brief enum class for Registration States
+ * This enum will no longer be available in version 6.11.0.
+ * <p>To find out the registration status of the SDK,
+ * use {@link SMRegistrationApplicationDelegate#registrationDropped(MobileError)} instead.</p>
  *
  * - UNREGISTERED
  * - REGISTERED
@@ -31,4 +34,4 @@ typedef NS_ENUM(NSInteger, SMRegistrationStates) {
      * stay in REGISTERED state even if it is dropped by server.
      */
     REGISTERED NS_SWIFT_NAME(registered)
-};
+} DEPRECATED_MSG_ATTRIBUTE("This API will be deprecated. Use registrationDropped(MobileError)");

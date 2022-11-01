@@ -1,7 +1,7 @@
 # Mobile SDK User Guide for iOS
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **October 3, 2022**
+Revision Date: **October 31, 2022**
 
 ## Mobile SDK overview
 
@@ -480,7 +480,7 @@ MobileSDK should be registered to SPiDR/Kandy Link before using any other servic
 
 ### Register the client
 
- Use the `registerToServer` method to register the client to the server with the values set in configuration. After the client is registered, the notification state will be changed to "CONNECTED", and the registration state is "REGISTERED". The client will try to stay in "REGISTERED" and "CONNECTED" states until the client is unregistered.
+ Use the `registerToServer` method to register the client to the server with the values set in configuration. After the client is registered, the notification state will be changed to "CONNECTED". The client will try to stay in "CONNECTED" states until the client is unregistered.
 
 The `SMRegistrationApplicationDelegate` should be set to receive registration service notifications.
 
@@ -521,18 +521,14 @@ The registration service renews registration according to the expiration time wi
     }];
 }
 
-- (void) registrationStateChanged:(SMRegistrationStates)registrationState {
-    //Handle registration state changes
+- (void)  registrationDropped:(SMMobileError*) error
+{ 
+    //Handle registration dropped
 }
 
 - (void) notificationStateChanged:(SMNotificationStates)notificationState
 {
     //Handle notification state changes
-}
-
-- (void) internalErrorDidOccur:(SMMobileError*) error
-{
-	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
 }
 
 @end
@@ -560,16 +556,12 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
         }
     }
 
-    func registrationStateChanged(_ registrationState: SMRegistrationStates) {
-        //Handle registration state changes
+    func registrationDropped(_ error: SMMobileError) {
+        //Handle registration dropped
     }
 
     func notificationStateChanged(_ notificationState: SMNotificationStates) {
         //Handle notification state changes
-    }
-
-    func internalErrorDidOccur(_ error: SMMobileError) {
-    	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
     }
 
 }
@@ -580,7 +572,7 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
 
  MobileSDK can register to SPiDR/Kandy Link server with a valid HMAC Token obtained from SPiDR/Kandy Link. You can get information on how to get HMAC Token, see [here](#appendix-e-obtaining-a-hmac-token).
 
- Use the `registerToServer` method to register the client to the server with the values set in configuration. After the client is registered, the notification state will be changed to "CONNECTED", and the registration state is "REGISTERED". The client will try to stay in "REGISTERED" and "CONNECTED" states until the client is unregistered. After registering with HMAC Token, in case the registration state is "UNREGISTERED", you must obtain a new HMAC token to register again. Because the obtained HMAC Tokens are disposable.
+ Use the `registerToServer` method to register the client to the server with the values set in configuration. After the client is registered, the notification state will be changed to "CONNECTED". The client will try to stay in "CONNECTED" states until the client is unregistered. After registering with HMAC Token, in case the notification state is "DISCONNECTED", you must obtain a new HMAC token to register again. Because the obtained HMAC Tokens are disposable.
 
 The `SMRegistrationApplicationDelegate` should be set to receive registration service notifications.
 
@@ -622,18 +614,14 @@ The registration service renews registration according to the expiration time wi
     }];
 }
 
-- (void) registrationStateChanged:(SMRegistrationStates)registrationState {
-    //Handle registration state changes
+- (void)  registrationDropped:(SMMobileError*) error
+{ 
+    //Handle registration dropped
 }
 
 - (void) notificationStateChanged:(SMNotificationStates)notificationState
 {
     //Handle notification state changes
-}
-
-- (void) internalErrorDidOccur:(SMMobileError*) error
-{
-	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
 }
 
 @end
@@ -663,16 +651,12 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
         }
     }
 
-    func registrationStateChanged(_ registrationState: SMRegistrationStates) {
-        //Handle registration state changes
+    func registrationDropped(_ error: SMMobileError) {
+    	//Handle registration dropped
     }
 
     func notificationStateChanged(_ notificationState: SMNotificationStates) {
         //Handle notification state changes
-    }
-
-    func internalErrorDidOccur(_ error: SMMobileError) {
-    	//This method will be called, if any internal error occurs when MobileSDK sends a request to SPiDR
     }
 
 }
@@ -683,7 +667,7 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
 
 ### Unregister the client
 
-To stop receiving events from SPiDR/Kandy Link, client should be unregistered. When unregistration is successful, the notification state will be changed to "DISCONNECTED", and the registration state is "UNREGISTERED".
+To stop receiving events from SPiDR/Kandy Link, client should be unregistered. When unregistration is successful, the notification state will be changed to "DISCONNECTED".
 
 ###### Example: Unregistering from SPiDR/Kandy Link
 
@@ -713,10 +697,6 @@ To stop receiving events from SPiDR/Kandy Link, client should be unregistered. W
     }];
 }
 
-- (void) registrationStateChanged:(SMRegistrationStates)registrationState {
-    //Handle registration state changes
-}
-
 - (void) notificationStateChanged:(SMNotificationStates)notificationState
 {
     //Handle notification state changes
@@ -741,10 +721,6 @@ class RegistrationController: NSObject, SMRegistrationApplicationDelegate {
 
             // Handle unregistration success
         }
-    }
-
-    func registrationStateChanged(_ registrationState: SMRegistrationStates) {
-        //Handle registration state changes
     }
 
     func notificationStateChanged(_ notificationState: SMNotificationStates) {

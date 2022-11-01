@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.7.0
+ * @version: 6.8.0
  *
  */
 
@@ -27,12 +27,22 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SMRegistrationApplicationDelegate <NSObject>
 
 /**
- * @brief This is the call back method for any registration state change on the Reqistration.
+ * @brief This method will no longer be available in version 6.11.0.
  *
- * @param registrationState new state of the registration 
+ * @param registrationState new state of the registration
  * @since 2.0.0
  */
-- (void) registrationStateChanged : (SMRegistrationStates) registrationState;
+- (void) registrationStateChanged :(SMRegistrationStates) registrationState DEPRECATED_MSG_ATTRIBUTE("This API will be deprecated. Use registrationDropped(MobileError)");
+
+/**
+ * This method will be triggered when the registration of the SDK ends due to an error.
+ * When this method is triggered, you must repeat the registration process
+ * to continue using the SDK functionalities.
+ *
+ * @param error reason of the registration drop event.
+ * @since 6.8.0
+ */
+- (void) registrationDropped:(SMMobileError*) error;
 
 /**
  * This method will be called, when websocet notification state changed
@@ -45,11 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * This method will be call, if any internal error occurs when MobileSDK
  * sends a request to SPiDR.
+ * This method will no longer available in version 6.11.0.
  *
  * @param error SMMobileError
  * @since 4.2.4
  */
-- (void) internalErrorDidOccur:(SMMobileError*) error;
+- (void) internalErrorDidOccur:(SMMobileError*) error DEPRECATED_MSG_ATTRIBUTE("This API will be deprecated. Use registrationDropped(MobileError)");
 
 NS_ASSUME_NONNULL_END
 

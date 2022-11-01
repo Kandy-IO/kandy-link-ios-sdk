@@ -5,6 +5,16 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.8.0 - 2022-31-10
+
+### Added
+- Added c flags to not create selector stubs, which is a feature that comes with Xcode 14. `KAE-1347`
+- Registration Service and Notification Manager refactored. `KAE-1351`
+
+### Fixed
+- iOS 16 WebSocket crash fixed with changing NSURLNetworkServiceType which is not depracated. `KAE-1367`
+- Rollback operation crash fixed. `KAE-1453`
+
 ## 6.7.0 - 2022-3-10
 
 ### Added

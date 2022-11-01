@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.7.0
+ * @version: 6.8.0
  *
  */
 
@@ -93,5 +93,20 @@ typedef NS_ENUM(NSInteger, SMErrorTypes) {
     ERROR_HTTP,
     
     /** Request pending */
-    ERROR_REQUEST_PENDING NS_SWIFT_NAME(requestPending) = 491
+    ERROR_REQUEST_PENDING NS_SWIFT_NAME(requestPending) = 491,
+    
+    /**
+     * WebSocket failure.
+     */
+    WEBSOCKET_FAILURE NS_SWIFT_NAME(websocketFailure) = 4020,
+
+    /**
+     * Registration expired.
+     */
+    REGISTRATION_EXPIRED NS_SWIFT_NAME(registrationExpired) = 4021,
+
+    /**
+     * Notification channel failure.
+     */
+    NOTIFICATION_CHANNEL_FAILURE NS_SWIFT_NAME(notificationChannelFailure) = 4022
 };

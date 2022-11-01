@@ -7,7 +7,7 @@
  * copied, accessed, disclosed or used in any manner, in whole or in part,
  * without GENBAND's express written authorization.
  *
- * @version: 6.7.0
+ * @version: 6.8.0
  *
  */
 
@@ -343,6 +343,14 @@
  *@updated 2022-06-20
  */
 @property(nonatomic) SMRingingFeedbackOptions ringingFeedbackOption;
+
+/**
+* Websocket reconnecting  limit parameter
+*
+* @since 6.8.0
+*/
+
+@property (nonatomic) NSInteger webSocketConnectionRetryLimit;
 
 /**
  * This method returns (creates if necessary) singleton instance of Configuration class
