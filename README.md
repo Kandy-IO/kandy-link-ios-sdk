@@ -17,7 +17,7 @@
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'KandyLinkMobileSDK', '~> 6.8.0'
+    pod 'KandyLinkMobileSDK', '~> 6.8.1'
 end
 
 post_install do |installer|

@@ -5,6 +5,10 @@ Kandy Link iOS SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.8.1 - 2022-08-11
+### Fixed
+- Custom SIP headers return bug is fixing. `KAE-1455`
+
 ## 6.8.0 - 2022-31-10
 
 ### Added
